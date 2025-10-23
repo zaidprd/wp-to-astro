@@ -20,12 +20,13 @@
         "@types/react-dom": "^19.2.2",
         "aos": "^2.3.4",
         "react": "^19.2.0",
-        "react-dom": "^19.2.0"
+        "react-dom": "^19.2.0",
+        "tailwindcss": "^4.1.15"
     },
     "devDependencies": {
         "@astrojs/check": "^0.9.4",
         "@astrojs/sitemap": "^3.3.0",
-        "@tailwindcss/vite": "^4.0.14",
+        "@tailwindcss/vite": "^4.1.15",
         "@types/aos": "^3.0.7",
         "astro": "^5.5.3",
         "lucide-astro": "^0.483.0",
