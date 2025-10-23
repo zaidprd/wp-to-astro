@@ -1,23 +1,29 @@
 // src/lib/sanity.ts
-// KODE LENGKAP YANG SUDAH DIPERBAIKI
+// REVISI FINAL - Menggunakan Environment Variables
 
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
+// Ambil kredensial dari environment variables
+const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
+const apiVersion = "2023-10-23";
+
+// Validasi: pastikan variabel ada
+if (!projectId || !dataset) {
+  throw new Error("Sanity projectId atau dataset tidak ditemukan. Pastikan variabel .env sudah diatur.");
+}
+
 export const client = createClient({
-  projectId: "lf9syc81", // Project ID Anda sudah benar
-  dataset: "production",   // Dataset Anda sudah benar
-  apiVersion: "2023-10-23",
-  useCdn: true, // `true` baik untuk produksi, `false` untuk development jika butuh data instan
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: true, // `true` untuk produksi, `false` untuk development jika perlu
 });
 
-// --- TAMBAHKAN KODE INI UNTUK MEMBUAT FUNGSI urlFor ---
-
-// 1. Buat builder gambar dari client Sanity
 const builder = imageUrlBuilder(client);
 
-// 2. Buat dan ekspor fungsi 'urlFor' agar bisa diimpor di file lain
 export function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
