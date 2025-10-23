@@ -1,0 +1,88 @@
+---
+// src/pages/[slug].astro
+// REVISI FINAL LENGKAP - Menggunakan PortableTextRenderer.jsx
+
+import { client, urlFor } from '../lib/sanity';
+import type { GetStaticPaths } from 'astro';
+import Layout from '@layouts/Layout.astro';
+import CategoryPill from '@components/ui/CategoryPill.astro';
+import Date from '@components/ui/Date.astro';
+
+// --- LANGKAH 1: Impor komponen renderer React Anda ---
+import PortableTextRenderer from '../components/PortableTextRenderer.jsx';
+
+export const prerender = true;
+
+// getStaticPaths: Membuat semua halaman artikel dari data Sanity (sudah benar)
+export const getStaticPaths: GetStaticPaths = async () => {
+    const posts = await client.fetch(`*[_type == "post" && defined(slug.current)]{ "slug": slug.current }`);
+    const staticPages = ['blog', 'contact', 'about', 'style-guide', 'privacy-policy'];
+    return posts
+        .filter((post: { slug: string }) => !staticPages.includes(post.slug))
+        .map((post: { slug: string }) => ({ params: { slug: post.slug } }));
+};
+
+// Ambil data lengkap artikel berdasarkan slug (sudah benar)
+const { slug } = Astro.params;
+if (!slug) throw new Error('Slug not found');
+
+const post = await client.fetch(
+`*[_type == "post" && slug.current == $slug][0]{
+    title,
+    body,
+    excerpt,
+    "publishDate": publishedAt,
+    "featuredImage": mainImage { asset->{...}, alt },
+    categories[]->{ title }
+}`, { slug });
+
+if (!post) return Astro.redirect('/404');
+
+// Olah data untuk SEO dan komponen (sudah benar)
+const seoTitle = post.title;
+const seoDescription = post.excerpt;
+const featuredImageUrl = post.featuredImage ? urlFor(post.featuredImage).width(1200).url() : undefined;
+---
+
+<Layout title={seoTitle} description={seoDescription} image={featuredImageUrl}>
+    <!-- Latar belakang gambar hero (sudah benar) -->
+    <div class="w-full h-120 absolute top-0 left-0 z-0 overflow-hidden border-b border-black">
+        {featuredImageUrl && (
+            <>
+                <img src={urlFor(post.featuredImage).width(1920).height(1080).quality(60).url()} alt={post.featuredImage.alt || ''} class="w-full h-full object-cover grayscale opacity-20" />
+                <div class="absolute inset-0 bg-primary/10 backdrop-blur-md" />
+            </>
+        )}
+    </div>
+
+    <!-- Konten Artikel Utama -->
+    <div class="relative z-10">
+        <article class="site-container--small mx-auto px-4 prose pb-base">
+            <div class="mt-42 mb-12 text-center">
+                <h1>{post.title}</h1>
+                <div class="flex items-center justify-center gap-4 text-gray-600">
+                    <Date date={post.publishDate} />
+                    {post.categories && (
+                        <div class="flex flex-wrap gap-2">
+                            {post.categories.map((cat: {title: string}) => <CategoryPill category={cat.title} />)}
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {featuredImageUrl && (
+                <img src={urlFor(post.featuredImage).width(1200).height(675).format('webp').quality(80).url()} alt={post.featuredImage.alt || ''} class="w-full h-auto rounded-lg border mb-12 border-black" />
+            )}
+
+            <div class="mt-8">
+                {/* --- LANGKAH 2: Ganti placeholder dengan komponen renderer --- */}
+                {post.body ? (
+                    // Tambahkan `client:load` agar komponen React berjalan di browser
+                    <PortableTextRenderer client:load content={post.body} />
+                ) : (
+                    <p>Konten artikel tidak tersedia.</p>
+                )}
+            </div>
+        </article>
+    </div>
+</Layout>

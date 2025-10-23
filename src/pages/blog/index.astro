@@ -1,35 +1,48 @@
 ---
-import { getCollection } from 'astro:content';
+// src/pages/blog/index.astro
+// REVISI FINAL LENGKAP
+
+import { client, urlFor } from '../../lib/sanity';
 import { blogSetting } from '../../data/config';
 import PaginatedBlogLayout from '../../components/blog/PaginatedBlogLayout.astro';
 export const prerender = true;
 
-// Get current page from URL, default to 1
-const currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+const currentPage = 1;
 
-// Get all posts without any filtering
-const allPosts = await getCollection('blog');
+// Ambil semua postingan dari Sanity
+const allPosts = await client.fetch(`
+*[_type == "post"] | order(publishedAt desc) {
+    title,
+    "slug": slug.current,
+    excerpt,
+    "publishDate": publishedAt,
+    "featuredImage": mainImage { asset->{...}, alt },
+    categories[]->{ title }
+}`);
 
-// Then apply filters if needed
-const filteredPosts = allPosts.filter((post) => {
-    return import.meta.env.DEV || post.data.publish !== false;
-});
+// Logika Paginasi
+const totalPosts = allPosts.length;
+const postsPerPage = blogSetting.postsPerPage || 10;
+const totalPages = Math.ceil(totalPosts / postsPerPage);
+const paginatedPosts = allPosts.slice(0, postsPerPage);
 
-// Sort posts by date
-const sortedPosts = filteredPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
-
-// Calculate pagination
-const totalPosts = sortedPosts.length;
-const totalPages = Math.ceil(totalPosts / blogSetting.postsPerPage);
-const start = (currentPage - 1) * blogSetting.postsPerPage;
-const end = start + blogSetting.postsPerPage;
-const paginatedPosts = sortedPosts.slice(start, end);
+// PERBAIKAN: Ubah struktur data agar cocok dengan yang dibutuhkan komponen `BlogPost.astro`
+const postsForLayout = paginatedPosts.map(post => ({
+    slug: post.slug, // Kirim slug secara langsung
+    data: {
+        title: post.title,
+        excerpt: post.excerpt,
+        publishDate: new Date(post.publishDate),
+        categories: post.categories?.map(c => c.title) || [],
+        featuredImage: post.featuredImage ? urlFor(post.featuredImage).width(800).url() : undefined,
+    }
+}));
 ---
 
 <PaginatedBlogLayout
-    posts={paginatedPosts}
-    {currentPage}
-    {totalPages}
+    posts={postsForLayout}
+    currentPage={currentPage}
+    totalPages={totalPages}
     baseUrl="/blog"
     title="Blog"
     subtitle="Latest articles and news from the team"
