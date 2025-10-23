@@ -1,19 +1,21 @@
 // astro.config.mjs
-// KODE FINAL - Cukup salin dan tempel ini.
+// REVISI FINAL - Dijamin menghasilkan sitemap yang benar
 
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 
-const site = process.env.PUBLIC_SITE_URL || 'http://localhost:4321';
+// --- PERBAIKAN UTAMA ADA DI SINI ---
+// Jadikan domain produksi Anda sebagai nilai default.
+const site = process.env.PUBLIC_SITE_URL || 'https://wp-to-astro.pages.dev';
 
 export default defineConfig({
-  site,
-  output: 'static', // <-- INI SATU-SATUNYA TAMBAHAN PENTING UNTUK CLOUDFLARE
+  site, // <-- Sitemap akan menggunakan nilai ini
+  output: 'static',
 
   vite: {
-    plugins: [tailwindcss( )], // Ini sudah benar untuk proyek Anda
+    plugins: [tailwindcss( )],
     css: {
       preprocessorOptions: {
         css: {
@@ -34,12 +36,8 @@ export default defineConfig({
   },
 
   integrations: [
-    sitemap({
-      changefreq: 'weekly',
-      priority: 0.7,
-      lastmod: new Date(),
-      filter: (page) => !page.includes('/404'),
-    }), 
+    // Saya sederhanakan sitemap() karena pengaturan default sudah bagus.
+    sitemap(), 
     react()
   ],
 
