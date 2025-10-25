@@ -25,11 +25,11 @@
         "tailwindcss": "^4.1.15"
     },
     "devDependencies": {
-        "@astrojs/check": "^0.9.4",
-        "@astrojs/sitemap": "^3.3.0",
+        "@astrojs/check": "^0.9.5",
+        "@astrojs/sitemap": "^3.6.0",
         "@tailwindcss/vite": "^4.1.15",
         "@types/aos": "^3.0.7",
-        "astro": "^5.5.3",
+        "astro": "^5.15.1",
         "lucide-astro": "^0.483.0",
         "prettier": "^3.5.3",
         "prettier-plugin-astro": "^0.14.1"

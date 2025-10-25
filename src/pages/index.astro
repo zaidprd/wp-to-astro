@@ -15,118 +15,128 @@ import RecentPosts from '@components/sections/RecentPosts.astro';
 import heroImage from '../assets/images/home/default-hero-2.jpg';
 import styleGuideImage from '../assets/images/home/developer.jpg';
 
-const seoTitle = "Modern, High-Performance Astro Theme";
-const seoDescription = "A modern, high-performance Astro theme for developer portfolios and documentation sites.";
+// SEO disesuaikan dengan website target
+const seoTitle = "Studi Kelayakan Bisnis & Business Plan | PT Jaya Konsultan Bisnis";
+const seoDescription = "PT Jaya Konsultan Bisnis (Jakobi ) adalah perusahaan konsultan studi kelayakan bisnis, business plan, riset pasar, dan jasa survey untuk UMKM dan korporasi.";
 
+// Konten Hero diganti
 const heroContent = {
-    title: 'The Foundation for Beautiful Astro JS Websites',
-    description: 'Titan Core is a minimal, performance-focused Astro JS theme that serves as the perfect foundation for your next web project. Built with clean code and modern best practices, it\'s designed to be extended and customized to your specific needs.',
+    title: 'Jasa Studi Kelayakan dan Business Plan Profesional',
+    description: 'Solusi terpercaya untuk analisis mendalam dan perencanaan strategis bisnis Anda. Kami siap membantu UMKM hingga korporasi.',
     buttons: [
         {
-            text: 'Get Started',
-            link: '/contact',
-            target: '_self'
+            text: 'Konsultasi via WhatsApp',
+            link: 'https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20tertarik%20dengan%20jasa%20studi%20kelayakan.',
+            target: '_blank' // Buka di tab baru
         },
         {
-            text: 'View on GitHub',
-            link: 'https://github.com/rspisarski/titan-core',
-            target: '_blank'
+            text: 'Lihat Portofolio',
+            link: 'https://jayakonsultanbisnis.com/portofolio/',
+            target: '_self'
         }
     ],
     backgroundImage: heroImage,
     overlayOpacity: 0.2
 }
 
+// Konten Features diganti
 const featuresSection = {
-    eyebrow: "CORE FEATURES",
-    title: "Everything You Need, Nothing You Don't",
-    description: "Titan Core gives you a solid foundation with essential features while staying lightweight and customizable. Start with a clean slate and build exactly what you need without the bloat.",
-    features: featureLists.main.features,
+    eyebrow: "Mengapa Memilih Kami",
+    title: "Keunggulan Layanan Jakobi",
+    description:[
+        "Kami memberikan nilai lebih pada setiap proyek yang kami tangani. Dengan tim yang berpengalaman dan metodologi yang teruji, kami memastikan hasil yang akurat dan dapat diandalkan untuk pengambilan keputusan bisnis Anda."
+    ],
+    features: featureLists.main.features, // Anda perlu menyesuaikan data ini
     button: {
-        text: "View Theme Info",
-        link: "/theme-info",
+        text: "Pelajari Layanan Kami",
+        link: "https://jayakonsultanbisnis.com/layanan/",
         variant: "primary" as const
     }
 }
 
+// Konten FooterCta diganti
 const FooterCta = {
-    eyebrow: "Join The Community",
-    title: ' Start Building With Titan Core Today',
-    description: 'Titan Core is open-source and constantly improving. Join our community of developers to contribute, get support, or showcase what you\'ve built.',
+    title: 'Siap Mengembangkan Bisnis Anda?',
+    description: 'Hubungi kami sekarang untuk mendapatkan penawaran terbaik untuk layanan studi kelayakan, business plan, dan riset pasar.',
     hideCta: false,
     button: {
-        text: 'Download Titan Core',
-        link: 'https://github.com/rspisarski/titan-core',
-        target: '_blank'
+        text: 'Kontak Kami',
+        link: 'https://jayakonsultanbisnis.com/kontak/',
+        target: '_self'
     }
 }
 
+// Konten styleGuideSection diganti
 const styleGuideSection = {
-    eyebrow: "Design System",
-    headline: "Consistent & Beautiful Components",
-    description: "Titan Core comes with a complete style guide to ensure your projects maintain visual consistency. From typography to interactive elements, we've carefully crafted each component.",
+    eyebrow: "Layanan Unggulan",
+    headline: "Studi Kelayakan Bisnis (Feasibility Study )",
+    description: "Analisis komprehensif untuk menilai kelayakan proyek Anda dari berbagai aspek: pasar, teknis, keuangan, hukum, dan dampak lingkungan. Dapatkan kepastian sebelum berinvestasi.",
     image: {
         src: styleGuideImage,
-        alt: "Featured image"
+        alt: "Ilustrasi Studi Kelayakan Bisnis"
     },
     buttons: [
         {
-            text: "Explore Style Guide",
-            link: "/style-guide",
+            text: "Lihat Detail Studi Kelayakan",
+            link: "https://jayakonsultanbisnis.com/layanan/studi-kelayakan-bisnis/",
             variant: "primary" as const
         }
     ]
 }
 
+// Konten sideBySideStats diganti
 const sideBySideStats = {
-    eyebrow: "Stats",
-    title: "Built for Speed and Flexibility",
-    description: "Titan Core is designed with performance and developer experience in mind. Our lightweight theme gives you all the essentials without the bloat, letting you build exactly what you need with impressive speed.",
+    eyebrow: "Portofolio Kami",
+    title: "Terpercaya oleh Berbagai Klien",
+    description: "Kami telah berhasil membantu puluhan klien dari berbagai sektor industri, mulai dari UMKM, BUMDes, hingga perusahaan swasta nasional dalam mewujudkan proyek dan rencana bisnis mereka.",
     variant: 'side-by-side' as const,
-    stats: statsLists.withContent.stats,
+    stats: statsLists.withContent.stats, // Anda perlu menyesuaikan data ini
     content: {
-        title: "Built for Speed and Flexibility",
-        description: "Titan Core is designed with performance and developer experience in mind. Our lightweight theme gives you all the essentials without the bloat, letting you build exactly what you need with impressive speed.",
+        title: "Klien Lintas Sektor",
+        description: "Keberhasilan kami diukur dari kepuasan klien. Portofolio kami mencakup sektor properti, pertambangan, agribisnis, manufaktur, dan banyak lagi.",
         button: {
-            text: "Discover Titan Core",
-            link: "/theme-info",
+            text: "Lihat Semua Portofolio",
+            link: "https://jayakonsultanbisnis.com/portofolio/",
             variant: "primary" as const
         }
     }
 };
 
+// Konten mainCta diganti
 const mainCta = {
-    eyebrow: "Build Blocks",
-    title: "Ready-to-Use Components",
-    description: "Save development time with our pre-built, accessible components. Each one is designed to integrate seamlessly with your projects while maintaining excellent performance.",
+    eyebrow: "Layanan Lainnya",
+    title: "Perencanaan Bisnis (Business Plan )",
+    description: "Kami membantu Anda menyusun rencana bisnis yang solid dan meyakinkan, lengkap dengan strategi pemasaran, proyeksi keuangan, dan analisis risiko untuk menarik investor.",
     button: {
-        text: "View All Components",
-        link: "/components",
+        text: "Pelajari Business Plan",
+        link: "https://jayakonsultanbisnis.com/layanan/jasa-pembuatan-business-plan/",
         variant: "primary" as const,
         target: "_self" as const
     }
 };
 
-
+// Konten logosSection diganti
 const logosSection = {
-    eyebrow: "Our Clients",
-    logos: logoLists.main.logos
+    eyebrow: "Klien Kami",
+    logos: logoLists.main.logos // Anda perlu menyesuaikan data ini
 }
 
+// Konten faqsSection diganti
 const faqsSection = {
-    eyebrow: "FAQs",
-    title: 'Frequently Asked Questions',
-    description: 'Find answers to common questions about our platform and services.',
-    faqs: faqLists.main.faqs
+    eyebrow: "FAQ",
+    title: 'Pertanyaan yang Sering Diajukan',
+    description: 'Temukan jawaban atas pertanyaan umum mengenai layanan, proses, dan biaya di Jakobi.',
+    faqs: faqLists.main.faqs // Anda perlu menyesuaikan data ini
 }
 
+// Konten recentPostsSection diganti
 const recentPostsSection = {
-    eyebrow: "LATEST INSIGHTS",
-    title: " Learn From Our Experience",
-    description: "Explore our latest articles on Astro JS development, theme customization tips, and web performance best practices.",
+    eyebrow: "ARTIKEL & WAWASAN",
+    title: "Baca Artikel Terbaru dari Blog Kami",
+    description: "Dapatkan wawasan terbaru seputar dunia bisnis, studi kelayakan, strategi, dan tips praktis dari para ahli di tim kami.",
     button: {
-            text: "View All Posts",
-            link: "/blog",
+            text: "Kunjungi Blog",
+            link: "https://jayakonsultanbisnis.com/blog/",
         variant: "primary" as const
     }
 }

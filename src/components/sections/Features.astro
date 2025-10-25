@@ -9,7 +9,8 @@ export interface Props {
     content: {
         eyebrow?: string;
         title?: string;
-        description?: string;
+        // Tipe data mendukung string tunggal (lama) atau array string (baru)
+        description?: string | string[]; 
         button?: {
             text: string;
             link: string;
@@ -27,12 +28,18 @@ const {
     content: {
         eyebrow,
         title,
-        description,
+        description, 
         button,
         features
     },
     background = 'base'
 } = Astro.props;
+
+// Fungsi untuk memastikan description selalu array jika ada, 
+// sehingga kita bisa melakukan map() tanpa error.
+const descriptionArray = Array.isArray(description) 
+    ? description 
+    : (description ? [description] : []);
 
 const bgColor = getBackgroundColor(background);
 const textColor = getTextColor(background);
@@ -45,7 +52,8 @@ const paddingClass = getPaddingClass({
 
 <section class:list={["relative", bgColor, paddingClass]}>
     <div class="site-container px-4">
-        {(title || description) && (
+        {/* Cek jika ada Judul atau deskripsi yang harus ditampilkan */}
+        {(title || descriptionArray.length > 0) && ( 
             <div class="text-center mb-16 max-w-3xl mx-auto">
                 {eyebrow && (
                     <Eyebrow 
@@ -58,11 +66,18 @@ const paddingClass = getPaddingClass({
                         {title}
                     </h2>
                 )}
-                {description && (
-                    <p class:list={["mt-4", textColor, "opacity-90"]} data-aos="fade-up" data-aos-delay="100">
-                        {description}
-                    </p>
+                {/* BLOK PERUBAHAN UTAMA: Melakukan loop melalui array deskripsi */}
+                {descriptionArray.length > 0 && (
+                    <div class:list={["mt-4", textColor, "opacity-90"]} data-aos="fade-up" data-aos-delay="100">
+                        {descriptionArray.map((paragraph) => (
+                            // Setiap elemen array dibungkus dengan tag <p> baru
+                            <p class="mb-4 last:mb-0"> 
+                                {paragraph}
+                            </p>
+                        ))}
+                    </div>
                 )}
+                {/* AKHIR BLOK PERUBAHAN */}
                 {button && (
                     <div class="mt-8" data-aos="fade-up" data-aos-delay="200">
                         <Button
