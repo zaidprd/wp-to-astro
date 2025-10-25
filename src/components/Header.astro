@@ -1,4 +1,7 @@
 ---
+// src/layouts/Header.astro
+// REVISI FINAL - SEMUA SCRIPT DIGABUNGKAN MENJADI SATU
+
 import { headerMenu } from '@data/menu';
 import Logo from '@components/Logo.astro';
 import { Menu, X, ChevronDown } from 'lucide-astro';
@@ -9,21 +12,18 @@ const ctaButton = {
     link: '/contact',
 };
 
-// Get the current path to determine active menu item
 const currentPath = Astro.url.pathname;
 
-// Function to check if a link is the current page or a parent of the current page
 const isCurrentPage = (link: string) => {
-    if (link === '/') {
-        return currentPath === '/';
-    }
+    if (link === '/') return currentPath === '/';
     return currentPath.startsWith(link);
 };
 ---
 
 <header class="fixed top-0 z-50 w-full left-0">
     <div class="site-container mx-auto px-4 mt-4">
-        <div class="flex justify-between items-center bg-white py-4 rounded-lg px-4 border-black border">
+        <div id="header-inner" class="flex justify-between items-center bg-white h-20 rounded-lg p-4 border-black border transition-all duration-300">
+
             <Logo />
             <nav class="relative flex items-center gap-2 lg:gap-8" aria-label="Site Navigation">
                 {/* Desktop Menu */}
@@ -31,6 +31,7 @@ const isCurrentPage = (link: string) => {
                     {
                         headerMenu.map((item, index) => (
                             <li class="relative group">
+                                {/* ... KONTEN MENU DESKTOP ANDA ... */}
                                 <div class="flex items-center gap-1">
                                     <a
                                         href={item.link}
@@ -175,7 +176,6 @@ const isCurrentPage = (link: string) => {
                         }
                     </ul>
 
-                    {/* Updated mobile CTA button styling */}
                     <div class="mt-8 pb-8">
                         <Button href={ctaButton.link} variant="ghostLight">{ctaButton.name} </Button>
                     </div>
@@ -185,10 +185,36 @@ const isCurrentPage = (link: string) => {
     </div>
 </header>
 
+<!-- =================================================================== -->
+<!-- === SATU BLOK SCRIPT TUNGGAL UNTUK SEMUA LOGIKA === -->
 <script>
+    // --- BAGIAN 1: LOGIKA UNTUK EFEK SCROLL ---
+    const topClasses = ['bg-white', 'border-black'];
+    const scrolledClasses = ['bg-white/80', 'backdrop-blur-sm', 'border-black/10', 'shadow-lg'];
+    const headerInner = document.getElementById('header-inner');
+
+    const handleScroll = () => {
+        if (!headerInner) return;
+        if (window.scrollY > 10) {
+            headerInner.classList.remove(...topClasses);
+            headerInner.classList.add(...scrolledClasses);
+        } else {
+            headerInner.classList.remove(...scrolledClasses);
+            headerInner.classList.add(...topClasses);
+        }
+    };
+
+    const initializeHeader = () => {
+        handleScroll();
+    };
+
+    document.addEventListener('DOMContentLoaded', initializeHeader);
+    document.addEventListener('scroll', handleScroll, { passive: true });
+
+
+    // --- BAGIAN 2: SEMUA LOGIKA MENU ANDA YANG SUDAH ADA (TIDAK DIUBAH) ---
     // Desktop Menu
     const desktopMenuItems = document.querySelectorAll('.group');
-
     desktopMenuItems.forEach((item) => {
         const link = item.querySelector('a');
         const button = item.querySelector('button');
@@ -196,16 +222,8 @@ const isCurrentPage = (link: string) => {
         const submenuLinks = submenu?.querySelectorAll('a');
 
         if (submenu && link && button) {
-            // Handle hover
-            item.addEventListener('mouseenter', () => {
-                showSubmenu(submenu as HTMLElement, button as HTMLElement);
-            });
-
-            item.addEventListener('mouseleave', () => {
-                hideSubmenu(submenu as HTMLElement, button as HTMLElement);
-            });
-
-            // Handle keyboard navigation
+            item.addEventListener('mouseenter', () => showSubmenu(submenu as HTMLElement, button as HTMLElement));
+            item.addEventListener('mouseleave', () => hideSubmenu(submenu as HTMLElement, button as HTMLElement));
             link.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowDown' && item.children) {
                     e.preventDefault();
@@ -213,7 +231,6 @@ const isCurrentPage = (link: string) => {
                     submenuLinks?.[0]?.focus();
                 }
             });
-
             button.addEventListener('click', (e) => {
                 if (item.children) {
                     e.preventDefault();
@@ -226,7 +243,6 @@ const isCurrentPage = (link: string) => {
                     }
                 }
             });
-
             button.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowDown' && item.children) {
                     e.preventDefault();
@@ -234,23 +250,14 @@ const isCurrentPage = (link: string) => {
                     submenuLinks?.[0]?.focus();
                 }
             });
-
-            // Don't show submenu on focus, only on hover or arrow key
-            link.addEventListener('focus', () => {
-                hideSubmenu(submenu as HTMLElement, button as HTMLElement);
-            });
-
-            // Keyboard navigation within submenu
+            link.addEventListener('focus', () => hideSubmenu(submenu as HTMLElement, button as HTMLElement));
             submenuLinks?.forEach((submenuLink, index) => {
                 submenuLink.addEventListener('keydown', (e) => {
                     const lastIndex = submenuLinks.length - 1;
-
                     switch (e.key) {
                         case 'ArrowDown':
                             e.preventDefault();
-                            if (index < lastIndex) {
-                                submenuLinks[index + 1].focus();
-                            }
+                            if (index < lastIndex) submenuLinks[index + 1].focus();
                             break;
                         case 'ArrowUp':
                             e.preventDefault();
@@ -267,14 +274,11 @@ const isCurrentPage = (link: string) => {
                             link.focus();
                             break;
                         case 'Tab':
-                            // Allow normal tab behavior but close submenu
                             hideSubmenu(submenu as HTMLElement, button as HTMLElement);
                             break;
                     }
                 });
             });
-
-            // Close submenu when focus leaves
             document.addEventListener('focusin', (e) => {
                 if (item && !item.contains(e.target as Node)) {
                     hideSubmenu(submenu as HTMLElement, button as HTMLElement);
@@ -283,7 +287,6 @@ const isCurrentPage = (link: string) => {
         }
     });
 
-    // Helper functions
     function showSubmenu(submenu: HTMLElement, button: HTMLElement) {
         submenu.classList.remove('invisible', 'opacity-0');
         submenu.classList.add('visible', 'opacity-100');
@@ -301,8 +304,6 @@ const isCurrentPage = (link: string) => {
         button.addEventListener('click', () => {
             const submenu = button.parentElement?.nextElementSibling as HTMLElement;
             const chevron = button.querySelector('svg');
-
-            // Toggle submenu
             if (submenu) {
                 submenu.classList.toggle('hidden');
                 chevron?.classList.toggle('rotate-180');
@@ -320,7 +321,6 @@ const isCurrentPage = (link: string) => {
 
     mobileMenuButton?.addEventListener('click', () => {
         const isHidden = mobileMenu?.classList.contains('hidden');
-
         if (isHidden) {
             document.body.style.overflow = 'hidden';
             mobileMenu?.classList.remove('hidden');

@@ -1,4 +1,7 @@
 ---
+// src/components/Footer.astro
+// REVISI FINAL YANG BENAR - Tanpa Gambar, Sesuai Cara Kerja Ripples
+
 import { footerMenu, legalMenu } from '@data/menu';
 import Logo from '@components/Logo.astro';
 import Button from '@components/ui/Button.astro';
@@ -36,66 +39,77 @@ const cta = footerCta || defaultCta;
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class={`bg-black text-white pb-small ${cta.hideCta ? 'pt-large' : ''}`}>
-  <div class="site-container mx-auto px-4">
-    {!cta.hideCta && (
-      <div class="text-center border-b border-background-light mb-12 py-small">
-        <h2 class="text-3xl font-bold mb-4" data-aos="fade-up">{cta.title}</h2>
-        <p class="text-white mb-6 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-          {cta.description}
-        </p>
-        <Button 
-          href={cta.button.link} 
-          variant="ghostLight"
-          size="lg"
-          data-aos="fade-up"
-          data-aos-delay="200"
-          {...(cta.button.target && { target: cta.button.target })}
-        >
-          {cta.button.text}
-        </Button>
-      </div>
-    )}
+<!-- 
+  PERUBAHAN 1:
+  - `relative` dan `overflow-hidden` tetap penting.
+  - `id="footer-ripples"` sekarang ada di tag <footer> itu sendiri.
+  - `bg-black` dikembalikan sebagai warna dasar.
+-->
+<footer id="footer-ripples" class={`relative overflow-hidden bg-black text-white pb-small ${cta.hideCta ? 'pt-large' : ''}`}>
+    <!-- 
+      PERUBAHAN 2: KONTEN FOOTER
+      - Tidak ada lagi div pembungkus tambahan.
+      - `relative z-10` ditambahkan untuk memastikan konten berada di atas kanvas WebGL.
+    -->
+    <div class="site-container mx-auto px-4 relative z-10">
+        {!cta.hideCta && (
+          <div class="text-center border-b border-white/20 mb-12 py-small">
+            <h2 class="text-3xl font-bold mb-4" data-aos="fade-up">{cta.title}</h2>
+            <p class="text-white/80 mb-6 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+              {cta.description}
+            </p>
+            <Button 
+              href={cta.button.link} 
+              variant="ghostLight"
+              size="lg"
+              data-aos="fade-up"
+              data-aos-delay="200"
+              {...(cta.button.target && { target: cta.button.target })}
+            >
+              {cta.button.text}
+            </Button>
+          </div>
+        )}
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-background-light">
-      <div class="col-span-1">
-        <Logo variant="footer" />
-        <p class="mt-4 text-white">
-          Empowering your digital journey with innovative solutions.
-        </p>
-      </div>
-      
-      <div class="col-span-1">
-        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-        <nav>
-          <ul class="space-y-2">
-            {footerMenu.map(item => (
-              <li><a href={item.link} class="text-body-dark hover:text-white transition-colors">{item.name}</a></li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-    </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-white/20">
+          <div class="col-span-1">
+            <Logo variant="footer" />
+            <p class="mt-4 text-white/80">
+              Empowering your digital journey with innovative solutions.
+            </p>
+          </div>
+          
+          <div class="col-span-1">
+            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+            <nav>
+              <ul class="space-y-2">
+                {footerMenu.map(item => (
+                  <li><a href={item.link} class="text-white/80 hover:text-white transition-colors">{item.name}</a></li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </div>
 
-    <div class="mt-8 flex flex-col md:flex-row justify-between items-center">
-      <div class="text-body-dark text-sm">
-        © {currentYear} {siteConfig.companyName}. All rights reserved.
-      </div>
-      
-      <nav class="mt-4 md:mt-0">
-        <ul class="flex flex-wrap gap-6">
-          {legalMenu.map(item => (
-            <li>
-              <a 
-                href={item.link} 
-                class="text-sm text-body-dark hover:text-white transition-colors"
-              >
-                {item.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+        <div class="mt-8 flex flex-col md:flex-row justify-between items-center">
+          <div class="text-white/60 text-sm">
+            © {currentYear} {siteConfig.companyName}. All rights reserved.
+          </div>
+          
+          <nav class="mt-4 md:mt-0">
+            <ul class="flex flex-wrap gap-6">
+              {legalMenu.map(item => (
+                <li>
+                  <a 
+                    href={item.link} 
+                    class="text-sm text-white/60 hover:text-white transition-colors"
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
     </div>
-  </div>
 </footer>
