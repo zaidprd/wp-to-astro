@@ -1,17 +1,16 @@
 // astro.config.mjs
-// REVISI FINAL - Dijamin menghasilkan sitemap yang benar
+// REVISI - Mencoba memperbaiki konflik integrasi
 
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
+import icon from 'astro-icon';
 
-// --- PERBAIKAN UTAMA ADA DI SINI ---
-// Jadikan domain produksi Anda sebagai nilai default.
 const site = process.env.PUBLIC_SITE_URL || 'https://wp-to-astro.pages.dev';
 
 export default defineConfig({
-  site, // <-- Sitemap akan menggunakan nilai ini
+  site,
   output: 'static',
 
   vite: {
@@ -35,10 +34,18 @@ export default defineConfig({
     }
   },
 
+  // --- PERUBAHAN UTAMA ADA DI SINI ---
+  // Kita akan mengonfigurasi astro-icon secara eksplisit.
   integrations: [
-    // Saya sederhanakan sitemap() karena pengaturan default sudah bagus.
     sitemap(), 
-    react()
+    react(), 
+    icon({
+      // Menambahkan konfigurasi ini terkadang membantu Astro
+      // untuk menemukan set ikon dengan benar.
+      include: {
+        lucide: ['*'], // Sertakan semua ikon dari set 'lucide'
+      }
+    })
   ],
 
   image: {
