@@ -2,11 +2,15 @@ import type { ImageMetadata } from 'astro';
 
 // Import your logo images
 // Replace these imports with your actual logo files
-import logo1 from '../assets/images/logos/logoipsum-333.svg';
-import logo2 from '../assets/images/logos/logoipsum-335.svg';
-import logo3 from '../assets/images/logos/logoipsum-344.svg';
-import logo4 from '../assets/images/logos/logoipsum-347.svg';
-import logo5 from '../assets/images/logos/logoipsum-352.svg';
+import logo1 from '../assets/images/logos/portofolio1.webp';
+import logo2 from '../assets/images/logos/portofolio2.webp';
+import logo3 from '../assets/images/logos/portofolio3.webp';
+import logo4 from '../assets/images/logos/portofolio4.webp';
+import logo5 from '../assets/images/logos/portofolio5.webp';
+import logo6 from '../assets/images/logos/portofolio6.webp';
+import logo7 from '../assets/images/logos/portofolio7.webp';
+import logo8 from '../assets/images/logos/portofolio8.webp';
+import logo9 from '../assets/images/logos/portofolio9.webp';
 
 export interface Logo {
     src: ImageMetadata;
@@ -42,6 +46,22 @@ export const logoLists: Record<string, LogoList> = {
             {
                 src: logo5,
                 alt: 'Partner 5',
+            },
+            {
+                src: logo6,
+                alt: 'Partner 6',
+            },
+            {
+                src: logo7,
+                alt: 'Partner 7',
+            },
+            {
+                src: logo8,
+                alt: 'Partner 8',
+            },
+            {
+                src: logo9,
+                alt: 'Partner 9',
             },
         ],
     },

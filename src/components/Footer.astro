@@ -1,11 +1,33 @@
 ---
 // src/components/Footer.astro
-// REVISI FINAL YANG BENAR - Tanpa Gambar, Sesuai Cara Kerja Ripples
 
-import { footerMenu, legalMenu } from '@data/menu';
 import Logo from '@components/Logo.astro';
 import Button from '@components/ui/Button.astro';
 import { siteConfig } from '@data/config';
+
+// --- PENTING ---
+// Pastikan Anda memiliki data menu yang sesuai di file data Anda.
+// Contoh: src/data/menu.ts
+const ourServicesMenu = [
+  { name: 'Studi Kelayakan', link: '/layanan/studi-kelayakan-bisnis' },
+  { name: 'Business Plan', link: '/layanan/jasa-pembuatan-business-plan' },
+  { name: 'Riset Pemasaran', link: '/layanan/jasa-riset-pemasaran' },
+  { name: 'Jasa Survey', link: '/layanan/jasa-survey' },
+];
+
+const companyMenu = [
+  { name: 'Tentang Kami', link: '/tentang-kami' },
+  { name: 'Portofolio', link: '/portofolio' },
+  { name: 'Blog', link: '/blog' },
+  { name: 'Kontak', link: '/kontak' },
+];
+
+const legalMenu = [
+    { name: 'Privacy Policy', link: '/privacy-policy' },
+    { name: 'Terms of Service', link: '/terms-of-service' },
+];
+// --- Akhir dari data menu ---
+
 
 interface ButtonProps {
   text: string;
@@ -24,13 +46,14 @@ interface Props {
 
 const { footerCta } = Astro.props;
 
+// CTA default jika tidak ada yang diberikan dari halaman
 const defaultCta = {
-  title: "Ready to get started?",
-  description: "Join us today and transform your digital presence with our innovative solutions.",
+  title: "Siap Mengembangkan Bisnis Anda?",
+  description: "Hubungi kami sekarang untuk mendapatkan penawaran terbaik untuk layanan studi kelayakan, business plan, dan riset pasar.",
   hideCta: false,
   button: {
-    text: "Contact Us",
-    link: "/contact",
+    text: "Kontak Kami",
+    link: "/kontak",
     target: "_self"
   }
 };
@@ -39,31 +62,20 @@ const cta = footerCta || defaultCta;
 const currentYear = new Date().getFullYear();
 ---
 
-<!-- 
-  PERUBAHAN 1:
-  - `relative` dan `overflow-hidden` tetap penting.
-  - `id="footer-ripples"` sekarang ada di tag <footer> itu sendiri.
-  - `bg-black` dikembalikan sebagai warna dasar.
--->
-<footer id="footer-ripples" class={`relative overflow-hidden bg-black text-white pb-small ${cta.hideCta ? 'pt-large' : ''}`}>
-    <!-- 
-      PERUBAHAN 2: KONTEN FOOTER
-      - Tidak ada lagi div pembungkus tambahan.
-      - `relative z-10` ditambahkan untuk memastikan konten berada di atas kanvas WebGL.
-    -->
-    <div class="site-container mx-auto px-4 relative z-10">
+<footer class="bg-black text-white pb-small">
+    <div class="site-container mx-auto px-4">
+        
+        <!-- Bagian CTA (Call to Action) di atas footer -->
         {!cta.hideCta && (
-          <div class="text-center border-b border-white/20 mb-12 py-small">
-            <h2 class="text-3xl font-bold mb-4" data-aos="fade-up">{cta.title}</h2>
-            <p class="text-white/80 mb-6 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+          <div class="text-center border-b border-white/20 mb-12 py-large">
+            <h2 class="text-3xl font-bold mb-4">{cta.title}</h2>
+            <p class="text-white/80 mb-6 max-w-2xl mx-auto">
               {cta.description}
             </p>
             <Button 
               href={cta.button.link} 
               variant="ghostLight"
               size="lg"
-              data-aos="fade-up"
-              data-aos-delay="200"
               {...(cta.button.target && { target: cta.button.target })}
             >
               {cta.button.text}
@@ -71,39 +83,75 @@ const currentYear = new Date().getFullYear();
           </div>
         )}
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-white/20">
+        <!-- Konten Utama Footer (4 Kolom) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
+          
+          <!-- Kolom 1: Tentang Perusahaan -->
           <div class="col-span-1">
-            <Logo variant="footer" />
-            <p class="mt-4 text-white/80">
-              Empowering your digital journey with innovative solutions.
+            <div class="mb-4">
+              <Logo variant="footer" />
+            </div>
+            <p class="text-white/70 text-sm leading-relaxed">
+              PT Jaya Konsultan Bisnis (Jakobi) adalah perusahaan konsultan independen yang berfokus pada layanan studi kelayakan, rencana bisnis, riset pasar, dan jasa survey.
             </p>
           </div>
           
+          <!-- Kolom 2: Layanan Kami -->
           <div class="col-span-1">
-            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 class="text-lg font-semibold mb-4">Layanan Kami</h3>
             <nav>
               <ul class="space-y-2">
-                {footerMenu.map(item => (
-                  <li><a href={item.link} class="text-white/80 hover:text-white transition-colors">{item.name}</a></li>
+                {ourServicesMenu.map(item => (
+                  <li><a href={item.link} class="text-white/80 hover:text-white transition-colors text-sm">{item.name}</a></li>
                 ))}
               </ul>
             </nav>
           </div>
+
+          <!-- Kolom 3: Perusahaan -->
+          <div class="col-span-1">
+            <h3 class="text-lg font-semibold mb-4">Perusahaan</h3>
+            <nav>
+              <ul class="space-y-2">
+                {companyMenu.map(item => (
+                  <li><a href={item.link} class="text-white/80 hover:text-white transition-colors text-sm">{item.name}</a></li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+
+          <!-- Kolom 4: Hubungi Kami -->
+          <div class="col-span-1">
+            <h3 class="text-lg font-semibold mb-4">Hubungi Kami</h3>
+            <ul class="space-y-3 text-sm">
+                <li class="flex items-start">
+                    <span class="text-white/80 mt-1 mr-3 shrink-0">&#9679;</span>
+                    <span class="text-white/80">Ruko Taman Surya 3 Blok L1 No. 1, Kalideres, Jakarta Barat</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-white/80 mt-1 mr-3 shrink-0">&#9679;</span>
+                    <a href="mailto:info@jayakonsultanbisnis.com" class="text-white/80 hover:text-white">info@jayakonsultanbisnis.com</a>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-white/80 mt-1 mr-3 shrink-0">&#9679;</span>
+                    <a href="tel:+6281274203815" class="text-white/80 hover:text-white">0812-7420-3815</a>
+                </li>
+            </ul>
+          </div>
+
         </div>
 
-        <div class="mt-8 flex flex-col md:flex-row justify-between items-center">
-          <div class="text-white/60 text-sm">
+        <!-- Bagian Copyright dan Menu Legal -->
+        <div class="mt-8 pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center">
+          <div class="text-white/60 text-sm text-center md:text-left">
             © {currentYear} {siteConfig.companyName}. All rights reserved.
           </div>
           
           <nav class="mt-4 md:mt-0">
-            <ul class="flex flex-wrap gap-6">
+            <ul class="flex flex-wrap gap-x-6 gap-y-2 justify-center">
               {legalMenu.map(item => (
                 <li>
-                  <a 
-                    href={item.link} 
-                    class="text-sm text-white/60 hover:text-white transition-colors"
-                  >
+                  <a href={item.link} class="text-sm text-white/60 hover:text-white transition-colors">
                     {item.name}
                   </a>
                 </li>

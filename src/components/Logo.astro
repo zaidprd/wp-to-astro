@@ -1,40 +1,61 @@
 ---
-// BAGIAN INI SUDAH BENAR DAN TIDAK PERLU DIUBAH
+// src/components/Logo.astro
+
 import { Image } from 'astro:assets';
+// Cukup impor satu logo saja
 import logo from '../assets/logo-jakobi.webp';
-interface Props {
-    variant?: 'header' | 'footer' | 'dark';
+
+export interface Props {
+    variant?: 'header' | 'footer';
 }
 
 const { variant = 'header' } = Astro.props;
 
-// FUNGSI INI PENTING DAN TETAP DIGUNAKAN
-const getLogoClass = () => {
+// Fungsi untuk mengatur UKURAN logo (tetap sama)
+const getSizeClass = () => {
     switch (variant) {
         case 'header':
-            // Anda bisa menyesuaikan ukuran di sini, misal 'h-10'
             return 'h-16'; 
         case 'footer':
-            // Mungkin di footer logonya lebih besar, misal 'h-12'
-            return 'h-12';
-        case 'dark':
-            // Mungkin ukurannya sama dengan header
-            return 'h-10';
+            return 'h-16';
         default:
-            return 'h-10';
+            return 'h-16';
+    }
+};
+
+// --- 👇 PERUBAHAN UTAMA ADA DI SINI 👇 ---
+// Fungsi untuk mendapatkan KELAS WARNA logo
+const getColorClass = () => {
+    switch (variant) {
+        case 'footer':
+            // Ini adalah class khusus yang akan kita definisikan di CSS
+            return 'logo-white-filter'; 
+        default:
+            // Tidak perlu class tambahan untuk varian lain
+            return ''; 
     }
 };
 ---
 
-<!-- CUKUP GANTI BAGIAN HTML DI BAWAH INI -->
-
+<!-- HTML diperbarui untuk menerapkan kedua kelas dinamis -->
 <a href="/" aria-label="Jakobi - Kembali ke Beranda" class="block transition-opacity duration-300 hover:opacity-80">
     <Image 
         src={logo} 
         alt="Logo Jakobi"
         class:list={[
-            "w-auto", // Lebar otomatis agar tidak gepeng
-            getLogoClass() // Terapkan kelas tinggi dinamis dari fungsi switch
+            "w-auto",         // Lebar otomatis
+            getSizeClass(),   // Terapkan kelas ukuran
+            getColorClass()   // Terapkan kelas filter warna
         ]}
     />
 </a>
+
+<!-- 
+    Tambahkan blok <style> di bawah ini untuk mendefinisikan
+    efek filter yang akan mengubah logo menjadi putih.
+-->
+<style>
+    .logo-white-filter {
+        filter: brightness(0) invert(1) grayscale(1);
+    }
+</style>

@@ -1,6 +1,6 @@
 export const siteConfig = {
-  companyName: 'Titan Core',
-  siteUrl: 'https://titan-core.com',
+  companyName: 'Jakobi',
+  siteUrl: 'https://jayakonsultanbisnis.com',
   Socials: {
       xSocial: 'https://x.com/astrodotbuild',
       Github: 'https://github.com/withastro',
@@ -14,8 +14,8 @@ export const siteConfig = {
 
 export const SEO = {
   Separator: '|',
-  SiteName: 'Titan Core',
-  defaultDescription: 'A modern, high-performance Astro JS theme',
+  SiteName: 'Jasa Studi Kelayakan',
+  defaultDescription: 'jasa konsultan studi kelyakan bisnis',
 };
   
 export const blogSetting = {

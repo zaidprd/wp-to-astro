@@ -18,7 +18,7 @@ Titan Core components are a set of components that are used to build pages. They
 
 ## List of Titan Core Page Components
 
-- components/sections/Faqs.astro
+
 - components/sections/CtaBanner.astro
 - components/sections/Logos.astro
 - components/sections/SplitPanel.astro

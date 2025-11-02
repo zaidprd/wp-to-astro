@@ -1,74 +1,59 @@
-import { Zap, Shield, Heart, Coffee, Smile, Type, TabletSmartphone, CodeXml } from 'lucide-astro';
+import { FileBarChart, Briefcase, BarChart3, Building2, MapPin, Users } from 'lucide-astro'
 
 // Define the LucideIcon type based on the structure of Lucide icons
-type LucideIcon = typeof Zap;
+type LucideIcon = typeof FileBarChart
 
 export interface Feature {
-    icon: LucideIcon;
-    title: string;
-    description: string;
+  icon: LucideIcon
+  title: string
+  description: string
 }
 
 export interface FeatureList {
-    id: string;
-    features: Feature[];
+  id: string
+  features: Feature[]
 }
 
-// Example feature lists
 export const featureLists: Record<string, FeatureList> = {
-    main: {
-        id: 'main',
-        features: [
-            {
-                icon: Zap,
-                title: 'Lightning Fast Performance',
-                description: 'Optimized for speed and performance'
-            },
-            {
-                icon: Shield,
-                title: 'SEO Optimized Structure',
-                description: 'Built with SEO best practices in mind'
-            },
-            {
-                icon: TabletSmartphone,
-                title: 'Responsive by Default',
-                description: 'Mobile-friendly out of the box'
-            },
-            {
-                icon: Smile,
-                title: 'Easy Customization',
-                description: 'Customize the theme to your liking'
-            },
-            {
-                icon: Type,
-                title: 'TypeScript Support',
-                description: 'Built with TypeScript in mind'
-            },
-            {
-                icon: CodeXml,
-                title: 'Minimal Dependencies',
-                description: 'Keep your project lightweight'
-            }
-        ]
-    },
-    secondary: {
-        id: 'secondary',
-        features: [
-            {
-                icon: Heart,
-                title: 'Made with Love',
-                description: 'Crafted with attention to detail'
-            },
-            {
-                icon: Coffee,
-                title: 'Always Fresh',
-                description: 'Regular updates and improvements'
-            },
-            {
-                icon: Smile,
-                title: 'User Friendly',
-                description: 'Intuitive and easy to use'
-            }
-        ]
-    }
-};
+  main: {
+    id: 'main',
+    features: [
+      {
+        icon: FileBarChart,
+        title: 'Studi Kelayakan',
+        description:
+          'Jasa layanan utama kami adalah studi kelayakan. Silakan konsultasikan kebutuhan feasibility study bisnis Anda kepada kami.'
+      },
+      {
+        icon: Briefcase,
+        title: 'Bisnis Plan',
+        description:
+          'Panduan strategis bagi pemilik bisnis untuk mencapai tujuan bisnis serta menarik minat investor atau pemberi pinjaman.'
+      },
+      {
+        icon: BarChart3,
+        title: 'Market Research',
+        description:
+          'Proses pengumpulan dan analisis data pasar untuk memahami pelanggan, pesaing, dan tren industri secara mendalam.'
+      },
+      {
+        icon: Building2,
+        title: 'High and Best Use (HBU)',
+        description:
+          'Konsep penilaian properti untuk menentukan penggunaan lahan paling efisien dan bernilai tinggi.'
+      },
+      {
+        icon: MapPin,
+        title: 'Survey Lokasi Bisnis',
+        description:
+          'Layanan survei lokasi bisnis untuk mengidentifikasi potensi pasar dan kepuasan pelanggan.'
+      },
+      {
+        icon: Users,
+        title: 'Konsultan Manajemen',
+        description:
+          'Konsultasi manajemen untuk membantu bisnis Anda berkembang dan beradaptasi dalam persaingan pasar.'
+      }
+    ]
+  }
+}

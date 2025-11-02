@@ -1,60 +1,131 @@
 ---
+// -----------------
+// 1. IMPORTS
+// -----------------
 import Layout from '@layouts/Layout.astro';
 import Hero from '@components/sections/Hero.astro';
 import SplitPanel from '@components/sections/SplitPanel.astro';
+import Feasibility from '@components/Feasibility.astro';
 import Features from '@components/sections/Features.astro';
-import Stats from '@components/sections/Stats.astro';
-import { featureLists } from '@data/features';
-import { statsLists } from '@data/stats';
-import Logos from '@components/sections/Logos.astro';
-import { logoLists } from '@data/logos';
-import CtaBanner from '@components/sections/CtaBanner.astro';
-import Faqs from '@components/sections/Faqs.astro';
-import { faqLists } from '@data/faqs';
 import RecentPosts from '@components/sections/RecentPosts.astro';
+import CtaBanner from '@components/sections/CtaBanner.astro';
+import Logos from '@components/sections/Logos.astro';
+
+// Data
+import { featureLists } from '@data/features';
+import { logoLists } from '@data/logos';
+
+// Assets
 import heroImage from '../assets/images/home/hero-jakobi.webp';
 import styleGuideImage from '../assets/images/home/jasa-studi-kelayakan-1.webp';
 
-// SEO disesuaikan dengan website target
+// -----------------
+// 2. SEO & METADATA
+// -----------------
 const seoTitle = "Studi Kelayakan Bisnis & Business Plan | PT Jaya Konsultan Bisnis";
-const seoDescription = "PT Jaya Konsultan Bisnis (Jakobi ) adalah perusahaan konsultan studi kelayakan bisnis, business plan, riset pasar, dan jasa survey untuk UMKM dan korporasi.";
+const seoDescription = "PT Jaya Konsultan Bisnis (Jakobi) adalah perusahaan konsultan studi kelayakan bisnis, business plan, riset pasar, dan jasa survey untuk UMKM dan korporasi.";
 
-// Konten Hero diganti
+// -----------------
+// 3. DEFINISI KONTEN (SESUAI URUTAN TAMPILAN)
+// -----------------
+
+// Section 1: Hero
 const heroContent = {
-    title: 'Jasa Studi Kelayakan dan Business Plan Profesional',
+    title: 'Konsultan Studi Kelayakan Bisnis',
     description: 'Solusi terpercaya untuk analisis mendalam dan perencanaan strategis bisnis Anda. Kami siap membantu UMKM hingga korporasi.',
     buttons: [
-        {
-            text: 'Konsultasi via WhatsApp',
-            link: 'https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20tertarik%20dengan%20jasa%20studi%20kelayakan.',
-            target: '_blank' // Buka di tab baru
-        },
-        {
-            text: 'Lihat Portofolio',
-            link: 'https://jayakonsultanbisnis.com/portofolio/',
-            target: '_self'
-        }
+        { text: 'Konsultasi via WhatsApp', link: 'https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20tertarik%20dengan%20jasa%20studi%20kelayakan.', target: '_blank' },
+        { text: 'Lihat Portofolio', link: 'https://jayakonsultanbisnis.com/portofolio/', target: '_self' }
     ],
     backgroundImage: heroImage,
     overlayOpacity: 0.4
-}
+};
 
-// Konten Features diganti
+// Section 2: SplitPanel (Pengertian )
+const styleGuideSection = {
+    eyebrow: "Pengertian",
+    headline: "Studi Kelayakan (Feasibility Study)",
+    description: `
+        <p style="margin-bottom: 1rem;">Studi kelayakan adalah proses evaluasi untuk menilai kelayakan suatu proyek dari berbagai aspek, seperti teknis, finansial, pasar, hukum, dan lingkungan.</p>
+        <p>Tujuan utamanya adalah memastikan apakah suatu rencana dapat berjalan dengan sukses, menguntungkan, dan layak untuk dilaksanakan.</p>
+    `,
+    image: {
+        src: styleGuideImage,
+        alt: "Ilustrasi Studi Kelayakan Bisnis"
+    },
+};
+
+// Section 3: Feasibility (Manfaat)
+const feasibilitySection = {
+    headline: "Manfaat Jasa Studi Kelayakan",
+    description: `
+        <p>Dengan menggunakan jasa studi kelayakan, Anda akan mendapatkan:</p>
+        <ol class="list-decimal list-inside mt-2 space-y-1">
+            <li>Bantuan dalam menentukan apakah proyek layak dilanjutkan.</li>
+            <li>Identifikasi risiko dan solusi untuk memitigasinya.</li>
+            <li>Data valid dan terperinci untuk menarik perhatian investor.</li>
+            <li>Efisiensi alokasi sumber daya yang lebih baik.</li>
+        </ol>
+    `,
+    image: {
+         src: "/manfaat-studi-kelayakan.webp",
+        alt: "Manfaat menggunakan jasa studi kelayakan"
+    },
+    stats: [
+        { label: "Internal Rate of Return (IRR)", value: 100 },
+        { label: "Net Present Value (NPV)", value: 98 },
+        { label: "Payback Period", value: 100 }
+    ],
+};
+
+// Section 4: Features (Keunggulan)
 const featuresSection = {
     eyebrow: "Mengapa Memilih Kami",
-    title: "Keunggulan Layanan Jakobi",
-    description:[
-        "Kami memberikan nilai lebih pada setiap proyek yang kami tangani. Dengan tim yang berpengalaman dan metodologi yang teruji, kami memastikan hasil yang akurat dan dapat diandalkan untuk pengambilan keputusan bisnis Anda."
-    ],
-    features: featureLists.main.features, // Anda perlu menyesuaikan data ini
+    title: "Keunggulan Jakobi",
+    description: "Dengan tim berpengalaman dan metodologi teruji, kami memastikan hasil yang akurat dan dapat diandalkan untuk pengambilan keputusan bisnis Anda.",
+    features: featureLists.main.features,
+};
+
+// Section 5: Recent Posts
+const recentPostsSection = {
+    eyebrow: "ARTIKEL & WAWASAN",
+    title: "Baca Artikel Terbaru dari Blog Kami",
+    description: "Dapatkan wawasan terbaru seputar dunia bisnis, studi kelayakan, strategi, dan tips praktis dari para ahli di tim kami.",
     button: {
-        text: "Pelajari Layanan Kami",
-        link: "https://jayakonsultanbisnis.com/layanan/",
+        text: "Kunjungi Blog",
+        link: "https://jayakonsultanbisnis.com/blog/",
         variant: "primary" as const
     }
-}
+};
 
-// Konten FooterCta diganti
+// Section 6: CTA Banner (Estimasi Biaya )
+const mainCta = {
+    eyebrow: "Biaya",
+    title: "Estimasi Biaya Jasa",
+    description: `
+        <p>Biaya jasa studi kelayakan bervariasi tergantung jenis proyek, skala, dan kompleksitas. Berikut perkiraan umumnya:</p>
+        <ul class="list-disc pl-6 mt-3 space-y-1">
+            <li><strong>Proyek Kecil (UKM, ritel):</strong> Rp 20–50 juta</li>
+            <li><strong>Proyek Menengah (pabrik, real estate):</strong> Rp 50–200 juta</li>
+            <li><strong>Proyek Besar (infrastruktur, industri):</strong> Rp 500 juta – Rp 1 miliar</li>
+        </ul>
+        <p class="mt-4">Untuk estimasi akurat sesuai kebutuhan Anda, silakan hubungi tim kami.</p>
+    `,
+    button: {
+        text: "Konsultasi Biaya Sekarang",
+        link: "https://jayakonsultanbisnis.com/kontak/",
+        variant: "primary" as const,
+        target: "_self" as const
+    }
+};
+
+// Section 7: Logos (Portofolio )
+const logosSection = {
+    eyebrow: "Portofolio Kami",
+    logos: logoLists.main.logos
+};
+
+// Footer CTA
 const FooterCta = {
     title: 'Siap Mengembangkan Bisnis Anda?',
     description: 'Hubungi kami sekarang untuk mendapatkan penawaran terbaik untuk layanan studi kelayakan, business plan, dan riset pasar.',
@@ -64,91 +135,19 @@ const FooterCta = {
         link: 'https://jayakonsultanbisnis.com/kontak/',
         target: '_self'
     }
-}
-
-// Konten styleGuideSection diganti
-const styleGuideSection = {
-    eyebrow: "Layanan Unggulan",
-    headline: "Studi Kelayakan Bisnis (Feasibility Study )",
-    description: "Analisis komprehensif untuk menilai kelayakan proyek Anda dari berbagai aspek: pasar, teknis, keuangan, hukum, dan dampak lingkungan. Dapatkan kepastian sebelum berinvestasi.",
-    image: {
-        src: styleGuideImage,
-        alt: "Ilustrasi Studi Kelayakan Bisnis"
-    },
-    buttons: [
-        {
-            text: "Lihat Detail Studi Kelayakan",
-            link: "https://jayakonsultanbisnis.com/layanan/studi-kelayakan-bisnis/",
-            variant: "primary" as const
-        }
-    ]
-}
-
-// Konten sideBySideStats diganti
-const sideBySideStats = {
-    eyebrow: "Portofolio Kami",
-    title: "Terpercaya oleh Berbagai Klien",
-    description: "Kami telah berhasil membantu puluhan klien dari berbagai sektor industri, mulai dari UMKM, BUMDes, hingga perusahaan swasta nasional dalam mewujudkan proyek dan rencana bisnis mereka.",
-    variant: 'side-by-side' as const,
-    stats: statsLists.withContent.stats, // Anda perlu menyesuaikan data ini
-    content: {
-        title: "Klien Lintas Sektor",
-        description: "Keberhasilan kami diukur dari kepuasan klien. Portofolio kami mencakup sektor properti, pertambangan, agribisnis, manufaktur, dan banyak lagi.",
-        button: {
-            text: "Lihat Semua Portofolio",
-            link: "https://jayakonsultanbisnis.com/portofolio/",
-            variant: "primary" as const
-        }
-    }
 };
-
-// Konten mainCta diganti
-const mainCta = {
-    eyebrow: "Layanan Lainnya",
-    title: "Perencanaan Bisnis (Business Plan )",
-    description: "Kami membantu Anda menyusun rencana bisnis yang solid dan meyakinkan, lengkap dengan strategi pemasaran, proyeksi keuangan, dan analisis risiko untuk menarik investor.",
-    button: {
-        text: "Pelajari Business Plan",
-        link: "https://jayakonsultanbisnis.com/layanan/jasa-pembuatan-business-plan/",
-        variant: "primary" as const,
-        target: "_self" as const
-    }
-};
-
-// Konten logosSection diganti
-const logosSection = {
-    eyebrow: "Klien Kami",
-    logos: logoLists.main.logos // Anda perlu menyesuaikan data ini
-}
-
-// Konten faqsSection diganti
-const faqsSection = {
-    eyebrow: "FAQ",
-    title: 'Pertanyaan yang Sering Diajukan',
-    description: 'Temukan jawaban atas pertanyaan umum mengenai layanan, proses, dan biaya di Jakobi.',
-    faqs: faqLists.main.faqs // Anda perlu menyesuaikan data ini
-}
-
-// Konten recentPostsSection diganti
-const recentPostsSection = {
-    eyebrow: "ARTIKEL & WAWASAN",
-    title: "Baca Artikel Terbaru dari Blog Kami",
-    description: "Dapatkan wawasan terbaru seputar dunia bisnis, studi kelayakan, strategi, dan tips praktis dari para ahli di tim kami.",
-    button: {
-            text: "Kunjungi Blog",
-            link: "https://jayakonsultanbisnis.com/blog/",
-        variant: "primary" as const
-    }
-}
 ---
 
+<!-- 
+    4. TEMPLATE HTML
+    Struktur halaman dengan komponen yang sudah diurutkan.
+-->
 <Layout footerCta={FooterCta} title={seoTitle} description={seoDescription}>
     <Hero content={heroContent} />
+    <SplitPanel content={styleGuideSection} imagePosition="right" background="light" padding="base" />
+    <Feasibility content={feasibilitySection} />
     <Features content={featuresSection} padding="base" background="light" />
     <RecentPosts content={recentPostsSection} background="base" padding="base" postsToShow={3} category="Theme Usage"/>
-    <SplitPanel content={styleGuideSection} imagePosition="right" background="light" padding="base" />
     <CtaBanner content={mainCta} variant="contained" background="light" paddingBottom="base" />
     <Logos content={logosSection} background="base" padding='small'/>
-    <Stats content={sideBySideStats} background='dark' padding="base"/>
-    <Faqs content={faqsSection} background="base" padding="base" />
 </Layout>

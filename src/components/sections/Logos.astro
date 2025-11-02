@@ -10,7 +10,7 @@ export interface Props {
         eyebrow?: string;
         headline?: string;
         subheadline?: string;
-        logos: Logo[];
+        logos: Logo[]; // tetap pakai tipe Logo biar kompatibel
     };
     background?: ThemeColor;
     padding?: PaddingSize;
@@ -29,11 +29,10 @@ const paddingClass = getPaddingClass({
     paddingTop: Astro.props.paddingTop,
     paddingBottom: Astro.props.paddingBottom 
 });
-
 ---
 
-<section class:list={["relative", bgColor, paddingClass]}>
-    <div class="site-container px-4 text-center">
+<section class:list={["relative overflow-hidden", bgColor, paddingClass]}>
+    <div class="site-container px-4 text-center mb-8">
         {eyebrow && (
             <Eyebrow 
                 text={eyebrow} 
@@ -41,22 +40,39 @@ const paddingClass = getPaddingClass({
                 className="text-center"
             />
         )}
-        <div class="flex flex-wrap justify-center gap-16">
-            {logos.map((logo, index) => (
+        {headline && <h2 class="text-2xl md:text-3xl font-semibold mt-2">{headline}</h2>}
+        {subheadline && <p class="text-base opacity-80 mt-1">{subheadline}</p>}
+    </div>
+
+    <!-- Portofolio slide otomatis -->
+    <div class="relative overflow-hidden">
+        <div class="flex animate-scroll-slow gap-8">
+            {logos.concat(logos).map((logo, index) => (
                 <div 
-                    class="logo-wrapper flex justify-center items-center w-32 h-20"
-                    data-aos="fade-up"
-                    data-aos-delay={index * 100}
+                    class="flex-shrink-0 w-[400px] md:w-[500px] h-[220px] md:h-[300px] rounded-xl overflow-hidden shadow-lg"
+                    aria-hidden={index >= logos.length ? "true" : "false"}
                 >
                     <Image 
                         src={logo.src} 
                         alt={logo.alt}
-                        class="h-8 md:h-10 w-auto transition-all duration-300 object-contain object-center filter grayscale hover:grayscale-0 opacity-75 hover:opacity-100"
-                        width={200}
-                        height={80}
+                        class="w-full h-full object-contain transition-transform duration-500 hover:scale-105"
+                        width={500}
+                        height={300}
                     />
                 </div>
             ))}
         </div>
     </div>
+
+    <style>
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-scroll-slow {
+            width: max-content;
+            animation: scroll 60s linear infinite; /* lebih lambat biar smooth */
+        }
+    </style>
 </section>

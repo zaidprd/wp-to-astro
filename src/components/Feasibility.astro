@@ -1,0 +1,64 @@
+---
+interface Stat {
+  label: string
+  value: number
+}
+
+interface Button {
+  text: string
+  link: string
+}
+
+interface Image {
+  src: string
+  alt: string
+}
+
+interface Content {
+  headline: string
+  description: string
+  stats: Stat[]
+  button?: Button
+  image: Image
+}
+
+const { content } = Astro.props as { content: Content }
+---
+
+<section class="bg-gray-50 py-16">
+  <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-4">
+    <!-- Gambar di kiri -->
+    <div class="order-1 md:order-none h-full">
+      <img
+        src={content.image.src}
+        alt={content.image.alt}
+        class="rounded-2xl shadow-lg object-cover w-full h-full max-h-[450px]"
+      />
+    </div>
+
+    <!-- Konten di kanan -->
+    <div>
+      <h2 class="text-3xl font-bold mb-4">{content.headline}</h2>
+      <div class="text-gray-700" set:html={content.description}></div>
+
+      <div class="mt-8 space-y-4">
+        {content.stats.map((stat: Stat) => (
+          <div>
+            <div class="flex justify-between font-semibold">
+              <span>{stat.label}</span>
+              <span>{stat.value}%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div
+                class="h-2.5 rounded-full"
+                style={`width: ${stat.value}%; background-color: #8fca2c;`}
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      
+    </div>
+  </div>
+</section>

@@ -3,14 +3,14 @@ import Layout from '@layouts/Layout.astro';
 import Hero from '@components/sections/Hero.astro';
 import SplitPanel from '@components/sections/SplitPanel.astro';
 import Features from '@components/sections/Features.astro';
-import Stats from '@components/sections/Stats.astro';
+
 import { featureLists } from '@data/features';
-import { statsLists } from '@data/stats';
+
 import Logos from '@components/sections/Logos.astro';
 import { logoLists } from '@data/logos';
 import CtaBanner from '@components/sections/CtaBanner.astro';
-import Faqs from '@components/sections/Faqs.astro';
-import { faqLists } from '@data/faqs';
+
+
 import RecentPosts from '@components/sections/RecentPosts.astro';
 import InnerHero from '@components/sections/InnerHero.astro';
 import TeamGrid from '@components/sections/TeamGrid.astro';
@@ -114,7 +114,7 @@ const sideBySideStats = {
     description: "The Stats component helps you highlight important metrics, achievements, or growth numbers in a visually compelling way that draws attention to your success.",
     variant: 'side-by-side' as const,
     background: 'dark' as const,
-    stats: statsLists.withContent.stats,
+   
     content: {
         title: 'Performance Metrics',
         description: 'Titan Core is designed for speed and efficiency. Our lightweight framework ensures fast load times and smooth user experiences.',
@@ -148,12 +148,7 @@ const logosSection = {
 }
 
 // FAQs Component Content
-const faqsSection = {
-    eyebrow: "COMMON QUESTIONS",
-    title: 'Answer Customer Questions',
-    description: 'The FAQs component helps address common questions and concerns, reducing support inquiries while building trust and confidence in your product or service.',
-    faqs: faqLists.main.faqs
-}
+
 
 // Recent Posts Component Content
 const recentPostsSection = {
@@ -264,7 +259,7 @@ const recentPostsSection = {
             <div class="component-label hidden absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-primary text-white py-1 px-3 rounded-md text-xs font-medium z-10 shadow-md">
                 Stats Component
             </div>
-            <Stats content={sideBySideStats} background='dark' padding="base"/>
+            
         </div>
     </section>
     
@@ -273,7 +268,7 @@ const recentPostsSection = {
             <div class="component-label hidden absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-primary text-white py-1 px-3 rounded-md text-xs font-medium z-10 shadow-md">
                 FAQs Component
             </div>
-            <Faqs content={faqsSection} background="base" padding="base" />
+            
         </div>
     </section>
     

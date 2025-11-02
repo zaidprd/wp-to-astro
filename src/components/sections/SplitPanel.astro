@@ -89,9 +89,8 @@ const textColor = getTextColor(background);
                 }
                 {
                     description && (
-                        <p class:list={['mt-6 text-base opacity-90', textColor]} data-aos="fade-up">
-                            {description}
-                        </p>
+                        <p class:list={['mt-6 text-base opacity-90', textColor]} data-aos="fade-up" set:html={description}></p>
+
                     )
                 }
 

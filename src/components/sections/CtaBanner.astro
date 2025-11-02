@@ -53,10 +53,10 @@ const containerBgColor = containerBgColors[background as keyof typeof containerB
         "text-center"
     ]}>
         <div class:list={[
-            "mx-auto",
-            variant === 'contained' ? 'max-w-3xl rounded-xl p-12' : 'max-w-4xl',
-            variant === 'contained' && containerBgColor
-        ]}>
+    "mx-auto",
+    variant === 'contained' ? 'max-w-6xl rounded-xl p-12' : 'max-w-6xl',
+    variant === 'contained' && containerBgColor
+]}>
             {eyebrow && (
                 <Eyebrow 
                     text={eyebrow} 
@@ -72,14 +72,13 @@ const containerBgColor = containerBgColors[background as keyof typeof containerB
             </h2>
             
             {description && (
-                <p 
-                    class:list={["mt-4", textColor, "opacity-90"]}
-                    data-aos="fade-up"
-                    data-aos-delay="100"
-                >
-                    {description}
-                </p>
-            )}
+    <div 
+        class:list={["mt-4", textColor, "opacity-90", "prose", "prose-green", "max-w-none", "mx-auto", "text-left"]}
+        data-aos="fade-up"
+        data-aos-delay="100"
+        set:html={description}
+    ></div>
+)}
 
             {button && (
                 <div 
