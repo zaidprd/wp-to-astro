@@ -9,7 +9,7 @@ import Button from '@components/ui/Button.astro';
 
 const ctaButton = {
     name: 'Contact Us',
-    link: '/contact',
+    link: '/contact-us', // Disesuaikan agar konsisten
 };
 
 const currentPath = Astro.url.pathname;
@@ -20,7 +20,11 @@ const isCurrentPage = (link: string) => {
 };
 ---
 
-<header class="fixed top-0 z-50 w-full left-0">
+{/* =================================================================== */}
+{/* === PERUBAHAN SATU-SATUNYA ADA DI BARIS INI === */}
+<header class="fixed top-0 z-50 w-screen left-0">
+{/* =================================================================== */}
+
     <div class="site-container mx-auto px-4 mt-4">
         <div id="header-inner" class="flex justify-between items-center bg-white h-20 rounded-lg p-4 border-black border transition-all duration-300">
 

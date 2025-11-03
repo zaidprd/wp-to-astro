@@ -1,85 +1,80 @@
 ---
 // src/components/blog/BlogList.astro
-// REVISI FINAL LENGKAP - Ini akan memperbaiki error 'undefined'
+// KODE LENGKAP YANG SUDAH DIPERBAIKI
 
 import BlogPost from '@components/blog/BlogPost.astro';
 import { categories } from '../../data/categories';
 
-// Interface Props ini sudah benar, menerima `posts`
 interface Props {
-    posts: any[]; // Menerima data dari PaginatedBlogLayout
+    posts: any[];
     currentCategory?: string;
 }
 
 const { posts, currentCategory } = Astro.props;
-
-// Kita tidak perlu mengambil data lagi di sini (seperti getCollection atau client.fetch).
-// Kita hanya perlu me-render `posts` yang sudah kita terima.
-
-// Logika untuk menampilkan kategori aktif bisa disederhanakan jika perlu.
-// Untuk sekarang, kita fokus pada rendering.
-const activeCategories = categories; // Asumsi semua kategori bisa aktif
+const activeCategories = categories;
 ---
 
-<section class="site-container mx-auto px-4 py-base">
-    <div
-        class="mb-16 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6"
-        data-aos="fade-in"
-        data-aos-delay="100"
-    >
-        <div class="w-full">
-            <h2 class="text-lg font-semibold mb-4">Filter by Categories:</h2>
-            <div class="flex flex-wrap gap-2">
-                <a
-                    href="/blog"
-                    class={`px-4 sm:px-6 py-2 sm:py-3 leading-none rounded-md text-small flex items-center justify-center transition-colors border border-primary duration-200 ${
-                        !currentCategory
-                            ? 'bg-primary text-body-dark shadow-md'
-                            : 'bg-background text-body-base hover:bg-background-light hover:text-body-light'
-                    }`}
-                >
-                    Show All
-                </a>
-                {
-                    activeCategories.map((category) => (
-                        <a
-                            href={`/category/${category.slug}`}
-                            class={`px-4 sm:px-6 py-2 sm:py-3 leading-none rounded-md text-small flex items-center justify-center transition-colors border border-primary duration-200 ${
-                                currentCategory === category.name
-                                    ? 'bg-primary text-body-dark shadow-md'
-                                    : 'bg-background text-body-base hover:bg-background-light hover:text-body-light'
-                            }`}
-                            title={category.description}
-                        >
-                            {category.name}
-                        </a>
-                    ))
-                }
-            </div>
+{/* 
+    Elemen <section> pembungkus telah dihapus dari sini.
+    Komponen ini sekarang akan dirender di dalam kontainer milik induknya.
+*/}
+
+<div
+    class="mb-16 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6"
+    data-aos="fade-in"
+    data-aos-delay="100"
+>
+    <div class="w-full">
+        <h2 class="text-lg font-semibold mb-4">Filter by Categories:</h2>
+        <div class="flex flex-wrap gap-2">
+            <a
+                href="/blog"
+                class={`px-4 sm:px-6 py-2 sm:py-3 leading-none rounded-md text-small flex items-center justify-center transition-colors border border-primary duration-200 ${
+                    !currentCategory
+                        ? 'bg-primary text-body-dark shadow-md'
+                        : 'bg-background text-body-base hover:bg-background-light hover:text-body-light'
+                }`}
+            >
+                Show All
+            </a>
+            {
+                activeCategories.map((category) => (
+                    <a
+                        href={`/category/${category.slug}`}
+                        class={`px-4 sm:px-6 py-2 sm:py-3 leading-none rounded-md text-small flex items-center justify-center transition-colors border border-primary duration-200 ${
+                            currentCategory === category.name
+                                ? 'bg-primary text-body-dark shadow-md'
+                                : 'bg-background text-body-base hover:bg-background-light hover:text-body-light'
+                        }`}
+                        title={category.description}
+                    >
+                        {category.name}
+                    </a>
+                ))
+            }
         </div>
-        <p class="text-small text-body-base text-left sm:text-right whitespace-nowrap">
-            Showing <span class="font-bold text-primary">{posts.length}</span> posts
-        </p>
     </div>
+    <p class="text-small text-body-base text-left sm:text-right whitespace-nowrap">
+        Showing <span class="font-bold text-primary">{posts.length}</span> posts
+    </p>
+</div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {
-            // --- INI ADALAH BAGIAN YANG DIPERBAIKI SESUAI INSTRUKSI ANDA ---
-            posts.map((post, index) => (
-                <div>
-                    <BlogPost
-                        title={post.data.title}
-                        excerpt={post.data.excerpt}
-                        featuredImage={post.data.featuredImage}
-                        publishDate={post.data.publishDate}
-                        categories={post.data.categories || []}
-                        slug={post.slug}  // <-- PERBAIKAN INTI: Menggunakan `post.slug`
-                        index={index}
-                    />
-                </div>
-            ))
-        }
-    </div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {
+        posts.map((post, index) => (
+            <div>
+                <BlogPost
+                    title={post.data.title}
+                    excerpt={post.data.excerpt}
+                    featuredImage={post.data.featuredImage}
+                    publishDate={post.data.publishDate}
+                    categories={post.data.categories || []}
+                    slug={post.slug}
+                    index={index}
+                />
+            </div>
+        ))
+    }
+</div>
 
-    {posts.length === 0 && <p class="text-center text-gray-500 py-8">No posts found in this category.</p>}
-</section>
+{posts.length === 0 && <p class="text-center text-gray-500 py-8">No posts found in this category.</p>}
