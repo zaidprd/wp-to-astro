@@ -1,0 +1,84 @@
+---
+// src/pages/layanan.astro
+// KODE LENGKAP - VERSI TANPA IKON UNTUK MENGHINDARI ERROR
+
+import Layout from '@layouts/Layout.astro';
+import InnerHero from '@components/sections/InnerHero.astro';
+import Button from '@components/ui/Button.astro';
+// import { Icon } from 'astro-icon/components'; // 1. Impor ikon DIHAPUS
+
+// Konten untuk Hero Section
+const heroContent = {
+    title: "Layanan Kami",
+    description: "Kami menyediakan solusi komprehensif untuk mendukung keberhasilan bisnis Anda, mulai dari perencanaan hingga evaluasi.",
+};
+
+// Daftar layanan Anda (tanpa properti 'icon')
+const services = [
+    {
+        title: "Jasa Studi Kelayakan (Feasibility Study)",
+        description: "Analisis mendalam untuk menilai kelayakan proyek dari aspek pasar, teknis, keuangan, dan hukum untuk pengambilan keputusan yang tepat.",
+        link: "/jasa-studi-kelayakan-bisnis/"
+    },
+    {
+        title: "Jasa Business Plan",
+        description: "Penyusunan rencana bisnis yang strategis dan terperinci untuk memandu arah perusahaan, menarik investor, dan mencapai tujuan bisnis.",
+        link: "/jasa-business-plan/"
+    },
+    {
+        title: "Jasa Riset Pasar (Market Research)",
+        description: "Penelitian pasar yang akurat untuk memahami perilaku konsumen, tren industri, dan potensi pasar sebagai dasar strategi pemasaran.",
+        link: "/kisaran-biaya-survey-pasar/"
+    },
+    {
+        title: "Jasa Survey",
+        description: "Pengumpulan data primer melalui survei yang dirancang secara profesional untuk mendapatkan wawasan spesifik dari target audiens Anda.",
+        link: "/metode-survey-pasar/"
+    },
+    {
+        title: "Jasa Konsultasi Bisnis",
+        description: "Layanan konsultasi untuk membantu Anda mengatasi tantangan bisnis, mengidentifikasi peluang baru, dan meningkatkan kinerja operasional.",
+        link: "/konsultan-bisnis-terpercaya/"
+    },
+    {
+        title: "Jasa Analisis Bisnis",
+        description: "Analisis data bisnis Anda untuk menemukan pola, mengukur kinerja, dan memberikan rekomendasi berbasis data untuk pertumbuhan.",
+        link: "/menghitung-biaya-studi-kelayakan-bisnis/"
+    }
+];
+---
+
+<Layout title="Layanan" description="Jelajahi layanan profesional kami mulai dari studi kelayakan, business plan, riset pasar, hingga konsultasi bisnis untuk mendukung kesuksesan proyek Anda.">
+    
+    <InnerHero content={heroContent} />
+
+    <section class="py-large">
+        <div class="site-container px-4">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                {services.map(service => (
+                    <div class="bg-white/5 border border-white/10 rounded-lg p-8 flex flex-col text-center items-center transition-all duration-300 hover:border-primary hover:-translate-y-2 shadow-lg">
+                        
+                        {/* 2. Bagian Ikon DIHAPUS dari sini */}
+                        
+                        {/* Judul Layanan */}
+                        <h3 class="text-xl font-semibold mb-3 text-headline mt-6"> {/* Menambahkan margin top untuk mengganti ruang ikon */}
+                            {service.title}
+                        </h3>
+                        
+                        {/* Deskripsi Layanan */}
+                        <p class="text-body-base opacity-80 mb-6 flex-grow">
+                            {service.description}
+                        </p>
+                        
+                        {/* Tombol Baca Selengkapnya */}
+                        <Button href={service.link} variant="primary" size="sm">
+                            Baca Selengkapnya
+                        </Button>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+</Layout>

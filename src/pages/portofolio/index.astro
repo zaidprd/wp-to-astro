@@ -1,0 +1,75 @@
+---
+// src/pages/portofolio/index.astro
+// KODE LENGKAP - DENGAN LINK DOWNLOAD GOOGLE DRIVE
+
+import Layout from '../../layouts/Layout.astro';
+import InnerHero from '../../components/sections/InnerHero.astro';
+import { Image } from 'astro:assets';
+import Button from '@components/ui/Button.astro';
+
+// ... (impor gambar tetap sama)
+import portofolioImg1 from '/src/assets/images/logos/portofolio1.webp';
+import portofolioImg2 from '/src/assets/images/logos/portofolio2.webp';
+import portofolioImg3 from '/src/assets/images/logos/portofolio3.webp';
+import portofolioImg4 from '/src/assets/images/logos/portofolio4.webp';
+import portofolioImg5 from '/src/assets/images/logos/portofolio5.webp';
+import portofolioImg6 from '/src/assets/images/logos/portofolio6.webp';
+import portofolioImg7 from '/src/assets/images/logos/portofolio7.webp';
+import portofolioImg8 from '/src/assets/images/logos/portofolio8.webp';
+import portofolioImg9 from '/src/assets/images/logos/portofolio9.webp';
+
+const heroContent = {
+    title: "Galeri Portofolio",
+    description: "Berikut adalah galeri visual dari proyek-proyek yang telah berhasil kami selesaikan.",
+};
+
+const portfolioImages = [
+    portofolioImg1, portofolioImg2, portofolioImg3,
+    portofolioImg4, portofolioImg5, portofolioImg6,
+    portofolioImg7, portofolioImg8, portofolioImg9
+];
+---
+
+<Layout 
+    title="Galeri Portofolio" 
+    description="Galeri visual proyek studi kelayakan, business plan, dan riset pasar oleh PT Jaya Konsultan Bisnis (Jakobi)."
+>
+    
+    <InnerHero content={heroContent} />
+
+    <section class="py-large">
+        <div class="site-container px-4">
+            
+            {/* Galeri Gambar */}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {portfolioImages.map((img, index) => (
+                    <div class="group block rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-primary/20 hover:-translate-y-2">
+                        <div class="aspect-w-16 aspect-h-9 overflow-hidden">
+                            <Image 
+                                src={img} 
+                                alt={`Gambar portofolio proyek ${index + 1}`}
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                width={500}
+                                height={281}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* --- 👇 BAGIAN TOMBOL DOWNLOAD DENGAN LINK GOOGLE DRIVE 👇 --- */}
+            <div class="mt-16 text-center">
+                <Button 
+                    href="https://drive.google.com/uc?export=download&id=1dVRuZWNghVfEFhTXkOtOkn2OBMnmEJUl" 
+                    variant="primary" 
+                    size="lg"
+                    target="_blank"
+                >
+                    Download Portofolio (PDF )
+                </Button>
+            </div>
+            {/* --- AKHIR BAGIAN BARU --- */}
+
+        </div>
+    </section>
+</Layout>

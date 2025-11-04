@@ -6,9 +6,9 @@ interface Category {
 
 export const categories: Category[] = [
   {
-    name: 'Tech',
-    slug: 'tech',
-    description: 'Latest in technology and software development'
+    name: 'Artikel',
+    slug: 'postsatu',
+    
   },
   {
     name: 'Web Development',

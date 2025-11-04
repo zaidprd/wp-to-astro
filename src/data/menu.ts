@@ -1,27 +1,29 @@
 // src/data/menu.ts
+// KODE LENGKAP - MENU "LAYANAN" DIJADIKAN LINK BIASA
 
 export const headerMenu = [
-    { name: 'Contac-Us', link: '/contact-us' },
-    { name: 'Our Team', link: '/team' },
+    { name: 'Home', link: '/' },
+    { 
+        name: 'Layanan', 
+        link: '/layanan', 
+        // --- 👇 PERUBAHAN UTAMA DI SINI 👇 ---
+        showArrow: false, // Panah dropdown dihilangkan
+        // Array 'children' dihapus sepenuhnya
+    },
+    { name: 'Portofolio', link: '/portofolio' },
     { name: 'Blog', link: '/blog' },
-    { name: 'Style-Guide', link: '/style-guide', showArrow: false,
-        children: [
-            { name: 'Typography', link: '/style-guide#typography' },
-            { name: 'Colors', link: '/style-guide#colors' },
-            { name: 'Links', link: '/style-guide#links' },
-            { name: 'Buttons', link: '/style-guide#buttons' },
-            { name: 'Forms', link: '/style-guide#forms' },
-            { name: 'Lists', link: '/style-guide#lists' },
-        ]
-    }
+    { name: 'Kontak', link: '/contact-us' },
 ];
 
+// Menu Footer (tidak diubah, sudah benar)
 export const footerMenu = [
-    { name: 'Style Guide', link: '/style-guide' },
+    { name: 'Home', link: '/' },
+    { name: 'Layanan', link: '/layanan' },
+    { name: 'Blog', link: '/blog' },
+    { name: 'Kontak', link: '/contact-us' },
 ];
 
+// Menu Legal (tidak diubah, sudah benar)
 export const legalMenu = [
-    { name: 'Privacy Policy', link: '/legal/privacy-policy' },
-    { name: 'Terms of Service', link: '/legal/terms-of-service' }
+    { name: 'Kebijakan Privasi', link: '/legal/privacy-policy' },
 ];
-
