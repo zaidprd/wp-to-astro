@@ -1,0 +1,85 @@
+---
+// src/pages/privacy-policy.astro
+// KODE LENGKAP UNTUK HALAMAN KEBIJAKAN PRIVASI
+
+import Layout from '../layouts/Layout.astro';
+import InnerHero from '../components/sections/InnerHero.astro';
+
+// Konten untuk judul halaman
+const heroContent = {
+    title: "Kebijakan Privasi",
+    description: "Hak Anda dan tanggung jawab kami dalam melindungi data Anda.",
+};
+---
+
+<Layout 
+    title="Kebijakan Privasi - PT Jaya Konsultan Bisnis" 
+    description="Pelajari bagaimana PT Jaya Konsultan Bisnis (Jakobi) mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda."
+>
+    
+    <InnerHero content={heroContent} />
+
+    <section class="py-large">
+        <div class="site-container-small px-4">
+            
+            {/* Menggunakan class 'prose' dari Tailwind Typography untuk styling otomatis */}
+            <article class="prose prose-lg max-w-none prose-headings:text-headline prose-p:text-body-base prose-a:text-secondary prose-strong:text-headline">
+                
+                <h2>Pendahuluan</h2>
+                <p>
+                    Selamat datang di Kebijakan Privasi PT Jaya Konsultan Bisnis (selanjutnya disebut "Jakobi", "kami"). Dokumen ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda saat Anda menggunakan situs web dan layanan kami. Privasi Anda sangat penting bagi kami.
+                </p>
+
+                <h2>Informasi yang Kami Kumpulkan</h2>
+                <p>
+                    Kami dapat mengumpulkan beberapa jenis informasi pribadi untuk menyediakan dan meningkatkan layanan kami kepada Anda:
+                </p>
+                <ul>
+                    <li><strong>Informasi Kontak:</strong> Nama, alamat email, nomor telepon, dan nama perusahaan.</li>
+                    <li><strong>Informasi Proyek:</strong> Detail dan dokumen yang Anda berikan terkait kebutuhan konsultasi Anda (studi kelayakan, business plan, dll.).</li>
+                    <li><strong>Informasi Teknis:</strong> Alamat IP, jenis browser, dan data interaksi dengan situs web kami melalui cookie untuk tujuan analisis.</li>
+                </ul>
+
+                <h2>Bagaimana Kami Menggunakan Informasi Anda</h2>
+                <p>
+                    Informasi yang kami kumpulkan digunakan untuk:
+                </p>
+                <ul>
+                    <li>Menyediakan, mengoperasikan, dan memelihara layanan kami.</li>
+                    <li>Berkomunikasi dengan Anda, termasuk untuk menanggapi pertanyaan dan mengirimkan proposal.</li>
+                    <li>Memproses transaksi dan administrasi proyek.</li>
+                    <li>Mematuhi kewajiban hukum yang berlaku.</li>
+                </ul>
+
+                <h2>Keamanan Data</h2>
+                <p>
+                    Kami menerapkan langkah-langkah keamanan teknis dan organisasi yang sesuai untuk melindungi informasi pribadi Anda dari akses, pengungkapan, perubahan, atau penghancuran yang tidak sah. Kerahasiaan data proyek Anda adalah prioritas utama kami.
+                </p>
+
+                <h2>Berbagi Informasi</h2>
+                <p>
+                    Kami **tidak menjual, menyewakan, atau memperdagangkan** informasi pribadi Anda kepada pihak ketiga. Kami hanya dapat membagikan informasi Anda kepada penyedia layanan pihak ketiga yang membantu kami dalam operasional bisnis (misalnya, platform email), dan mereka terikat oleh kewajiban kerahasiaan yang ketat.
+                </p>
+
+                <h2>Hak Anda</h2>
+                <p>
+                    Anda memiliki hak untuk meminta akses, koreksi, atau penghapusan informasi pribadi Anda yang kami simpan. Untuk melakukannya, silakan hubungi kami melalui detail kontak yang tersedia.
+                </p>
+
+                <h2>Perubahan pada Kebijakan Ini</h2>
+                <p>
+                    Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Versi terbaru akan selalu diposting di halaman ini dengan tanggal pembaruan yang tertera.
+                </p>
+
+                <h2>Hubungi Kami</h2>
+                <p>
+                    Jika Anda memiliki pertanyaan tentang Kebijakan Privasi ini, silakan hubungi kami di <a href="mailto:info@jayakonsultanbisnis.com">info@jayakonsultanbisnis.com</a>.
+                </p>
+                
+                <p class="text-sm text-body-base/70">Terakhir diperbarui: 03 November 2025</p>
+
+            </article>
+        </div>
+    </section>
+
+</Layout>

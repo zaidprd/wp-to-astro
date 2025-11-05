@@ -3,7 +3,7 @@
 
 **Titan Core** is a high-performance, feature-rich theme for Astro JS, designed for modern websites, blogs, and portfolios. With beautiful UI components, multiple theme options, and a focus on performance, Titan Core helps you build stunning websites quickly.
 
-[Live Demo](https://wp-to-astro.pages.dev/)
+[Live Demo](https://jayakonsultanbisnis.com/)
 
 ## ✨ Features
 

@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import icon from 'astro-icon';
 
-const site = process.env.PUBLIC_SITE_URL || 'https://wp-to-astro.pages.dev';
+const site = process.env.PUBLIC_SITE_URL || 'https://jayakonsultanbisnis.com';
 
 export default defineConfig({
   site,

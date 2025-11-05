@@ -1,32 +1,19 @@
 ---
 // src/components/Footer.astro
+// KODE LENGKAP YANG SUDAH DIPERBAIKI
 
 import Logo from '@components/Logo.astro';
 import Button from '@components/ui/Button.astro';
 import { siteConfig } from '@data/config';
 
-// --- PENTING ---
-// Pastikan Anda memiliki data menu yang sesuai di file data Anda.
-// Contoh: src/data/menu.ts
-const ourServicesMenu = [
-  { name: 'Studi Kelayakan', link: '/layanan/studi-kelayakan-bisnis' },
-  { name: 'Business Plan', link: '/layanan/jasa-pembuatan-business-plan' },
-  { name: 'Riset Pemasaran', link: '/layanan/jasa-riset-pemasaran' },
-  { name: 'Jasa Survey', link: '/layanan/jasa-survey' },
-];
+// --- 👇 PERUBAHAN UTAMA: Hanya impor footerMenu 👇 ---
+import { footerMenu } from '@data/menu'; 
 
-const companyMenu = [
-  { name: 'Tentang Kami', link: '/tentang-kami' },
-  { name: 'Portofolio', link: '/portofolio' },
-  { name: 'Blog', link: '/blog' },
-  { name: 'Kontak', link: '/kontak' },
-];
-
+// --- 👇 PERUBAHAN UTAMA: Definisikan legalMenu secara lokal 👇 ---
 const legalMenu = [
-    { name: 'Privacy Policy', link: '/privacy-policy' },
-    { name: 'Terms of Service', link: '/terms-of-service' },
+    { name: 'Kebijakan Privasi', link: '/privacypolicy' }
 ];
-// --- Akhir dari data menu ---
+// --- AKHIR PERUBAHAN ---
 
 
 interface ButtonProps {
@@ -46,14 +33,13 @@ interface Props {
 
 const { footerCta } = Astro.props;
 
-// CTA default jika tidak ada yang diberikan dari halaman
 const defaultCta = {
   title: "Siap Mengembangkan Bisnis Anda?",
   description: "Hubungi kami sekarang untuk mendapatkan penawaran terbaik untuk layanan studi kelayakan, business plan, dan riset pasar.",
   hideCta: false,
   button: {
     text: "Kontak Kami",
-    link: "/kontak",
+    link: "/contact-us",
     target: "_self"
   }
 };
@@ -65,7 +51,6 @@ const currentYear = new Date().getFullYear();
 <footer class="bg-black text-white pb-small">
     <div class="site-container mx-auto px-4">
         
-        <!-- Bagian CTA (Call to Action) di atas footer -->
         {!cta.hideCta && (
           <div class="text-center border-b border-white/20 mb-12 py-large">
             <h2 class="text-3xl font-bold mb-4">{cta.title}</h2>
@@ -83,44 +68,28 @@ const currentYear = new Date().getFullYear();
           </div>
         )}
 
-        <!-- Konten Utama Footer (4 Kolom) -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
           
-          <!-- Kolom 1: Tentang Perusahaan -->
-          <div class="col-span-1">
+          <div class="col-span-1 lg:col-span-2">
             <div class="mb-4">
               <Logo variant="footer" />
             </div>
-            <p class="text-white/70 text-sm leading-relaxed">
+            <p class="text-white/70 text-sm leading-relaxed max-w-md">
               PT Jaya Konsultan Bisnis (Jakobi) adalah perusahaan konsultan independen yang berfokus pada layanan studi kelayakan, rencana bisnis, riset pasar, dan jasa survey.
             </p>
           </div>
           
-          <!-- Kolom 2: Layanan Kami -->
           <div class="col-span-1">
-            <h3 class="text-lg font-semibold mb-4">Layanan Kami</h3>
+            <h3 class="text-lg font-semibold mb-4">Quick Menu</h3>
             <nav>
               <ul class="space-y-2">
-                {ourServicesMenu.map(item => (
+                {footerMenu.map(item => (
                   <li><a href={item.link} class="text-white/80 hover:text-white transition-colors text-sm">{item.name}</a></li>
                 ))}
               </ul>
             </nav>
           </div>
 
-          <!-- Kolom 3: Perusahaan -->
-          <div class="col-span-1">
-            <h3 class="text-lg font-semibold mb-4">Quick Menus</h3>
-            <nav>
-              <ul class="space-y-2">
-                {companyMenu.map(item => (
-                  <li><a href={item.link} class="text-white/80 hover:text-white transition-colors text-sm">{item.name}</a></li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-
-          <!-- Kolom 4: Hubungi Kami -->
           <div class="col-span-1">
             <h3 class="text-lg font-semibold mb-4">Hubungi Kami</h3>
             <ul class="space-y-3 text-sm">
@@ -141,7 +110,6 @@ const currentYear = new Date().getFullYear();
 
         </div>
 
-        <!-- Bagian Copyright dan Menu Legal -->
         <div class="mt-8 pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center">
           <div class="text-white/60 text-sm text-center md:text-left">
             © {currentYear} {siteConfig.companyName}. All rights reserved.

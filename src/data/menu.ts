@@ -23,7 +23,4 @@ export const footerMenu = [
     { name: 'Kontak', link: '/contact-us' },
 ];
 
-// Menu Legal (tidak diubah, sudah benar)
-export const legalMenu = [
-    { name: 'Kebijakan Privasi', link: '/legal/privacy-policy' },
-];
+

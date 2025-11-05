@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://wp-to-astro.pages.dev/sitemap-index.xml 
+Sitemap: https://jayakonsultanbisnis.com/sitemap-index.xml 

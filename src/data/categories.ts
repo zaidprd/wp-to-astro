@@ -8,7 +8,7 @@ export const categories: Category[] = [
   {
     name: 'Artikel',
     slug: 'postsatu',
-    
+    description: 'Latest in technology and software development'
   },
   {
     name: 'Web Development',

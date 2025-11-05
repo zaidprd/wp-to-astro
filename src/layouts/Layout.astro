@@ -1,18 +1,17 @@
 ---
-// src/layouts/Layout.astro (atau nama file layout Anda)
+// src/layouts/Layout.astro
+// KODE FINAL DENGAN JAVASCRIPT YANG BENAR
 
-// 1. 👇 TAMBAHKAN IMPOR INI DI BAGIAN ATAS
 import { ViewTransitions } from 'astro:transitions';
-
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FloatingWhatsApp from "../components/FloatingWhatsApp.astro";
-import { SEO, siteConfig } from "../data/config";
+import { SEO, siteConfig, themeSetting } from "../data/config";
+import { headerMenu } from '../data/menu';
 import 'aos/dist/aos.css';
-import { themeSetting } from "../data/config";
-const { theme } = themeSetting;
 
+const { theme } = themeSetting;
 const { SiteName, Separator, defaultDescription } = SEO;
 
 interface Props {
@@ -39,7 +38,6 @@ const pageDescription = description || defaultDescription || '';
 const pageImage = image || '';
 const canonicalPath = canonicalUrl || Astro.url.pathname;
 const fullCanonicalUrl = new URL(canonicalPath, siteConfig.siteUrl).toString();
-
 ---
 
 <!doctype html>
@@ -57,21 +55,16 @@ const fullCanonicalUrl = new URL(canonicalPath, siteConfig.siteUrl).toString();
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={fullCanonicalUrl} />
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={pageDescription} />
-		{pageImage && <meta property="og:image" content={new URL(pageImage, siteConfig.siteUrl ).toString()} />}
-
-		<!-- Twitter -->
+		{pageImage && <meta property="og:image" content={new URL(pageImage, siteConfig.siteUrl  ).toString()} />}
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content={fullCanonicalUrl} />
 		<meta property="twitter:title" content={pageTitle} />
 		<meta property="twitter:description" content={pageDescription} />
 		{pageImage && <meta property="twitter:image" content={new URL(pageImage, siteConfig.siteUrl).toString()} />}
-
-        <!-- 2. 👇 TAMBAHKAN KOMPONEN INI DI DALAM <head> -->
         <ViewTransitions />
 	</head>
 	<body data-theme={theme}>
@@ -80,12 +73,79 @@ const fullCanonicalUrl = new URL(canonicalPath, siteConfig.siteUrl).toString();
 		<Footer footerCta={footerCta} />
 		<FloatingWhatsApp />
 		
+        <!-- Panel Menu Mobile -->
+        <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
+        <div
+            id="mobile-menu-panel"
+            class="fixed top-0 right-0 bottom-0 w-[90%] max-w-sm z-50 p-8 bg-primary lg:hidden hidden opacity-0 translate-x-full transform transition-transform duration-300 ease-out overflow-y-auto"
+        >
+            <ul class="flex flex-col gap-4 mt-16">
+                {headerMenu.map((item) => (
+                    <li>
+                        <div class="text-white">
+                            <a href={item.link} class:list={['py-1 text-lg text-nav-mobile-text hover:text-nav-mobile-text-hover']}>
+                                {item.name}
+                            </a>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+            <div class="mt-8 pb-8">
+                <a href="/contact-us" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-11 px-8 bg-transparent text-white hover:bg-white hover:text-primary">
+                    Hubungi Kami
+                </a>
+            </div>
+        </div>
+
 		<script>
 			import AOS from 'aos';
 			AOS.init({
 				duration: 800,
 				once: true,
 			});
+
+            // --- LOGIKA MENU MOBILE YANG DIPERBAIKI TOTAL ---
+            document.addEventListener('DOMContentLoaded', () => {
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const menuPanel = document.getElementById('mobile-menu-panel');
+                const menuOverlay = document.getElementById('mobile-menu-overlay');
+                
+                if (!mobileMenuButton || !menuPanel || !menuOverlay) return;
+
+                const menuIcon = mobileMenuButton.querySelector('.menu-icon');
+                const closeIcon = mobileMenuButton.querySelector('.close-icon');
+
+                const toggleMenu = () => {
+                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+
+                    if (isExpanded) {
+                        // Tutup Menu
+                        document.body.style.overflow = '';
+                        menuPanel.classList.add('opacity-0', 'translate-x-full');
+                        menuOverlay.classList.add('hidden');
+                        menuIcon?.classList.remove('hidden');
+                        closeIcon?.classList.add('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    } else {
+                        // Buka Menu
+                        document.body.style.overflow = 'hidden';
+                        menuPanel.classList.remove('hidden');
+                        menuPanel.classList.remove('opacity-0', 'translate-x-full');
+                        menuOverlay.classList.remove('hidden');
+                        menuIcon?.classList.add('hidden');
+                        closeIcon?.classList.remove('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'true');
+                    }
+                };
+
+                mobileMenuButton.addEventListener('click', toggleMenu);
+                menuOverlay.addEventListener('click', () => {
+                    // Hanya tutup jika menu sedang terbuka
+                    if (mobileMenuButton.getAttribute('aria-expanded') === 'true') {
+                        toggleMenu();
+                    }
+                });
+            });
 		</script>
 	</body>
 </html>
