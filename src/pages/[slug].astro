@@ -1,14 +1,12 @@
 ---
 // src/pages/[slug].astro
-// REVISI FINAL LENGKAP - Menggunakan PortableTextRenderer.jsx
 
 import { client, urlFor } from '../lib/sanity';
 import type { GetStaticPaths } from 'astro';
 import Layout from '@layouts/Layout.astro';
 import CategoryPill from '@components/ui/CategoryPill.astro';
 import Date from '@components/ui/Date.astro';
-
-// --- LANGKAH 1: Impor komponen renderer React Anda ---
+import { marked } from 'marked';
 import PortableTextRenderer from '../components/PortableTextRenderer.jsx';
 
 export const prerender = true;
@@ -31,6 +29,7 @@ const post = await client.fetch(
     title,
     body,
     excerpt,
+    svgContent,
     "publishDate": publishedAt,
     "featuredImage": mainImage { asset->{...}, alt },
     categories[]->{ title }
@@ -38,21 +37,26 @@ const post = await client.fetch(
 
 if (!post) return Astro.redirect('/404');
 
-// Olah data untuk SEO dan komponen (sudah benar)
 const seoTitle = post.title;
 const seoDescription = post.excerpt;
 const featuredImageUrl = post.featuredImage ? urlFor(post.featuredImage).width(1200).url() : undefined;
+
+// If body is a plain string (markdown from Make.com), convert to HTML
+const bodyIsString = typeof post.body === 'string';
+const bodyHtml = bodyIsString ? String(await marked(post.body)) : null;
 ---
 
 <Layout title={seoTitle} description={seoDescription} image={featuredImageUrl}>
-    <!-- Latar belakang gambar hero (sudah benar) -->
+    <!-- Latar belakang gambar hero -->
     <div class="w-full h-120 absolute top-0 left-0 z-0 overflow-hidden border-b border-black">
-        {featuredImageUrl && (
+        {featuredImageUrl ? (
             <>
                 <img src={urlFor(post.featuredImage).width(1920).height(1080).quality(60).url()} alt={post.featuredImage.alt || ''} class="w-full h-full object-cover grayscale opacity-20" />
                 <div class="absolute inset-0 bg-primary/10 backdrop-blur-md" />
             </>
-        )}
+        ) : post.svgContent ? (
+            <div class="w-full h-full opacity-20 [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover" set:html={post.svgContent} />
+        ) : null}
     </div>
 
     <!-- Konten Artikel Utama -->
@@ -70,14 +74,16 @@ const featuredImageUrl = post.featuredImage ? urlFor(post.featuredImage).width(1
                 </div>
             </div>
 
-            {featuredImageUrl && (
+            {featuredImageUrl ? (
                 <img src={urlFor(post.featuredImage).width(1200).height(675).format('webp').quality(80).url()} alt={post.featuredImage.alt || ''} class="w-full h-auto rounded-lg border mb-12 border-black" />
-            )}
+            ) : post.svgContent ? (
+                <div class="w-full mb-12 rounded-lg border border-black overflow-hidden [&>svg]:w-full [&>svg]:h-auto" set:html={post.svgContent} />
+            ) : null}
 
             <div class="mt-8">
-                {/* --- LANGKAH 2: Ganti placeholder dengan komponen renderer --- */}
-                {post.body ? (
-                    // Tambahkan `client:load` agar komponen React berjalan di browser
+                {bodyHtml ? (
+                    <div class="prose max-w-none" set:html={bodyHtml} />
+                ) : post.body ? (
                     <PortableTextRenderer client:load content={post.body} />
                 ) : (
                     <p>Konten artikel tidak tersedia.</p>
