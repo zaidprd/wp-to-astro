@@ -38,6 +38,16 @@ const seoTitle = post.title;
 const seoDescription = post.excerpt;
 const featuredImageUrl = post.featuredImage ? urlFor(post.featuredImage).width(1200).url() : undefined;
 
+// Tandai link eksternal agar buka di tab baru. URL TIDAK diubah sama sekali.
+const SITE_HOST = 'jayakonsultanbisnis.com';
+function markExternalLinks(html: string): string {
+    return html.replace(/<a\s+href="(https?:\/\/[^"]+)"/gi, (match, url) => {
+        // Link ke domain sendiri tetap di tab yang sama
+        if (url.includes(SITE_HOST)) return match;
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer nofollow"`;
+    });
+}
+
 // Convert body to HTML: handles plain string OR PortableText where spans contain raw markdown
 let bodyHtml: string | null = null;
 if (typeof post.body === 'string') {
@@ -51,6 +61,7 @@ if (typeof post.body === 'string') {
         bodyHtml = String(await marked(extractedText));
     }
 }
+if (bodyHtml) bodyHtml = markExternalLinks(bodyHtml);
 ---
 
 <Layout title={seoTitle} description={seoDescription} image={featuredImageUrl}>
