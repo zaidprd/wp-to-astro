@@ -31,7 +31,6 @@ const paginatedPosts = await client.fetch(`
     title,
     "slug": slug.current,
     excerpt,
-    svgContent,
     "publishDate": publishedAt,
     "featuredImage": mainImage { asset->{...}, alt },
     categories[]->{ title }
@@ -48,11 +47,7 @@ const postsForLayout = paginatedPosts.map(post => ({
         excerpt: post.excerpt,
         publishDate: new Date(post.publishDate),
         categories: post.categories?.map(c => c.title) || [],
-        featuredImage: post.featuredImage
-            ? urlFor(post.featuredImage).width(800).url()
-            : post.svgContent
-            ? `data:image/svg+xml;charset=utf-8,${encodeURIComponent(post.svgContent)}`
-            : undefined,
+        featuredImage: post.featuredImage ? urlFor(post.featuredImage).width(800).url() : undefined,
     }
 }));
 ---

@@ -11,7 +11,6 @@ import PortableTextRenderer from '../components/PortableTextRenderer.jsx';
 
 export const prerender = true;
 
-// getStaticPaths: Membuat semua halaman artikel dari data Sanity (sudah benar)
 export const getStaticPaths: GetStaticPaths = async () => {
     const posts = await client.fetch(`*[_type == "post" && defined(slug.current)]{ "slug": slug.current }`);
     const staticPages = ['blog', 'contact', 'about', 'style-guide', 'privacy-policy'];
@@ -20,7 +19,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
         .map((post: { slug: string }) => ({ params: { slug: post.slug } }));
 };
 
-// Ambil data lengkap artikel berdasarkan slug (sudah benar)
 const { slug } = Astro.params;
 if (!slug) throw new Error('Slug not found');
 
@@ -29,7 +27,6 @@ const post = await client.fetch(
     title,
     body,
     excerpt,
-    svgContent,
     "publishDate": publishedAt,
     "featuredImage": mainImage { asset->{...}, alt },
     categories[]->{ title }
@@ -41,25 +38,31 @@ const seoTitle = post.title;
 const seoDescription = post.excerpt;
 const featuredImageUrl = post.featuredImage ? urlFor(post.featuredImage).width(1200).url() : undefined;
 
-// If body is a plain string (markdown from Make.com), convert to HTML
-const bodyIsString = typeof post.body === 'string';
-const bodyHtml = bodyIsString ? String(await marked(post.body)) : null;
+// Convert body to HTML: handles plain string OR PortableText where spans contain raw markdown
+let bodyHtml: string | null = null;
+if (typeof post.body === 'string') {
+    bodyHtml = String(await marked(post.body));
+} else if (Array.isArray(post.body)) {
+    const extractedText: string = post.body
+        .flatMap((block: any) => block.children || [])
+        .map((span: any) => span.text || '')
+        .join('\n');
+    if (/##|\*\*|^- |\n##/m.test(extractedText)) {
+        bodyHtml = String(await marked(extractedText));
+    }
+}
 ---
 
 <Layout title={seoTitle} description={seoDescription} image={featuredImageUrl}>
-    <!-- Latar belakang gambar hero -->
     <div class="w-full h-120 absolute top-0 left-0 z-0 overflow-hidden border-b border-black">
-        {featuredImageUrl ? (
+        {featuredImageUrl && (
             <>
                 <img src={urlFor(post.featuredImage).width(1920).height(1080).quality(60).url()} alt={post.featuredImage.alt || ''} class="w-full h-full object-cover grayscale opacity-20" />
                 <div class="absolute inset-0 bg-primary/10 backdrop-blur-md" />
             </>
-        ) : post.svgContent ? (
-            <div class="w-full h-full opacity-20 [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover" set:html={post.svgContent} />
-        ) : null}
+        )}
     </div>
 
-    <!-- Konten Artikel Utama -->
     <div class="relative z-10">
         <article class="site-container--small mx-auto px-4 prose pb-base">
             <div class="mt-42 mb-12 text-center">
@@ -74,11 +77,9 @@ const bodyHtml = bodyIsString ? String(await marked(post.body)) : null;
                 </div>
             </div>
 
-            {featuredImageUrl ? (
-                <img src={urlFor(post.featuredImage).width(1200).height(675).format('webp').quality(80).url()} alt={post.featuredImage.alt || ''} class="w-full h-auto rounded-lg border mb-12 border-black" />
-            ) : post.svgContent ? (
-                <div class="w-full mb-12 rounded-lg border border-black overflow-hidden [&>svg]:w-full [&>svg]:h-auto" set:html={post.svgContent} />
-            ) : null}
+            {featuredImageUrl && (
+                <img src={urlFor(post.featuredImage).width(1200).height(630).format('webp').quality(80).url()} alt={post.featuredImage.alt || ''} class="w-full h-auto rounded-lg border mb-12 border-black" />
+            )}
 
             <div class="mt-8">
                 {bodyHtml ? (
