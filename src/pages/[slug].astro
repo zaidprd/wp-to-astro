@@ -23,10 +23,7 @@ if (!slug) throw new Error('Slug tidak ditemukan');
 const post = await client.fetch(
 `*[_type == "post" && slug.current == $slug][0]{
     title,
-    "body": body[]{
-        ...,
-        markDefs[]{...}
-    },
+    body,
     "_markDefs": body[].markDefs[],
     excerpt,
     "publishDate": publishedAt,
@@ -55,7 +52,14 @@ function portableTextToHtml(blocks: any[], markDefs: any[] = []): string {
             const caption = block.caption ? `<figcaption class="text-center text-sm text-gray-500 mt-2">${escape(block.caption)}</figcaption>` : '';
             return `<figure class="my-8"><img src="${src}" alt="${alt}" loading="lazy" class="w-full h-auto rounded-lg" />${caption}</figure>`;
         }
-        if (block._type !== 'block') return '';
+        if (block._type !== 'block') {
+            // Untuk custom block types, coba extract text dari children jika ada
+            if (Array.isArray(block.children)) {
+                const text = block.children.map((c: any) => escape(c.text || '')).join('');
+                return text ? `<p>${text}</p>` : '';
+            }
+            return '';
+        }
         const tag = styleTag[block.style || 'normal'] || 'p';
         const children = (block.children || []).map((child: any) => {
             let text = escape(child.text || '');
