@@ -92,26 +92,19 @@ function markExternalLinks(html: string): string {
     });
 }
 
-// ✅ FIX #1 CRITICAL: Konten artikel sepenuhnya di-render saat build (SSG)
-// Tidak ada lagi client:load — Google bisa baca semua konten di raw HTML
 let bodyHtml: string | null = null;
 
-if (typeof post.body === 'string') {
-    bodyHtml = String(await marked(post.body));
+if (typeof post.body === 'string' && post.body.startsWith('[object Object]')) {
+    // Data korup dari proses import — body-nya array PortableText yang di-.toString()
+    // Konten asli tidak bisa dipulihkan, tampilkan null agar fallback ke pesan error
+    bodyHtml = null;
+} else if (typeof post.body === 'string') {
+    // Artikel lama yang tersimpan sebagai string/markdown di Sanity
+    bodyHtml = await marked.parse(post.body);
 } else if (Array.isArray(post.body)) {
-    const extractedText: string = post.body
-        .flatMap((block: any) => block.children || [])
-        .map((span: any) => span.text || '')
-        .join('\n');
-
-    if (/##|\*\*|^- |\n##/m.test(extractedText)) {
-        // Konten dengan raw markdown syntax
-        bodyHtml = String(await marked(extractedText));
-    } else {
-        // Konten PortableText native dari Sanity Block Editor
-        // Dikonversi ke HTML saat build time (SSG) — tidak ada client:load
-        bodyHtml = portableTextToHtml(post.body, (post._markDefs || []).filter(Boolean));
-    }
+    // PortableText native dari Sanity Block Editor — selalu render SSG
+    // JANGAN pakai marked() di sini karena marked() bisa return Token array bukan string
+    bodyHtml = portableTextToHtml(post.body, (post._markDefs || []).filter(Boolean));
 }
 
 if (bodyHtml) bodyHtml = markExternalLinks(bodyHtml);
