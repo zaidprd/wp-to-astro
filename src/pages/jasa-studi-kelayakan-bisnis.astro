@@ -1,0 +1,185 @@
+---
+import Layout from '@layouts/Layout.astro';
+import InnerHero from '@components/sections/InnerHero.astro';
+import Button from '@components/ui/Button.astro';
+
+const seoTitle = "Jasa Studi Kelayakan Bisnis Profesional";
+const seoDescription = "Jasa studi kelayakan bisnis dari PT Jaya Konsultan Bisnis. Analisis komprehensif aspek teknis, finansial, pasar, dan hukum untuk proyek UMKM hingga korporasi. Konsultasi gratis.";
+
+const serviceSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Jasa Studi Kelayakan Bisnis",
+    "provider": {
+        "@type": "Organization",
+        "name": "PT Jaya Konsultan Bisnis",
+        "url": "https://jayakonsultanbisnis.com"
+    },
+    "description": seoDescription,
+    "areaServed": "ID",
+    "serviceType": "Business Consulting"
+});
+
+const heroContent = {
+    title: "Jasa Studi Kelayakan Bisnis",
+    description: "Analisis komprehensif untuk memastikan proyek atau bisnis Anda layak secara teknis, finansial, pasar, dan hukum sebelum Anda berinvestasi.",
+};
+
+const aspects = [
+    { title: 'Aspek Pasar', desc: 'Analisis permintaan, penawaran, tren industri, segmentasi pasar, dan proyeksi pangsa pasar proyek Anda.' },
+    { title: 'Aspek Teknis', desc: 'Evaluasi lokasi, kapasitas produksi, teknologi yang digunakan, dan kebutuhan infrastruktur pendukung.' },
+    { title: 'Aspek Finansial', desc: 'Proyeksi keuangan 5–10 tahun, analisis NPV, IRR, Payback Period, BEP, dan sensitivitas investasi.' },
+    { title: 'Aspek Hukum', desc: 'Kajian perizinan, regulasi, status tanah, kepatuhan lingkungan, dan persyaratan legal yang berlaku.' },
+    { title: 'Aspek Manajemen', desc: 'Evaluasi struktur organisasi, kebutuhan SDM, dan rencana operasional jangka pendek dan panjang.' },
+    { title: 'Aspek Lingkungan', desc: 'Analisis dampak lingkungan (AMDAL), tanggung jawab sosial perusahaan, dan keberlanjutan proyek.' },
+];
+
+const packages = [
+    {
+        name: 'Paket UMKM',
+        price: 'Rp 20 – 50 Juta',
+        desc: 'Ideal untuk usaha kecil, ritel, dan startup',
+        features: ['Analisis pasar lokal', 'Proyeksi keuangan 5 tahun', 'Analisis NPV & IRR', 'Laporan 60–80 halaman', 'Revisi 2 kali'],
+    },
+    {
+        name: 'Paket Menengah',
+        price: 'Rp 50 – 200 Juta',
+        desc: 'Untuk pabrik, properti, dan proyek menengah',
+        features: ['Survei pasar langsung', 'Proyeksi keuangan 10 tahun', 'Analisis lengkap 6 aspek', 'Laporan 100–150 halaman', 'Presentasi ke investor', 'Revisi 3 kali'],
+        highlight: true,
+    },
+    {
+        name: 'Paket Enterprise',
+        price: 'Rp 200 Juta+',
+        desc: 'Infrastruktur besar, kawasan industri, properti skala besar',
+        features: ['Tim ahli multidisiplin', 'Riset primer & sekunder mendalam', 'Analisis sensitivitas lengkap', 'Laporan 200+ halaman', 'Presentasi ke bank/lembaga', 'Revisi tidak terbatas'],
+    },
+];
+---
+
+<Layout title={seoTitle} description={seoDescription} schema={serviceSchema}>
+    <InnerHero content={heroContent} />
+
+    <!-- Pengertian -->
+    <section class="py-base bg-background">
+        <div class="site-container mx-auto px-4 sm:px-6">
+            <div class="max-w-3xl mx-auto text-center mb-14">
+                <div class="text-secondary font-bold text-sm uppercase tracking-wider mb-3" data-aos="fade-up">Apa Itu</div>
+                <h2 class="text-headline mb-5" data-aos="fade-up" data-aos-delay="100">Studi Kelayakan Bisnis</h2>
+                <p class="text-body-base leading-relaxed" data-aos="fade-up" data-aos-delay="150">
+                    Studi kelayakan bisnis (<em>feasibility study</em>) adalah proses evaluasi sistematis untuk menentukan apakah suatu ide bisnis atau proyek investasi layak untuk dilaksanakan. Laporan ini mencakup analisis mendalam dari berbagai aspek yang saling berkaitan untuk menghasilkan rekomendasi yang objektif dan berbasis data.
+                </p>
+                <p class="text-body-base leading-relaxed mt-4" data-aos="fade-up" data-aos-delay="200">
+                    Studi kelayakan dibutuhkan sebelum memulai proyek baru, mengajukan pinjaman ke bank, mencari investor, atau memperluas bisnis yang sudah ada. Laporan yang baik akan meminimalkan risiko kegagalan dan memaksimalkan peluang keberhasilan investasi Anda.
+                </p>
+            </div>
+
+            <!-- Aspek yang dianalisis -->
+            <h3 class="text-center text-headline font-bold text-xl mb-8" data-aos="fade-up">6 Aspek yang Kami Analisis</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {aspects.map((a, i) => (
+                    <div class="bg-background-light rounded-xl p-6 border border-gray-100" data-aos="fade-up" data-aos-delay={i * 80}>
+                        <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center text-sm font-bold mb-4">{String(i + 1).padStart(2, '0')}</div>
+                        <h4 class="font-bold text-headline mb-2">{a.title}</h4>
+                        <p class="text-body-base text-sm leading-relaxed">{a.desc}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Manfaat -->
+    <section class="py-base bg-background-light">
+        <div class="site-container mx-auto px-4 sm:px-6">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-headline mb-8 text-center" data-aos="fade-up">Manfaat Menggunakan Jasa Studi Kelayakan Jakobi</h2>
+                <div class="space-y-4">
+                    {[
+                        'Dapatkan kepastian apakah proyek Anda layak dilaksanakan sebelum menginvestasikan modal besar.',
+                        'Identifikasi risiko potensial sejak dini dan rencanakan mitigasinya secara tepat.',
+                        'Laporan yang bankable — siap diajukan ke bank, lembaga keuangan, dan investor.',
+                        'Proyeksi keuangan akurat sebagai dasar pengambilan keputusan strategis.',
+                        'Hemat waktu dan biaya dengan menghindari investasi pada proyek yang tidak layak.',
+                        'Meningkatkan kepercayaan diri saat berdiskusi dengan mitra bisnis dan pemangku kepentingan.',
+                    ].map((benefit, i) => (
+                        <div class="flex items-start gap-3 bg-white rounded-lg p-4 border border-gray-100" data-aos="fade-up" data-aos-delay={i * 60}>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-secondary shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                            <p class="text-body-base text-sm leading-relaxed">{benefit}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paket Harga -->
+    <section class="py-base bg-background">
+        <div class="site-container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 max-w-2xl mx-auto">
+                <div class="text-secondary font-bold text-sm uppercase tracking-wider mb-3" data-aos="fade-up">Investasi</div>
+                <h2 class="text-headline mb-4" data-aos="fade-up" data-aos-delay="100">Estimasi Biaya Layanan</h2>
+                <p class="text-body-base leading-relaxed" data-aos="fade-up" data-aos-delay="150">
+                    Biaya bervariasi tergantung skala, kompleksitas, dan lokasi proyek. Hubungi kami untuk penawaran yang sesuai dengan kebutuhan Anda.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {packages.map((pkg, i) => (
+                    <div
+                        class={`rounded-xl p-8 border flex flex-col relative ${pkg.highlight ? 'bg-primary text-white border-primary shadow-xl' : 'bg-white border-gray-100 shadow-sm'}`}
+                        data-aos="fade-up"
+                        data-aos-delay={i * 100}
+                    >
+                        {pkg.highlight && (
+                            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary text-white text-xs font-bold px-4 py-1 rounded-full">Paling Diminati</span>
+                        )}
+                        <h3 class={`font-bold text-xl mb-1 ${pkg.highlight ? 'text-white' : 'text-headline'}`}>{pkg.name}</h3>
+                        <p class={`text-sm mb-4 ${pkg.highlight ? 'text-white/70' : 'text-body-base'}`}>{pkg.desc}</p>
+                        <div class={`text-2xl font-bold mb-6 ${pkg.highlight ? 'text-secondary-light' : 'text-secondary-dark'}`}>{pkg.price}</div>
+                        <ul class="space-y-3 flex-1 mb-8">
+                            {pkg.features.map(f => (
+                                <li class="flex items-start gap-2.5 text-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class={`w-4 h-4 shrink-0 mt-0.5 ${pkg.highlight ? 'text-secondary-light' : 'text-secondary'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span class={pkg.highlight ? 'text-white/90' : 'text-body-base'}>{f}</span>
+                                </li>
+                            ))}
+                        </ul>
+                        <a
+                            href={`https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20tertarik%20dengan%20${encodeURIComponent(pkg.name)}%20untuk%20studi%20kelayakan.`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class={`block w-full text-center font-bold py-3 rounded-lg transition-colors text-sm ${pkg.highlight ? 'bg-secondary text-white hover:bg-secondary-dark' : 'bg-primary text-white hover:bg-primary-dark'}`}
+                        >
+                            Minta Penawaran
+                        </a>
+                    </div>
+                ))}
+            </div>
+
+            <p class="text-center text-sm text-body-base mt-8 opacity-75" data-aos="fade-up">
+                * Harga di atas merupakan estimasi dan dapat berbeda sesuai kebutuhan spesifik proyek Anda.
+            </p>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-base bg-primary">
+        <div class="site-container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-white mb-4" data-aos="fade-up">Siap Memulai Studi Kelayakan Bisnis Anda?</h2>
+            <p class="text-white/75 mb-8 max-w-xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                Konsultasikan proyek Anda dengan tim ahli kami. Konsultasi awal GRATIS dan tanpa kewajiban.
+            </p>
+            <a
+                href="https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20ingin%20konsultasi%20mengenai%20jasa%20studi%20kelayakan%20bisnis."
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2.5 bg-secondary text-white font-bold px-8 py-4 rounded-lg hover:bg-secondary-dark transition-colors shadow-lg"
+                data-aos="fade-up"
+                data-aos-delay="200"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 fill-current" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157z"/></svg>
+                Konsultasi Gratis via WhatsApp
+            </a>
+        </div>
+    </section>
+</Layout>

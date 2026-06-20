@@ -1,84 +1,117 @@
 ---
-// src/pages/layanan.astro
-// KODE LENGKAP - VERSI TANPA IKON UNTUK MENGHINDARI ERROR
-
 import Layout from '@layouts/Layout.astro';
 import InnerHero from '@components/sections/InnerHero.astro';
 import Button from '@components/ui/Button.astro';
-// import { Icon } from 'astro-icon/components'; // 1. Impor ikon DIHAPUS
 
-// Konten untuk Hero Section
 const heroContent = {
     title: "Layanan Kami",
-    description: "Kami menyediakan solusi komprehensif untuk mendukung keberhasilan bisnis Anda, mulai dari perencanaan hingga evaluasi.",
+    description: "Solusi konsultasi bisnis komprehensif untuk mendukung keberhasilan proyek Anda, dari perencanaan hingga evaluasi.",
 };
 
-// Daftar layanan Anda (tanpa properti 'icon')
 const services = [
     {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
         title: "Jasa Studi Kelayakan (Feasibility Study)",
-        description: "Analisis mendalam untuk menilai kelayakan proyek dari aspek pasar, teknis, keuangan, dan hukum untuk pengambilan keputusan yang tepat.",
-        link: "/jasa-studi-kelayakan-bisnis/"
+        description: "Analisis mendalam untuk menilai kelayakan proyek dari aspek pasar, teknis, keuangan, dan hukum. Hasil laporan komprehensif siap digunakan untuk pengajuan ke bank atau investor.",
+        link: "/jasa-studi-kelayakan-bisnis",
+        badge: "Layanan Utama",
     },
     {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
         title: "Jasa Business Plan",
-        description: "Penyusunan rencana bisnis yang strategis dan terperinci untuk memandu arah perusahaan, menarik investor, dan mencapai tujuan bisnis.",
-        link: "/jasa-business-plan/"
+        description: "Penyusunan rencana bisnis strategis dan terperinci untuk memandu arah perusahaan, menarik investor, dan mencapai tujuan bisnis jangka pendek maupun panjang.",
+        link: "/jasa-business-plan",
+        badge: "Populer",
     },
     {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><polyline points="1 20 23 20"/></svg>`,
         title: "Jasa Riset Pasar (Market Research)",
-        description: "Penelitian pasar yang akurat untuk memahami perilaku konsumen, tren industri, dan potensi pasar sebagai dasar strategi pemasaran.",
-        link: "/kisaran-biaya-survey-pasar/"
+        description: "Penelitian pasar komprehensif untuk memahami perilaku konsumen, tren industri, dan potensi pasar sebagai dasar strategi pemasaran dan ekspansi bisnis Anda.",
+        link: "/jasa-riset-pasar",
+        badge: null,
     },
     {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+        title: "High and Best Use (HBU)",
+        description: "Konsep penilaian properti untuk menentukan penggunaan lahan paling efisien secara fisik, hukum, keuangan, dan menghasilkan nilai tertinggi bagi pemilik.",
+        link: "/layanan",
+        badge: null,
+    },
+    {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
         title: "Jasa Survey",
-        description: "Pengumpulan data primer melalui survei yang dirancang secara profesional untuk mendapatkan wawasan spesifik dari target audiens Anda.",
-        link: "/metode-survey-pasar/"
+        description: "Pengumpulan data primer melalui survei terstruktur untuk mendapatkan wawasan spesifik dari target audiens, termasuk survei kepuasan pelanggan dan potensi pasar.",
+        link: "/contact-us",
+        badge: null,
     },
     {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
         title: "Jasa Konsultasi Bisnis",
-        description: "Layanan konsultasi untuk membantu Anda mengatasi tantangan bisnis, mengidentifikasi peluang baru, dan meningkatkan kinerja operasional.",
-        link: "/konsultan-bisnis-terpercaya/"
-    },
-    {
-        title: "Jasa Analisis Bisnis",
-        description: "Analisis data bisnis Anda untuk menemukan pola, mengukur kinerja, dan memberikan rekomendasi berbasis data untuk pertumbuhan.",
-        link: "/menghitung-biaya-studi-kelayakan-bisnis/"
+        description: "Layanan konsultasi strategis untuk mengatasi tantangan bisnis, mengidentifikasi peluang baru, dan meningkatkan kinerja operasional perusahaan Anda.",
+        link: "/contact-us",
+        badge: null,
     }
 ];
 ---
 
-<Layout title="Layanan" description="Jelajahi layanan profesional kami mulai dari studi kelayakan, business plan, riset pasar, hingga konsultasi bisnis untuk mendukung kesuksesan proyek Anda.">
-    
+<Layout
+    title="Layanan Konsultasi Bisnis"
+    description="Jelajahi layanan Jakobi: studi kelayakan, business plan, riset pasar, HBU, survey, dan konsultasi bisnis. Tim berpengalaman 10+ tahun melayani UMKM hingga korporasi."
+>
     <InnerHero content={heroContent} />
 
-    <section class="py-large">
-        <div class="site-container px-4">
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                {services.map(service => (
-                    <div class="bg-white/5 border border-white/10 rounded-lg p-8 flex flex-col text-center items-center transition-all duration-300 hover:border-primary hover:-translate-y-2 shadow-lg">
-                        
-                        {/* 2. Bagian Ikon DIHAPUS dari sini */}
-                        
-                        {/* Judul Layanan */}
-                        <h3 class="text-xl font-semibold mb-3 text-headline mt-6"> {/* Menambahkan margin top untuk mengganti ruang ikon */}
-                            {service.title}
-                        </h3>
-                        
-                        {/* Deskripsi Layanan */}
-                        <p class="text-body-base opacity-80 mb-6 flex-grow">
-                            {service.description}
-                        </p>
-                        
-                        {/* Tombol Baca Selengkapnya */}
+    <!-- Grid Layanan -->
+    <section class="py-base bg-background">
+        <div class="site-container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 max-w-2xl mx-auto">
+                <h2 class="text-headline mb-4" data-aos="fade-up">Semua Layanan Kami</h2>
+                <p class="text-body-base leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                    Setiap layanan dirancang untuk memberikan hasil yang terukur dan dapat diandalkan untuk pengambilan keputusan bisnis Anda.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {services.map((service, i) => (
+                    <div
+                        class="group bg-white rounded-xl p-8 border border-gray-100 shadow-sm hover:border-secondary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col relative"
+                        data-aos="fade-up"
+                        data-aos-delay={i * 80}
+                    >
+                        {service.badge && (
+                            <span class="absolute top-5 right-5 text-xs font-bold bg-secondary/15 text-secondary-dark px-2.5 py-1 rounded-full">
+                                {service.badge}
+                            </span>
+                        )}
+                        <div class="w-16 h-16 rounded-xl bg-primary/8 text-primary group-hover:bg-primary group-hover:text-white flex items-center justify-center mb-6 transition-all duration-300 shrink-0" set:html={service.icon} />
+                        <h3 class="text-headline font-bold text-lg mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
+                        <p class="text-body-base text-sm leading-relaxed flex-1 mb-6">{service.description}</p>
                         <Button href={service.link} variant="primary" size="sm">
-                            Baca Selengkapnya
+                            Pelajari Selengkapnya
                         </Button>
                     </div>
                 ))}
             </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-base bg-primary">
+        <div class="site-container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-white mb-4" data-aos="fade-up">Tidak yakin layanan mana yang tepat?</h2>
+            <p class="text-white/75 mb-8 max-w-xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                Konsultasikan kebutuhan Anda dengan tim kami. Kami akan merekomendasikan solusi terbaik sesuai skala dan jenis bisnis Anda — tanpa biaya.
+            </p>
+            <a
+                href="https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20ingin%20konsultasi%20tentang%20layanan%20yang%20tepat%20untuk%20bisnis%20saya."
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2.5 bg-secondary text-white font-bold px-8 py-4 rounded-lg hover:bg-secondary-dark transition-colors shadow-lg"
+                data-aos="fade-up"
+                data-aos-delay="200"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 fill-current" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157z"/></svg>
+                Konsultasi Gratis Sekarang
+            </a>
         </div>
     </section>
 </Layout>

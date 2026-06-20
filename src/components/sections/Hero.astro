@@ -2,17 +2,25 @@
 import Button from '@components/ui/Button.astro';
 import { Image } from 'astro:assets';
 
+interface HeroButton {
+    text: string;
+    link: string;
+    variant?: 'primary' | 'secondary' | 'accent' | 'ghostLight' | 'ghostDark';
+    target?: string;
+}
+
+interface TrustBadge {
+    value: string;
+    label: string;
+}
+
 interface HeroContent {
     title: string;
     description: string;
-        buttons?: {
-        text: string;
-        link: string;
-        variant?: 'primary' | 'secondary' | 'ghostLight' | 'ghostDark';
-        target?: string;
-    }[];
-    backgroundImage?: string | any; // Using any for now to handle both string paths and imported images
-    overlayOpacity?: number; // Value between 0 and 1
+    buttons?: HeroButton[];
+    backgroundImage?: string | any;
+    overlayOpacity?: number;
+    trustBadges?: TrustBadge[];
 }
 
 interface Props {
@@ -20,12 +28,20 @@ interface Props {
 }
 
 const { content } = Astro.props;
-const opacity = content.overlayOpacity ?? 1; // Default opacity if not specified
+const opacity = content.overlayOpacity ?? 0.5;
+
+const defaultBadges: TrustBadge[] = [
+    { value: '100+', label: 'Proyek Selesai' },
+    { value: '10+', label: 'Tahun Pengalaman' },
+    { value: '95%', label: 'Klien Puas' },
+];
+const badges = content.trustBadges || defaultBadges;
 ---
 
-<section class="header-offset relative">
-    {content.backgroundImage && (
-        <div class="absolute inset-0 left-0 top-0 w-full h-full overflow-hidden">
+<section class="relative min-h-[85vh] flex flex-col justify-center header-offset overflow-hidden">
+    <!-- Background -->
+    {content.backgroundImage ? (
+        <div class="absolute inset-0">
             <Image
                 src={content.backgroundImage}
                 alt=""
@@ -35,30 +51,62 @@ const opacity = content.overlayOpacity ?? 1; // Default opacity if not specified
                 quality={70}
                 format="webp"
                 loading="eager"
-                decoding="async"
+                aria-hidden="true"
             />
-            <div
-                class="hero-background absolute inset-0 left-0 top-0 w-full h-full overflow-hidden"
-  style={`background: rgba(0, 0, 0, ${opacity});`}
-            ></div>
+            <div class="absolute inset-0 bg-primary" style={`opacity: ${opacity};`}></div>
         </div>
+    ) : (
+        <div class="absolute inset-0 hero-background"></div>
     )}
 
-    <div class="site-container mx-auto px-4 py-large relative z-10 flex flex-col md:items-center md:justify-center md:text-center">
-        <h1 class="text-white text-balance" data-aos="fade-up">{content.title}</h1>
-        <p class="text-white mt-2 text-balance" data-aos="fade-up" data-aos-delay="100">{content.description}</p>
-        {content.buttons && content.buttons.length > 0 && (
-            <div class="flex flex-wrap gap-4 mt-8" data-aos="fade-up">
-                {content.buttons.map((button) => (
-                    <Button
-                        href={button.link}
-                        target={button.target || '_self'}
-                        variant={button.variant || 'primary'}
-                    >
-                        {button.text}
-                    </Button>
-                ))}
+    <!-- Konten -->
+    <div class="site-container mx-auto px-4 sm:px-6 relative z-10 py-20">
+        <div class="max-w-3xl">
+            <!-- Badge atas -->
+            <div class="inline-flex items-center gap-2 bg-secondary/20 border border-secondary/30 text-secondary-light text-xs font-bold px-4 py-2 rounded-full mb-6 uppercase tracking-wider" data-aos="fade-down">
+                Konsultan Bisnis Terpercaya Jakarta
             </div>
-        )}
+
+            <h1 class="text-white mb-6 leading-tight" data-aos="fade-up" data-aos-delay="50">
+                {content.title}
+            </h1>
+
+            <p class="text-white/85 text-lg leading-relaxed mb-10 max-w-2xl" data-aos="fade-up" data-aos-delay="150">
+                {content.description}
+            </p>
+
+            {content.buttons && content.buttons.length > 0 && (
+                <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="250">
+                    {content.buttons.map((btn) => (
+                        <Button
+                            href={btn.link}
+                            target={btn.target || '_self'}
+                            variant={btn.variant || 'secondary'}
+                            size="lg"
+                        >
+                            {btn.text}
+                        </Button>
+                    ))}
+                </div>
+            )}
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="mt-16 grid grid-cols-3 gap-4 max-w-lg" data-aos="fade-up" data-aos-delay="350">
+            {badges.map((badge) => (
+                <div class="text-center bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div class="text-2xl sm:text-3xl font-bold text-secondary mb-1">{badge.value}</div>
+                    <div class="text-white/75 text-xs sm:text-sm leading-tight">{badge.label}</div>
+                </div>
+            ))}
+        </div>
+    </div>
+
+    <!-- Wave bottom -->
+    <div class="absolute bottom-0 left-0 right-0" aria-hidden="true">
+        <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+            <path d="M0 48 L0 20 Q360 0 720 20 Q1080 40 1440 20 L1440 48 Z" fill="white" fill-opacity="0.08"/>
+            <path d="M0 48 L0 30 Q360 10 720 30 Q1080 50 1440 30 L1440 48 Z" fill="white" fill-opacity="0.05"/>
+        </svg>
     </div>
 </section>

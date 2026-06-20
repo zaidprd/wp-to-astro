@@ -1,6 +1,5 @@
 ---
 // src/layouts/Layout.astro
-// KODE FINAL DENGAN JAVASCRIPT YANG BENAR
 
 import { ViewTransitions } from 'astro:transitions';
 import "../styles/global.css";
@@ -15,67 +14,82 @@ const { theme } = themeSetting;
 const { SiteName, Separator, defaultDescription } = SEO;
 
 interface Props {
-	title?: string;
-	description?: string;
-	image?: string;
-	footerCta?: {
-		title: string;
-		description: string;
-		hideCta: boolean;
-		button: {
-			text: string;
-			link: string;
-			target?: string;
-		};
-	};
-	canonicalUrl?: string;
+    title?: string;
+    description?: string;
+    image?: string;
+    ogType?: 'website' | 'article';
+    schema?: string;
+    footerCta?: {
+        title: string;
+        description: string;
+        hideCta: boolean;
+        button: {
+            text: string;
+            link: string;
+            target?: string;
+        };
+    };
+    canonicalUrl?: string;
 }
 
-const { title, description, image, footerCta, canonicalUrl } = Astro.props;
+const { title, description, image, ogType = 'website', schema, footerCta, canonicalUrl } = Astro.props;
 
-const pageTitle = title ? `${title} ${Separator} ${SiteName}` : SiteName;
+const pageTitle       = title ? `${title} ${Separator} ${SiteName}` : SiteName;
 const pageDescription = description || defaultDescription || '';
-const pageImage = image || '';
-const canonicalPath = canonicalUrl || Astro.url.pathname;
+const pageImage       = image || '';
+const canonicalPath   = canonicalUrl || Astro.url.pathname;
 const fullCanonicalUrl = new URL(canonicalPath, siteConfig.siteUrl).toString();
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-<meta name="google-site-verification" content="vWHsJzER6zbEUBODjdXsxBtnGUvr6qRlkfTrBW97-vM" />
-		<meta charset="UTF-8" />
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7938664692257223"
-     crossorigin="anonymous"></script>
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/webp" href="/favicon.webp" />
-		<link rel="sitemap" href="/sitemap-index.xml" />
-		<link rel="canonical" href={fullCanonicalUrl} />
-		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
-		<meta name="description" content={pageDescription} />
-		<meta name="robots" content="index, follow" />
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={fullCanonicalUrl} />
-		<meta property="og:title" content={pageTitle} />
-		<meta property="og:description" content={pageDescription} />
-		{pageImage && <meta property="og:image" content={new URL(pageImage, siteConfig.siteUrl  ).toString()} />}
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content={fullCanonicalUrl} />
-		<meta property="twitter:title" content={pageTitle} />
-		<meta property="twitter:description" content={pageDescription} />
-		{pageImage && <meta property="twitter:image" content={new URL(pageImage, siteConfig.siteUrl).toString()} />}
+<html lang="id">
+    <head>
+        <meta name="google-site-verification" content="vWHsJzER6zbEUBODjdXsxBtnGUvr6qRlkfTrBW97-vM" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/webp" href="/favicon.webp" />
+        <link rel="sitemap" href="/sitemap-index.xml" />
+        <link rel="canonical" href={fullCanonicalUrl} />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta name="robots" content="index, follow" />
+
+        <!-- Open Graph -->
+        <meta property="og:type"        content={ogType} />
+        <meta property="og:url"         content={fullCanonicalUrl} />
+        <meta property="og:title"       content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:locale"      content="id_ID" />
+        <meta property="og:site_name"   content="PT Jaya Konsultan Bisnis" />
+        {pageImage && <meta property="og:image" content={new URL(pageImage, siteConfig.siteUrl).toString()} />}
+
+        <!-- Twitter -->
+        <meta property="twitter:card"        content="summary_large_image" />
+        <meta property="twitter:url"         content={fullCanonicalUrl} />
+        <meta property="twitter:title"       content={pageTitle} />
+        <meta property="twitter:description" content={pageDescription} />
+        {pageImage && <meta property="twitter:image" content={new URL(pageImage, siteConfig.siteUrl).toString()} />}
+
+        <!-- JSON-LD Schema (opsional, dari prop) -->
+        {schema && <script type="application/ld+json" set:html={schema} />}
+
+        <!-- Slot untuk head tambahan dari halaman anak -->
+        <slot name="head" />
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
         <ViewTransitions />
-	</head>
-	<body data-theme={theme}>
-		<Header />
-		<slot />
-		<Footer footerCta={footerCta} />
-		<FloatingWhatsApp />
-		
+    </head>
+    <body data-theme={theme}>
+        <Header />
+        <slot />
+        <Footer footerCta={footerCta} />
+        <FloatingWhatsApp />
+
         <!-- Panel Menu Mobile -->
         <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
         <div
@@ -85,55 +99,59 @@ const fullCanonicalUrl = new URL(canonicalPath, siteConfig.siteUrl).toString();
             <ul class="flex flex-col gap-4 mt-16">
                 {headerMenu.map((item) => (
                     <li>
-                        <div class="text-white">
-                            <a href={item.link} class:list={['py-1 text-lg text-nav-mobile-text hover:text-nav-mobile-text-hover']}>
-                                {item.name}
-                            </a>
-                        </div>
+                        <a href={item.link} class="py-2 text-lg text-white hover:text-secondary transition-colors block">
+                            {item.name}
+                        </a>
                     </li>
                 ))}
             </ul>
             <div class="mt-8 pb-8">
-                <a href="/contact-us" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-11 px-8 bg-transparent text-white hover:bg-white hover:text-primary">
-                    Hubungi Kami
+                <a
+                    href="https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20ingin%20konsultasi%20gratis."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center w-full rounded-lg bg-secondary text-white font-semibold h-12 px-8 hover:bg-secondary-dark transition-colors"
+                >
+                    Konsultasi Gratis
                 </a>
             </div>
         </div>
 
-		<script>
-			import AOS from 'aos';
-			AOS.init({
-				duration: 800,
-				once: true,
-			});
+        <script>
+            import AOS from 'aos';
 
-            // --- LOGIKA MENU MOBILE YANG DIPERBAIKI TOTAL ---
-            document.addEventListener('DOMContentLoaded', () => {
+            // Pakai astro:page-load agar reinit setelah ViewTransitions
+            document.addEventListener('astro:page-load', () => {
+                AOS.init({ duration: 700, once: true, offset: 60 });
+            });
+
+            // Logika menu mobile
+            document.addEventListener('astro:page-load', () => {
                 const mobileMenuButton = document.getElementById('mobile-menu-button');
-                const menuPanel = document.getElementById('mobile-menu-panel');
-                const menuOverlay = document.getElementById('mobile-menu-overlay');
-                
+                const menuPanel        = document.getElementById('mobile-menu-panel');
+                const menuOverlay      = document.getElementById('mobile-menu-overlay');
+
                 if (!mobileMenuButton || !menuPanel || !menuOverlay) return;
 
-                const menuIcon = mobileMenuButton.querySelector('.menu-icon');
+                const menuIcon  = mobileMenuButton.querySelector('.menu-icon');
                 const closeIcon = mobileMenuButton.querySelector('.close-icon');
 
                 const toggleMenu = () => {
                     const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-
                     if (isExpanded) {
-                        // Tutup Menu
                         document.body.style.overflow = '';
                         menuPanel.classList.add('opacity-0', 'translate-x-full');
+                        setTimeout(() => menuPanel.classList.add('hidden'), 300);
                         menuOverlay.classList.add('hidden');
                         menuIcon?.classList.remove('hidden');
                         closeIcon?.classList.add('hidden');
                         mobileMenuButton.setAttribute('aria-expanded', 'false');
                     } else {
-                        // Buka Menu
                         document.body.style.overflow = 'hidden';
                         menuPanel.classList.remove('hidden');
-                        menuPanel.classList.remove('opacity-0', 'translate-x-full');
+                        requestAnimationFrame(() => {
+                            menuPanel.classList.remove('opacity-0', 'translate-x-full');
+                        });
                         menuOverlay.classList.remove('hidden');
                         menuIcon?.classList.add('hidden');
                         closeIcon?.classList.remove('hidden');
@@ -143,12 +161,12 @@ const fullCanonicalUrl = new URL(canonicalPath, siteConfig.siteUrl).toString();
 
                 mobileMenuButton.addEventListener('click', toggleMenu);
                 menuOverlay.addEventListener('click', () => {
-                    // Hanya tutup jika menu sedang terbuka
-                    if (mobileMenuButton.getAttribute('aria-expanded') === 'true') {
-                        toggleMenu();
-                    }
+                    if (mobileMenuButton.getAttribute('aria-expanded') === 'true') toggleMenu();
                 });
             });
-		</script>
-	</body>
+        </script>
+
+        <!-- AdSense — dipindah ke sebelum </body> agar tidak blokir render -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7938664692257223" crossorigin="anonymous"></script>
+    </body>
 </html>

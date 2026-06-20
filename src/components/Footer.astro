@@ -1,131 +1,149 @@
 ---
 // src/components/Footer.astro
-// KODE LENGKAP YANG SUDAH DIPERBAIKI
 
 import Logo from '@components/Logo.astro';
-import Button from '@components/ui/Button.astro';
 import { siteConfig } from '@data/config';
-
-// --- 👇 PERUBAHAN UTAMA: Hanya impor footerMenu 👇 ---
-import { footerMenu } from '@data/menu'; 
-
-// --- 👇 PERUBAHAN UTAMA: Definisikan legalMenu secara lokal 👇 ---
-const legalMenu = [
-    { name: 'Kebijakan Privasi', link: '/privacypolicy' }
-];
-// --- AKHIR PERUBAHAN ---
-
+import { footerMenu } from '@data/menu';
 
 interface ButtonProps {
-  text: string;
-  link: string;
-  target?: string;
+    text: string;
+    link: string;
+    target?: string;
 }
-
 interface Props {
-  footerCta?: {
-    title: string;
-    description: string;
-    hideCta: boolean;
-    button: ButtonProps;
-  };
+    footerCta?: {
+        title: string;
+        description: string;
+        hideCta: boolean;
+        button: ButtonProps;
+    };
 }
 
 const { footerCta } = Astro.props;
-
 const defaultCta = {
-  title: "Siap Mengembangkan Bisnis Anda?",
-  description: "Hubungi kami sekarang untuk mendapatkan penawaran terbaik untuk layanan studi kelayakan, business plan, dan riset pasar.",
-  hideCta: false,
-  button: {
-    text: "Kontak Kami",
-    link: "/contact-us",
-    target: "_self"
-  }
+    title: "Siap Memulai Proyek Anda?",
+    description: "Konsultasi pertama GRATIS. Tim ahli kami siap membantu Anda membuat studi kelayakan, business plan, dan riset pasar yang komprehensif.",
+    hideCta: false,
+    button: { text: "Chat WhatsApp Sekarang", link: "https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20ingin%20konsultasi%20gratis.", target: "_blank" }
 };
-
 const cta = footerCta || defaultCta;
 const currentYear = new Date().getFullYear();
+
+const services = [
+    { name: 'Studi Kelayakan', href: '/jasa-studi-kelayakan-bisnis' },
+    { name: 'Business Plan', href: '/jasa-business-plan' },
+    { name: 'Riset Pasar', href: '/jasa-riset-pasar' },
+    { name: 'High and Best Use', href: '/layanan' },
+    { name: 'Konsultasi Bisnis', href: '/layanan' },
+];
 ---
 
-<footer class="bg-black text-white pb-small">
-    <div class="site-container mx-auto px-4">
-        
-        {!cta.hideCta && (
-          <div class="text-center border-b border-white/20 mb-12 py-large">
-            <h2 class="text-3xl font-bold mb-4">{cta.title}</h2>
-            <p class="text-white/80 mb-6 max-w-2xl mx-auto">
-              {cta.description}
-            </p>
-            <Button 
-              href={cta.button.link} 
-              variant="ghostLight"
-              size="lg"
-              {...(cta.button.target && { target: cta.button.target })}
-            >
-              {cta.button.text}
-            </Button>
-          </div>
-        )}
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
-          
-          <div class="col-span-1 lg:col-span-2">
-            <div class="mb-4">
-              <Logo variant="footer" />
+<footer class="bg-primary text-white">
+    <!-- CTA Banner -->
+    {!cta.hideCta && (
+        <div class="bg-secondary/10 border-b border-white/10">
+            <div class="site-container mx-auto px-4 sm:px-6 py-14 text-center">
+                <h2 class="text-white text-2xl sm:text-3xl font-bold mb-3">{cta.title}</h2>
+                <p class="text-white/75 mb-8 max-w-2xl mx-auto leading-relaxed">{cta.description}</p>
+                <a
+                    href={cta.button.link}
+                    target={cta.button.target || '_self'}
+                    rel={cta.button.target === '_blank' ? 'noopener noreferrer' : undefined}
+                    class="inline-flex items-center gap-2.5 bg-secondary text-white font-bold px-8 py-4 rounded-lg hover:bg-secondary-dark transition-colors shadow-lg text-base"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 fill-current" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157z"/></svg>
+                    {cta.button.text}
+                </a>
             </div>
-            <p class="text-white/70 text-sm leading-relaxed max-w-md">
-              PT Jaya Konsultan Bisnis (Jakobi) adalah perusahaan konsultan independen yang berfokus pada layanan studi kelayakan, rencana bisnis, riset pasar, dan jasa survey.
-            </p>
-          </div>
-          
-          <div class="col-span-1">
-            <h3 class="text-lg font-semibold mb-4">Quick Menu</h3>
-            <nav>
-              <ul class="space-y-2">
-                {footerMenu.map(item => (
-                  <li><a href={item.link} class="text-white/80 hover:text-white transition-colors text-sm">{item.name}</a></li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-
-          <div class="col-span-1">
-            <h3 class="text-lg font-semibold mb-4">Hubungi Kami</h3>
-            <ul class="space-y-3 text-sm">
-                <li class="flex items-start">
-                    <span class="text-white/80 mt-1 mr-3 shrink-0">&#9679;</span>
-                    <span class="text-white/80">Jl. H Taha No 2K Kelapa Dua Kebon Jeruk, Jakarta Barat</span>
-                </li>
-                <li class="flex items-start">
-                    <span class="text-white/80 mt-1 mr-3 shrink-0">&#9679;</span>
-                    <a href="mailto:info@jayakonsultanbisnis.com" class="text-white/80 hover:text-white">info@jayakonsultanbisnis.com</a>
-                </li>
-                <li class="flex items-start">
-                    <span class="text-white/80 mt-1 mr-3 shrink-0">&#9679;</span>
-                    <a href="tel:+6281274203815" class="text-white/80 hover:text-white">0812-7420-3815</a>
-                </li>
-            </ul>
-          </div>
-
         </div>
+    )}
 
-        <div class="mt-8 pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center">
-          <div class="text-white/60 text-sm text-center md:text-left">
-            © {currentYear} {siteConfig.companyName}. All rights reserved.
-          </div>
-          
-          <nav class="mt-4 md:mt-0">
-            <ul class="flex flex-wrap gap-x-6 gap-y-2 justify-center">
-              {legalMenu.map(item => (
-                <li>
-                  <a href={item.link} class="text-sm text-white/60 hover:text-white transition-colors">
-                    {item.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+    <!-- Footer Utama -->
+    <div class="site-container mx-auto px-4 sm:px-6 py-14">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+
+            <!-- Kolom 1: Branding -->
+            <div class="lg:col-span-2">
+                <div class="mb-5">
+                    <Logo variant="footer" />
+                </div>
+                <p class="text-white/70 text-sm leading-relaxed max-w-sm mb-6">
+                    PT Jaya Konsultan Bisnis (Jakobi) adalah perusahaan konsultan independen yang berspesialisasi dalam studi kelayakan bisnis, business plan, riset pasar, dan jasa survey untuk UMKM hingga korporasi.
+                </p>
+                <!-- Instagram -->
+                <a
+                    href={siteConfig.Socials.Instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm"
+                    aria-label="Instagram PT Jaya Konsultan Bisnis"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    @jayakonsultanbisnis
+                </a>
+            </div>
+
+            <!-- Kolom 2: Menu Cepat -->
+            <div>
+                <h3 class="text-white font-semibold text-base mb-5">Menu Cepat</h3>
+                <ul class="space-y-2.5 list-none m-0 p-0">
+                    {footerMenu.map(item => (
+                        <li>
+                            <a href={item.link} class="text-white/70 hover:text-white transition-colors text-sm flex items-center gap-2">
+                                <span class="w-1 h-1 rounded-full bg-secondary shrink-0"></span>
+                                {item.name}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            <!-- Kolom 3: Layanan + Kontak -->
+            <div>
+                <h3 class="text-white font-semibold text-base mb-5">Layanan</h3>
+                <ul class="space-y-2.5 list-none m-0 p-0 mb-8">
+                    {services.map(s => (
+                        <li>
+                            <a href={s.href} class="text-white/70 hover:text-white transition-colors text-sm flex items-center gap-2">
+                                <span class="w-1 h-1 rounded-full bg-secondary shrink-0"></span>
+                                {s.name}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+
+                <h3 class="text-white font-semibold text-base mb-4">Hubungi Kami</h3>
+                <ul class="space-y-3 text-sm list-none m-0 p-0">
+                    <li class="flex items-start gap-2.5 text-white/70">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mt-0.5 shrink-0 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <span>{siteConfig.Socials.Location}</span>
+                    </li>
+                    <li>
+                        <a href={`mailto:${siteConfig.Socials.Email}`} class="flex items-center gap-2.5 text-white/70 hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            {siteConfig.Socials.Email}
+                        </a>
+                    </li>
+                    <li>
+                        <a href={`tel:${siteConfig.Socials.Phone}`} class="flex items-center gap-2.5 text-white/70 hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+                            {siteConfig.Socials.PhoneDisplay}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="border-t border-white/10">
+        <div class="site-container mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <p class="text-white/50 text-xs text-center sm:text-left">
+                © {currentYear} PT Jaya Konsultan Bisnis. Semua hak dilindungi.
+            </p>
+            <a href="/privacypolicy" class="text-white/50 hover:text-white text-xs transition-colors">
+                Kebijakan Privasi
+            </a>
         </div>
     </div>
 </footer>

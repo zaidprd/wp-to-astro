@@ -1,0 +1,93 @@
+---
+import Layout from '@layouts/Layout.astro';
+import InnerHero from '@components/sections/InnerHero.astro';
+
+const seoTitle = "Jasa Business Plan Profesional";
+const seoDescription = "Jasa penyusunan business plan profesional oleh PT Jaya Konsultan Bisnis. Rencana bisnis strategis untuk startup, UMKM, dan korporasi. Siap diajukan ke bank dan investor.";
+
+const serviceSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Jasa Business Plan",
+    "provider": { "@type": "Organization", "name": "PT Jaya Konsultan Bisnis", "url": "https://jayakonsultanbisnis.com" },
+    "description": seoDescription,
+    "areaServed": "ID"
+});
+
+const heroContent = {
+    title: "Jasa Business Plan",
+    description: "Rencana bisnis yang strategis, terstruktur, dan meyakinkan — untuk memandu pertumbuhan perusahaan Anda dan menarik perhatian investor serta lembaga keuangan.",
+};
+
+const components = [
+    { title: 'Ringkasan Eksekutif', desc: 'Gambaran singkat namun komprehensif tentang bisnis, peluang, dan strategi utama yang dirancang untuk menarik perhatian pembaca sejak halaman pertama.' },
+    { title: 'Analisis Industri & Pasar', desc: 'Riset mendalam tentang ukuran pasar, tren, kompetitor, dan peluang di industri Anda berdasarkan data primer dan sekunder terkini.' },
+    { title: 'Produk & Layanan', desc: 'Deskripsi detail tentang apa yang Anda tawarkan, keunggulan kompetitif, model harga, dan roadmap pengembangan ke depan.' },
+    { title: 'Strategi Pemasaran', desc: 'Rencana go-to-market yang konkret mencakup segmentasi, positioning, saluran distribusi, dan anggaran pemasaran.' },
+    { title: 'Proyeksi Keuangan', desc: 'Laporan keuangan proyeksi 3–5 tahun: P&L, neraca, arus kas, dan analisis break-even point yang realistis dan terverifikasi.' },
+    { title: 'Kebutuhan Pendanaan', desc: 'Penjelasan kebutuhan modal, alokasi penggunaan dana, dan jadwal pengembalian investasi yang transparan dan meyakinkan.' },
+];
+---
+
+<Layout title={seoTitle} description={seoDescription} schema={serviceSchema}>
+    <InnerHero content={heroContent} />
+
+    <section class="py-base bg-background">
+        <div class="site-container mx-auto px-4 sm:px-6">
+            <div class="max-w-3xl mx-auto text-center mb-14">
+                <div class="text-secondary font-bold text-sm uppercase tracking-wider mb-3" data-aos="fade-up">Tentang Layanan</div>
+                <h2 class="text-headline mb-5" data-aos="fade-up" data-aos-delay="100">Apa Itu Business Plan?</h2>
+                <p class="text-body-base leading-relaxed" data-aos="fade-up" data-aos-delay="150">
+                    Business plan adalah dokumen formal yang menggambarkan tujuan bisnis, strategi pencapaian, analisis pasar, struktur operasional, dan proyeksi keuangan suatu perusahaan. Dokumen ini menjadi panduan internal bagi tim manajemen dan alat komunikasi eksternal kepada investor, bank, dan mitra bisnis.
+                </p>
+                <p class="text-body-base leading-relaxed mt-4" data-aos="fade-up" data-aos-delay="200">
+                    Business plan yang baik bukan sekadar dokumen formalitas — melainkan peta jalan nyata yang membantu Anda membuat keputusan strategis yang tepat dan mengalokasikan sumber daya secara efisien.
+                </p>
+            </div>
+
+            <h3 class="text-center text-headline font-bold text-xl mb-8" data-aos="fade-up">Komponen Business Plan yang Kami Susun</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
+                {components.map((c, i) => (
+                    <div class="bg-background-light rounded-xl p-6 border border-gray-100" data-aos="fade-up" data-aos-delay={i * 70}>
+                        <div class="w-8 h-8 rounded-lg bg-secondary text-white flex items-center justify-center text-sm font-bold mb-4">{String(i + 1).padStart(2, '0')}</div>
+                        <h4 class="font-bold text-headline mb-2">{c.title}</h4>
+                        <p class="text-body-base text-sm leading-relaxed">{c.desc}</p>
+                    </div>
+                ))}
+            </div>
+
+            <!-- Cocok untuk -->
+            <div class="bg-primary/5 border border-primary/15 rounded-2xl p-10 max-w-3xl mx-auto text-center" data-aos="fade-up">
+                <h3 class="text-headline font-bold text-xl mb-6">Business Plan Kami Cocok untuk:</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-body-base">
+                    {['Startup & Wirausaha Baru', 'UMKM yang Ingin Berkembang', 'Pengajuan KUR Bank', 'Mencari Modal Investor', 'Waralaba & Franchise', 'Ekspansi Bisnis'].map(t => (
+                        <div class="flex items-center gap-2 bg-white rounded-lg p-3 shadow-xs border border-gray-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-secondary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                            {t}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-base bg-primary">
+        <div class="site-container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-white mb-4" data-aos="fade-up">Mulai Susun Business Plan Anda Sekarang</h2>
+            <p class="text-white/75 mb-8 max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Tim konsultan kami akan membantu Anda menyusun business plan yang profesional, realistis, dan siap meyakinkan investor.
+            </p>
+            <a
+                href="https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20ingin%20konsultasi%20mengenai%20jasa%20business%20plan."
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2.5 bg-secondary text-white font-bold px-8 py-4 rounded-lg hover:bg-secondary-dark transition-colors"
+                data-aos="fade-up"
+                data-aos-delay="200"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 fill-current" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157z"/></svg>
+                Konsultasi Gratis via WhatsApp
+            </a>
+        </div>
+    </section>
+</Layout>

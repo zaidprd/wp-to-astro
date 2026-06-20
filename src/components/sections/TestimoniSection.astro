@@ -1,0 +1,79 @@
+---
+// src/components/sections/TestimoniSection.astro
+
+const testimonials = [
+    {
+        name: 'Budi Santoso',
+        position: 'Direktur, PT Maju Bersama',
+        industry: 'Manufaktur',
+        rating: 5,
+        text: 'Laporan studi kelayakan dari Jakobi sangat komprehensif dan detail. Analisis finansialnya akurat dan membantu kami mendapatkan persetujuan investor dalam waktu singkat. Sangat profesional!',
+        initial: 'B',
+    },
+    {
+        name: 'Siti Rahayu',
+        position: 'Pemilik, CV Kuliner Nusantara',
+        industry: 'F&B',
+        rating: 5,
+        text: 'Sebagai pelaku UMKM, saya khawatir tidak bisa afford konsultan. Tapi Jakobi memberikan layanan yang sangat worth it dengan harga yang transparan. Business plan kami jadi jauh lebih terstruktur.',
+        initial: 'S',
+    },
+    {
+        name: 'Ahmad Fauzan',
+        position: 'CEO, PT Properti Andalan',
+        industry: 'Properti',
+        rating: 5,
+        text: 'Kami menggunakan jasa Jakobi untuk analisis HBU lahan seluas 5 hektar. Hasilnya sangat detail dan akurat. Tim mereka sangat responsif dan selalu siap menjawab pertanyaan kami.',
+        initial: 'A',
+    },
+];
+---
+
+<section class="py-base bg-background">
+    <div class="site-container mx-auto px-4 sm:px-6">
+
+        <!-- Header -->
+        <div class="text-center mb-14 max-w-2xl mx-auto">
+            <div class="inline-block text-secondary font-bold text-sm uppercase tracking-wider mb-3" data-aos="fade-up">Testimoni</div>
+            <h2 class="text-headline mb-4" data-aos="fade-up" data-aos-delay="100">Apa Kata Klien Kami</h2>
+            <p class="text-body-base leading-relaxed" data-aos="fade-up" data-aos-delay="150">
+                Kepercayaan klien adalah prioritas utama kami. Berikut pengalaman mereka bekerja bersama Jakobi.
+            </p>
+        </div>
+
+        <!-- Grid Testimoni -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((t, i) => (
+                <div
+                    class="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md hover:border-secondary/30 transition-all duration-300 flex flex-col"
+                    data-aos="fade-up"
+                    data-aos-delay={i * 100}
+                >
+                    <!-- Bintang -->
+                    <div class="flex gap-1 mb-5" aria-label={`Rating ${t.rating} dari 5 bintang`}>
+                        {Array.from({ length: t.rating }).map(() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-secondary fill-current" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        ))}
+                    </div>
+
+                    <!-- Kutipan -->
+                    <blockquote class="text-body-base text-sm leading-relaxed flex-1 mb-6 italic">
+                        "{t.text}"
+                    </blockquote>
+
+                    <!-- Profil -->
+                    <div class="flex items-center gap-3 pt-5 border-t border-gray-100">
+                        <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shrink-0" aria-hidden="true">
+                            {t.initial}
+                        </div>
+                        <div>
+                            <p class="font-semibold text-headline text-sm">{t.name}</p>
+                            <p class="text-xs text-body-base">{t.position}</p>
+                        </div>
+                        <span class="ml-auto text-xs bg-secondary/10 text-secondary-dark font-medium px-2 py-1 rounded-full shrink-0">{t.industry}</span>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

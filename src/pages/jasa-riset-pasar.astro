@@ -1,0 +1,102 @@
+---
+import Layout from '@layouts/Layout.astro';
+import InnerHero from '@components/sections/InnerHero.astro';
+
+const seoTitle = "Jasa Riset Pasar (Market Research) Profesional";
+const seoDescription = "Jasa riset pasar dari PT Jaya Konsultan Bisnis. Analisis komprehensif tentang perilaku konsumen, kompetitor, dan tren industri untuk strategi bisnis yang tepat sasaran.";
+
+const serviceSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Jasa Riset Pasar",
+    "provider": { "@type": "Organization", "name": "PT Jaya Konsultan Bisnis", "url": "https://jayakonsultanbisnis.com" },
+    "description": seoDescription,
+    "areaServed": "ID"
+});
+
+const heroContent = {
+    title: "Jasa Riset Pasar",
+    description: "Penelitian pasar berbasis data untuk memahami konsumen, mengidentifikasi peluang, dan merancang strategi bisnis yang tepat sasaran.",
+};
+
+const methods = [
+    { title: 'Survei Kuantitatif', desc: 'Pengumpulan data terstruktur dari sampel besar untuk menghasilkan temuan yang representatif dan dapat digeneralisasi.' },
+    { title: 'Focus Group Discussion', desc: 'Diskusi mendalam dengan kelompok target untuk memahami motivasi, persepsi, dan preferensi konsumen secara kualitatif.' },
+    { title: 'Wawancara Mendalam', desc: 'One-on-one interview dengan narasumber kunci untuk menggali insight yang tidak bisa didapat dari survei standar.' },
+    { title: 'Analisis Kompetitor', desc: 'Pemetaan lanskap persaingan — kekuatan, kelemahan, strategi, dan posisi kompetitor di pasar.' },
+    { title: 'Desk Research', desc: 'Analisis data sekunder dari laporan industri, statistik pemerintah, dan riset pihak ketiga terpercaya.' },
+    { title: 'Observasi Lapangan', desc: 'Pengamatan langsung di titik-titik penjualan, lokasi target, dan perilaku konsumen di dunia nyata.' },
+];
+---
+
+<Layout title={seoTitle} description={seoDescription} schema={serviceSchema}>
+    <InnerHero content={heroContent} />
+
+    <section class="py-base bg-background">
+        <div class="site-container mx-auto px-4 sm:px-6">
+            <div class="max-w-3xl mx-auto text-center mb-14">
+                <div class="text-secondary font-bold text-sm uppercase tracking-wider mb-3" data-aos="fade-up">Tentang Layanan</div>
+                <h2 class="text-headline mb-5" data-aos="fade-up" data-aos-delay="100">Mengapa Riset Pasar itu Penting?</h2>
+                <p class="text-body-base leading-relaxed" data-aos="fade-up" data-aos-delay="150">
+                    Riset pasar adalah proses sistematis pengumpulan, analisis, dan interpretasi data tentang pasar, konsumen, dan kompetitor. Tanpa riset pasar yang solid, bisnis berjalan berdasarkan asumsi — bukan fakta.
+                </p>
+                <p class="text-body-base leading-relaxed mt-4" data-aos="fade-up" data-aos-delay="200">
+                    Dengan data yang akurat, Anda bisa mengembangkan produk yang benar-benar dibutuhkan pasar, menetapkan harga yang kompetitif, memilih saluran distribusi yang efektif, dan merancang kampanye pemasaran yang menghasilkan ROI tinggi.
+                </p>
+            </div>
+
+            <h3 class="text-center text-headline font-bold text-xl mb-8" data-aos="fade-up">Metode Penelitian yang Kami Gunakan</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
+                {methods.map((m, i) => (
+                    <div class="bg-background-light rounded-xl p-6 border border-gray-100 hover:border-secondary/30 transition-colors" data-aos="fade-up" data-aos-delay={i * 70}>
+                        <div class="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center text-sm font-bold mb-4">{String(i + 1).padStart(2, '0')}</div>
+                        <h4 class="font-bold text-headline mb-2">{m.title}</h4>
+                        <p class="text-body-base text-sm leading-relaxed">{m.desc}</p>
+                    </div>
+                ))}
+            </div>
+
+            <!-- Output yang diberikan -->
+            <div class="bg-primary text-white rounded-2xl p-10 max-w-3xl mx-auto" data-aos="fade-up">
+                <h3 class="text-white font-bold text-xl mb-6 text-center">Yang Akan Anda Dapatkan</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {[
+                        'Laporan riset pasar komprehensif',
+                        'Profil dan segmentasi konsumen',
+                        'Analisis kompetitor mendalam',
+                        'Proyeksi ukuran dan potensi pasar',
+                        'Rekomendasi strategi masuk pasar',
+                        'Data primer & sekunder ter-update',
+                        'Presentasi temuan kepada tim',
+                        'Infografis dan visualisasi data',
+                    ].map(item => (
+                        <div class="flex items-center gap-2.5 text-sm text-white/90">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-secondary-light shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-base bg-background-light">
+        <div class="site-container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-headline mb-4" data-aos="fade-up">Siap Memahami Pasar Anda Lebih Dalam?</h2>
+            <p class="text-body-base mb-8 max-w-xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                Hubungi kami untuk mendapatkan proposal riset pasar yang disesuaikan dengan industri dan kebutuhan spesifik bisnis Anda.
+            </p>
+            <a
+                href="https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20ingin%20konsultasi%20mengenai%20jasa%20riset%20pasar."
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2.5 bg-primary text-white font-bold px-8 py-4 rounded-lg hover:bg-primary-dark transition-colors shadow-sm"
+                data-aos="fade-up"
+                data-aos-delay="200"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 fill-current" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157z"/></svg>
+                Konsultasi Gratis via WhatsApp
+            </a>
+        </div>
+    </section>
+</Layout>

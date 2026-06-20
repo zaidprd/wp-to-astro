@@ -1,5 +1,5 @@
 ---
-// src/components/blog/PaginatedBlogLayout.astro (PAGINASI DIPERBAIKI)
+// src/components/blog/PaginatedBlogLayout.astro
 
 import Layout from '../../layouts/Layout.astro';
 import BlogList from './BlogList.astro';
@@ -7,9 +7,6 @@ import InnerHero from '../sections/InnerHero.astro';
 import Button from '../ui/Button.astro';
 import { ChevronLeft, ChevronRight } from 'lucide-astro';
 import blogHeroImage from '@assets/images/blog-hero-2.jpg';
-
-const seoTitle = "Blog Jakobi";
-const seoDescription = "Kumpulan artikel, wawasan, dan berita terbaru dari tim PT Jaya Konsultan Bisnis (Jakobi).";
 
 interface Props {
     posts: any[];
@@ -21,15 +18,22 @@ interface Props {
     currentCategory?: string;
 }
 
-const { 
-    posts: paginatedPosts, 
-    currentPage, 
-    totalPages, 
+const {
+    posts: paginatedPosts,
+    currentPage,
+    totalPages,
     baseUrl,
     title,
     subtitle,
-    currentCategory 
+    currentCategory
 } = Astro.props;
+
+// FIX #9: SEO title dinamis per halaman
+const seoTitle = currentPage > 1
+    ? `Blog Jakobi - Halaman ${currentPage} | Artikel Studi Kelayakan & Business Plan`
+    : "Blog Jakobi | Artikel Studi Kelayakan, Business Plan & Riset Pasar";
+
+const seoDescription = "Kumpulan artikel, panduan, dan wawasan seputar studi kelayakan bisnis, business plan, riset pasar, dan strategi investasi dari tim PT Jaya Konsultan Bisnis.";
 
 const nextPage = currentPage < totalPages ? `${baseUrl}/${currentPage + 1}` : null;
 const prevPage = currentPage > 1 ? (currentPage - 1 === 1 ? baseUrl : `${baseUrl}/${currentPage - 1}`) : null;
@@ -38,93 +42,79 @@ const heroContent = {
     title: title,
     description: subtitle,
     backgroundImage: blogHeroImage,
-    overlayOpacity: 0.2
-}
+    overlayOpacity: 0.6
+};
 
-// --- LOGIKA BARU UNTUK MEMBUAT DAFTAR NOMOR HALAMAN ---
-function getPaginationNumbers(currentPage: number, totalPages: number) {
-    const pages = [];
-    const delta = 2; // Berapa banyak nomor di sekitar halaman saat ini
-
-    // Selalu tampilkan halaman pertama
+function getPaginationNumbers(current: number, total: number) {
+    const pages: (number | '...')[] = [];
+    const delta = 2;
     pages.push(1);
-
-    // Tampilkan '...' jika perlu
-    if (currentPage > delta + 2) {
-        pages.push('...');
-    }
-
-    // Tampilkan nomor di sekitar halaman saat ini
-    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+    if (current > delta + 2) pages.push('...');
+    for (let i = Math.max(2, current - delta); i <= Math.min(total - 1, current + delta); i++) {
         pages.push(i);
     }
-
-    // Tampilkan '...' jika perlu
-    if (currentPage < totalPages - delta - 1) {
-        pages.push('...');
-    }
-
-    // Selalu tampilkan halaman terakhir (jika lebih dari 1 halaman)
-    if (totalPages > 1) {
-        pages.push(totalPages);
-    }
-
+    if (current < total - delta - 1) pages.push('...');
+    if (total > 1) pages.push(total);
     return pages;
 }
 
 const paginationNumbers = getPaginationNumbers(currentPage, totalPages);
 ---
-<Layout title={seoTitle} description={seoDescription}>
-    <main>
-        <InnerHero content={heroContent}/>
 
-        <section class="py-base md:py-large">
-            <div class="container mx-auto px-4">
-                
+<Layout title={seoTitle} description={seoDescription}>
+    <slot name="head" slot="head">
+        {prevPage && <link rel="prev" href={`https://jayakonsultanbisnis.com${prevPage}`} />}
+        {nextPage && <link rel="next" href={`https://jayakonsultanbisnis.com${nextPage}`} />}
+    </slot>
+
+    <main>
+        <InnerHero content={heroContent} />
+
+        <section class="py-base">
+            <div class="site-container mx-auto px-4 sm:px-6">
+
                 <BlogList posts={paginatedPosts} currentCategory={currentCategory} />
 
                 {totalPages > 1 && (
-                    <nav class="pagination-nav mt-16" aria-label="Blog pagination" data-aos="fade-in">
-                        <div class="flex items-center justify-center gap-2 sm:gap-4">
-                            {prevPage && (
-                                <Button href={prevPage} variant="primary" class="flex items-center gap-2">
-                                    <ChevronLeft size={20} />
-                                    Prev
-                                </Button>
-                            )}
-                            
-                            {/* --- BAGIAN INI DIUBAH UNTUK MENGGUNAKAN LOGIKA BARU --- */}
-                            <div class="hidden sm:flex items-center gap-2">
-                                {paginationNumbers.map((pageNum) => (
-                                    typeof pageNum === 'number' ? (
-                                        <a
-                                            href={pageNum === 1 ? baseUrl : `${baseUrl}/${pageNum}`}
-                                            class={`w-10 h-10 flex items-center justify-center rounded-full transition-colors ${
-                                                currentPage === pageNum
-                                                    ? 'bg-primary text-white'
-                                                    : 'hover:bg-white hover:text-body-base'
-                                            }`}
-                                            aria-current={currentPage === pageNum ? 'page' : undefined}
-                                        >
-                                            {pageNum}
-                                        </a>
-                                    ) : (
-                                        <span class="w-10 h-10 flex items-center justify-center">...</span>
-                                    )
-                                ))}
-                            </div>
-                            {/* Tampilkan info halaman di mobile */}
-                            <div class="sm:hidden text-sm">
-                                Page {currentPage} of {totalPages}
-                            </div>
+                    <nav class="mt-16 flex items-center justify-center gap-2 sm:gap-3" aria-label="Navigasi halaman blog">
+                        {prevPage && (
+                            <Button href={prevPage} variant="primary" class="flex items-center gap-2">
+                                <ChevronLeft size={18} aria-hidden="true" />
+                                Sebelumnya
+                            </Button>
+                        )}
 
-                            {nextPage && (
-                                <Button href={nextPage} variant="primary" class="flex items-center gap-2">
-                                    Next
-                                    <ChevronRight size={20} />
-                                </Button>
-                            )}
+                        <div class="hidden sm:flex items-center gap-2">
+                            {paginationNumbers.map((pageNum) => (
+                                typeof pageNum === 'number' ? (
+                                    <a
+                                        href={pageNum === 1 ? baseUrl : `${baseUrl}/${pageNum}`}
+                                        class={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${
+                                            currentPage === pageNum
+                                                ? 'bg-primary text-white shadow-sm'
+                                                : 'text-body-base hover:bg-background-light'
+                                        }`}
+                                        aria-current={currentPage === pageNum ? 'page' : undefined}
+                                        aria-label={`Halaman ${pageNum}`}
+                                    >
+                                        {pageNum}
+                                    </a>
+                                ) : (
+                                    <span class="w-10 h-10 flex items-center justify-center text-body-base" aria-hidden="true">...</span>
+                                )
+                            ))}
                         </div>
+
+                        <div class="sm:hidden text-sm text-body-base">
+                            Halaman {currentPage} dari {totalPages}
+                        </div>
+
+                        {nextPage && (
+                            <Button href={nextPage} variant="primary" class="flex items-center gap-2">
+                                Selanjutnya
+                                <ChevronRight size={18} aria-hidden="true" />
+                            </Button>
+                        )}
                     </nav>
                 )}
             </div>

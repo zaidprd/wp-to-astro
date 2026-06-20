@@ -1,25 +1,24 @@
 export const siteConfig = {
-  companyName: 'Jakobi',
+  companyName: 'PT Jaya Konsultan Bisnis',
   siteUrl: 'https://jayakonsultanbisnis.com',
   Socials: {
-      xSocial: 'https://x.com/astrodotbuild',
-      Github: 'https://github.com/withastro',
-      Instagram: 'https://www.instagram.com/astrodotbuild',
-      LinkedIn: 'https://www.linkedin.com/company/astrodotbuild',
-      Email: 'support@titan-core.com',
-      Phone: '+123 456 7890',
-      Location: '123 Main St, Anytown, USA',
+      Instagram: 'https://www.instagram.com/jayakonsultanbisnis',
+      Email: 'info@jayakonsultanbisnis.com',
+      Phone: '+6281274203815',
+      PhoneDisplay: '0812-7420-3815',
+      WhatsApp: 'https://wa.me/6281274203815',
+      Location: 'Jl. H Taha No 2K Kelapa Dua Kebon Jeruk, Jakarta Barat',
   }
 };
 
 export const SEO = {
   Separator: '|',
   SiteName: 'Jasa Studi Kelayakan',
-  defaultDescription: 'jasa konsultan studi kelyakan bisnis',
+  defaultDescription: 'Jasa konsultan studi kelayakan bisnis, business plan, dan riset pasar untuk UMKM dan korporasi Indonesia. Hubungi PT Jaya Konsultan Bisnis.',
 };
-  
+
 export const blogSetting = {
-  postsPerPage: 6   
+  postsPerPage: 6
 }
 
 export const themeSetting = {

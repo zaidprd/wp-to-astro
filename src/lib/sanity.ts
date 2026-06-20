@@ -19,7 +19,7 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true, // `true` untuk produksi, `false` untuk development jika perlu
+  useCdn: false, // false agar build-time fetch selalu ambil data terbaru
 });
 
 const builder = imageUrlBuilder(client);

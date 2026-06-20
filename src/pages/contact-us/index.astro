@@ -1,69 +1,225 @@
 ---
-// src/pages/contact-us/index.astro (dengan peta yang sudah diperbarui )
+// src/pages/contact-us/index.astro
 
 import Layout from "@layouts/Layout.astro";
 import InnerHero from "@components/sections/InnerHero.astro";
 
 const heroContent = {
     title: "Hubungi Kami",
-    description: "Kami siap membantu mewujudkan rencana bisnis Anda. Silakan hubungi kami melalui detail kontak di bawah ini atau kunjungi langsung kantor kami.",
+    description: "Kami siap membantu Anda. Konsultasi pertama gratis — hubungi kami melalui WhatsApp, email, atau kunjungi kantor kami.",
 };
 ---
 
-<Layout title="Hubungi Kami" description="Halaman kontak PT Jaya Konsultan Bisnis. Hubungi kami untuk layanan studi kelayakan, business plan, dan riset pasar.">
-    
+<Layout
+    title="Hubungi Kami"
+    description="Hubungi PT Jaya Konsultan Bisnis (Jakobi) untuk konsultasi studi kelayakan, business plan, dan riset pasar. Konsultasi pertama GRATIS. Telepon: 0812-7420-3815."
+>
     <InnerHero content={heroContent} />
 
-    <section class="py-large">
-        <div class="site-container px-4">
-            
-            <div class="max-w-4xl mx-auto space-y-12">
+    <section class="py-base bg-background">
+        <div class="site-container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-                <!-- Bagian Informasi Kontak -->
-                <div>
-                    <h2 class="text-3xl font-semibold mb-6 text-center">Informasi Kontak</h2>
-                    <div class="bg-white/5 p-8 rounded-lg shadow-lg border border-white/10">
-                        <ul class="space-y-4 text-body-base text-lg">
-                            <li class="flex flex-col sm:flex-row">
-                                <strong class="w-28 shrink-0">Alamat:</strong>
-                                <span>Jl. H Taha No 2K Kelapa Dua Kebon Jeruk, Jakarta Barat</span>
-                            </li>
-                            <li class="flex items-center">
-                                <strong class="w-28 shrink-0">Email:</strong>
-                                <a href="mailto:info@jayakonsultanbisnis.com" class="hover:text-primary transition-colors">info@jayakonsultanbisnis.com</a>
-                            </li>
-                            <li class="flex items-center">
-                                <strong class="w-28 shrink-0">Telepon:</strong>
-                                <a href="tel:+6281274203815" class="hover:text-primary transition-colors">0812-7420-3815</a>
-                            </li>
-                             <li class="flex items-center">
-                                <strong class="w-28 shrink-0">WhatsApp:</strong>
-                                <a href="https://wa.me/6281274203815?text=Halo%20Jakobi%2C%20saya%20tertarik%20dengan%20jasa%20Anda." target="_blank" class="hover:text-primary transition-colors">0812-7420-3815 (Klik untuk chat )</a>
-                            </li>
-                        </ul>
-                    </div>
+                <!-- Form Kontak -->
+                <div data-aos="fade-right">
+                    <h2 class="text-headline mb-2">Kirim Pesan</h2>
+                    <p class="text-body-base mb-8 leading-relaxed">
+                        Isi formulir di bawah ini dan kami akan menghubungi Anda melalui WhatsApp.
+                    </p>
+
+                    <form id="contact-form" class="space-y-5" novalidate>
+                        <!-- Nama -->
+                        <div>
+                            <label for="name" class="block text-sm font-semibold text-headline mb-1.5">
+                                Nama Lengkap <span class="text-red-500" aria-hidden="true">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                required
+                                placeholder="Masukkan nama lengkap Anda"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-background-light text-headline placeholder:text-gray-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
+                            />
+                        </div>
+
+                        <!-- Email & Telepon -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="email" class="block text-sm font-semibold text-headline mb-1.5">
+                                    Email <span class="text-red-500" aria-hidden="true">*</span>
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    required
+                                    placeholder="email@contoh.com"
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-background-light text-headline placeholder:text-gray-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
+                                />
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-semibold text-headline mb-1.5">Nomor WhatsApp</label>
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    placeholder="08xx-xxxx-xxxx"
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-background-light text-headline placeholder:text-gray-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Jenis Layanan -->
+                        <div>
+                            <label for="service" class="block text-sm font-semibold text-headline mb-1.5">
+                                Jenis Layanan yang Dibutuhkan <span class="text-red-500" aria-hidden="true">*</span>
+                            </label>
+                            <select
+                                id="service"
+                                name="service"
+                                required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-background-light text-headline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors appearance-none"
+                            >
+                                <option value="" disabled selected>-- Pilih layanan --</option>
+                                <option value="Studi Kelayakan Bisnis">Studi Kelayakan Bisnis (Feasibility Study)</option>
+                                <option value="Business Plan">Business Plan</option>
+                                <option value="Riset Pasar">Riset Pasar (Market Research)</option>
+                                <option value="High and Best Use">High and Best Use (HBU)</option>
+                                <option value="Jasa Survey">Jasa Survey</option>
+                                <option value="Konsultasi Bisnis">Konsultasi Bisnis</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+
+                        <!-- Pesan -->
+                        <div>
+                            <label for="message" class="block text-sm font-semibold text-headline mb-1.5">
+                                Deskripsi Kebutuhan <span class="text-red-500" aria-hidden="true">*</span>
+                            </label>
+                            <textarea
+                                id="message"
+                                name="message"
+                                required
+                                rows="5"
+                                placeholder="Ceritakan proyek atau kebutuhan Anda secara singkat..."
+                                class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-background-light text-headline placeholder:text-gray-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors resize-none"
+                            ></textarea>
+                        </div>
+
+                        <!-- Submit -->
+                        <button
+                            type="submit"
+                            class="w-full inline-flex items-center justify-center gap-2.5 bg-primary text-white font-bold py-4 px-8 rounded-lg hover:bg-primary-dark transition-colors shadow-sm"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-5 h-5 fill-current" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157z"/></svg>
+                            Kirim via WhatsApp
+                        </button>
+
+                        <p class="text-xs text-body-base text-center">
+                            Formulir ini akan membuka WhatsApp dengan pesan yang sudah terisi.
+                        </p>
+                    </form>
                 </div>
 
-                <!-- Bagian Peta Lokasi -->
-                <div>
-                    <h2 class="text-3xl font-semibold mb-6 text-center">Lokasi Kantor Kami</h2>
-                    <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg border border-white/10">
-                        
-                        {/* --- PETA ANDA SUDAH DI-EMBED DI SINI --- */}
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d991.6126579579419!2d106.76810246961068!3d-6.204133599611466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f7272ef24689%3A0x8de398a464a8488!2sSoto%20Tangkar%20mas%20Pradi%20Jl.%20H.Taha!5e0!3m2!1sid!2sid!4v1762121362892!5m2!1sid!2sid" 
-                            width="100%" 
-                            height="100%" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                        
+                <!-- Info Kontak + Maps -->
+                <div data-aos="fade-left">
+                    <!-- Info Kontak -->
+                    <h2 class="text-headline mb-6">Informasi Kontak</h2>
+                    <div class="space-y-4 mb-8">
+                        {[
+                            {
+                                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+                                label: 'Alamat',
+                                value: 'Jl. H Taha No 2K Kelapa Dua Kebon Jeruk, Jakarta Barat',
+                                href: null,
+                            },
+                            {
+                                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>`,
+                                label: 'WhatsApp / Telepon',
+                                value: '0812-7420-3815',
+                                href: 'https://wa.me/6281274203815',
+                            },
+                            {
+                                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`,
+                                label: 'Email',
+                                value: 'info@jayakonsultanbisnis.com',
+                                href: 'mailto:info@jayakonsultanbisnis.com',
+                            },
+                            {
+                                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+                                label: 'Jam Operasional',
+                                value: 'Senin – Jumat, 08.00 – 17.00 WIB',
+                                href: null,
+                            },
+                        ].map(info => (
+                            <div class="flex items-start gap-4 p-4 bg-background-light rounded-xl border border-gray-100">
+                                <div class="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center shrink-0" set:html={info.icon} />
+                                <div>
+                                    <p class="text-xs font-semibold text-body-base uppercase tracking-wider mb-0.5">{info.label}</p>
+                                    {info.href ? (
+                                        <a href={info.href} target={info.href.startsWith('http') ? '_blank' : undefined} rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined} class="text-primary font-medium hover:underline">{info.value}</a>
+                                    ) : (
+                                        <p class="text-headline font-medium">{info.value}</p>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <!-- Google Maps — FIX #5: alamat kantor yang benar -->
+                    <h3 class="text-headline font-bold mb-4">Lokasi Kantor</h3>
+                    <div class="rounded-xl overflow-hidden border border-gray-200 shadow-sm aspect-video">
+                        <iframe
+                            title="Lokasi PT Jaya Konsultan Bisnis di Jakarta Barat"
+                            src="https://maps.google.com/maps?q=Jl.+H+Taha+No+2K+Kelapa+Dua+Kebon+Jeruk+Jakarta+Barat+Indonesia&output=embed&z=16"
+                            width="100%"
+                            height="100%"
+                            style="border:0; display:block;"
+                            allowfullscreen
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                        ></iframe>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 </Layout>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const form = document.getElementById('contact-form') as HTMLFormElement | null;
+        if (!form) return;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name    = (document.getElementById('name')    as HTMLInputElement)?.value.trim();
+            const email   = (document.getElementById('email')   as HTMLInputElement)?.value.trim();
+            const phone   = (document.getElementById('phone')   as HTMLInputElement)?.value.trim();
+            const service = (document.getElementById('service') as HTMLSelectElement)?.value;
+            const message = (document.getElementById('message') as HTMLTextAreaElement)?.value.trim();
+
+            if (!name || !email || !service || !message) {
+                alert('Mohon isi semua field yang wajib (*).');
+                return;
+            }
+
+            const waMessage = [
+                `Halo Jakobi, saya ingin berkonsultasi.`,
+                ``,
+                `*Nama:* ${name}`,
+                `*Email:* ${email}`,
+                phone ? `*No. HP:* ${phone}` : null,
+                `*Layanan:* ${service}`,
+                ``,
+                `*Pesan:*`,
+                message,
+            ].filter(line => line !== null).join('\n');
+
+            const waUrl = `https://wa.me/6281274203815?text=${encodeURIComponent(waMessage)}`;
+            window.open(waUrl, '_blank', 'noopener noreferrer');
+        });
+    });
+</script>
