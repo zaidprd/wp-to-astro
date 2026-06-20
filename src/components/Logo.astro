@@ -39,13 +39,15 @@ const getColorClass = () => {
 
 <!-- HTML diperbarui untuk menerapkan kedua kelas dinamis -->
 <a href="/" aria-label="Jakobi - Kembali ke Beranda" class="block transition-opacity duration-300 hover:opacity-80">
-    <Image 
-        src={logo} 
+    <Image
+        src={logo}
         alt="Logo Jakobi"
+        loading={variant === 'header' ? 'eager' : 'lazy'}
+        fetchpriority={variant === 'header' ? 'high' : 'auto'}
         class:list={[
-            "w-auto",         // Lebar otomatis
-            getSizeClass(),   // Terapkan kelas ukuran
-            getColorClass()   // Terapkan kelas filter warna
+            "w-auto",
+            getSizeClass(),
+            getColorClass()
         ]}
     />
 </a>
