@@ -3,15 +3,12 @@
 // KODE LENGKAP YANG SUDAH DIPERBAIKI
 
 import BlogPost from '@components/blog/BlogPost.astro';
-import { categories as allCategories, type Category } from '../../data/categories';
 
 interface Props {
     posts: any[];
-    currentCategory?: string;
-    categories?: Category[];
 }
 
-const { posts, currentCategory, categories: activeCategories = allCategories } = Astro.props;
+const { posts } = Astro.props;
 ---
 
 {/* 
@@ -19,46 +16,19 @@ const { posts, currentCategory, categories: activeCategories = allCategories } =
     Komponen ini sekarang akan dirender di dalam kontainer milik induknya.
 */}
 
-<div
-    class="mb-16 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6"
-    data-aos="fade-in"
-    data-aos-delay="100"
->
-    <div class="w-full">
-        <h2 class="text-lg font-semibold mb-4">Filter berdasarkan kategori</h2>
-        <div class="flex flex-wrap gap-2">
-            <a
-                href="/blog"
-                aria-current={!currentCategory ? 'page' : undefined}
-                class={`px-4 sm:px-6 py-2 sm:py-3 leading-none rounded-md text-small flex items-center justify-center transition-colors border border-primary duration-200 ${
-                    !currentCategory
-                        ? 'bg-primary text-body-dark shadow-md'
-                        : 'bg-background text-body-base hover:bg-background-light hover:text-body-light'
-                }`}
-            >
-                Semua artikel
-            </a>
-            {
-                activeCategories.map((category) => (
-                    <a
-                        href={`/category/${category.slug}`}
-                        aria-current={currentCategory === category.name ? 'page' : undefined}
-                        class={`px-4 sm:px-6 py-2 sm:py-3 leading-none rounded-md text-small flex items-center justify-center transition-colors border border-primary duration-200 ${
-                            currentCategory === category.name
-                                ? 'bg-primary text-body-dark shadow-md'
-                                : 'bg-background text-body-base hover:bg-background-light hover:text-body-light'
-                        }`}
-                        title={category.description}
-                    >
-                        {category.name}
-                    </a>
-                ))
-            }
-        </div>
+<div class="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+        <h2 class="text-lg font-semibold">Artikel terbaru</h2>
+        <p class="mt-1 text-small text-body-base">
+            Menampilkan <span class="font-bold text-primary">{posts.length}</span> artikel pada halaman ini.
+        </p>
     </div>
-    <p class="text-small text-body-base text-left sm:text-right whitespace-nowrap">
-Menampilkan <span class="font-bold text-primary">{posts.length}</span> artikel
-    </p>
+    <a
+        href="/search"
+        class="inline-flex min-h-11 items-center justify-center rounded-md border border-primary px-5 py-2 text-small font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+    >
+        Cari artikel
+    </a>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -79,4 +49,4 @@ Menampilkan <span class="font-bold text-primary">{posts.length}</span> artikel
     }
 </div>
 
-{posts.length === 0 && <p class="text-center text-gray-500 py-8">Belum ada artikel dalam kategori ini.</p>}
+{posts.length === 0 && <p class="py-8 text-center text-gray-500">Belum ada artikel untuk ditampilkan.</p>}

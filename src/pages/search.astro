@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+import InnerHero from '../components/sections/InnerHero.astro';
+import blogHeroImage from '@assets/images/blog-hero-2.jpg';
+import { client } from '../lib/sanity';
+
+const posts = await client.fetch(`
+    *[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
+        title,
+        "slug": slug.current,
+        excerpt,
+        "publishedAt": publishedAt
+    }
+`);
+
+const searchIndex = posts.map((post: any) => ({
+    title: post.title ?? '',
+    slug: post.slug,
+    excerpt: post.excerpt ?? '',
+    publishedAt: post.publishedAt ?? '',
+}));
+
+const heroContent = {
+    title: 'Cari Artikel',
+    description: 'Temukan panduan dan wawasan bisnis yang Anda butuhkan.',
+    backgroundImage: blogHeroImage,
+    overlayOpacity: 0.6,
+};
+---
+
+<Layout
+    title="Cari Artikel"
+    description="Cari artikel studi kelayakan, business plan, riset pasar, investasi, dan konsultasi bisnis."
+>
+    <main>
+        <InnerHero content={heroContent} />
+        <section class="py-base">
+            <div class="site-container mx-auto max-w-4xl px-4 sm:px-6">
+                <form id="article-search-form" class="flex flex-col gap-3 sm:flex-row" role="search">
+                    <label class="sr-only" for="article-search">Cari artikel</label>
+                    <input
+                        id="article-search"
+                        type="search"
+                        placeholder="Contoh: studi kelayakan, HBU, business plan"
+                        class="min-h-12 flex-1 rounded-md border border-primary/40 bg-white px-4 text-body-base outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        autocomplete="off"
+                    />
+                    <button type="submit" class="min-h-12 rounded-md bg-primary px-6 font-semibold text-white transition hover:bg-primary-dark">
+                        Cari
+                    </button>
+                </form>
+
+                <p id="search-status" class="mt-6 text-small text-body-base" aria-live="polite">
+                    Masukkan kata kunci untuk mencari dari {searchIndex.length} artikel.
+                </p>
+                <div id="search-results" class="mt-6 space-y-4"></div>
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<script define:vars={{ searchIndex }}>
+    const form = document.querySelector('#article-search-form');
+    const input = document.querySelector('#article-search');
+    const status = document.querySelector('#search-status');
+    const results = document.querySelector('#search-results');
+
+    const formatDate = (value) => {
+        if (!value) return '';
+        return new Intl.DateTimeFormat('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        }).format(new Date(value));
+    };
+
+    const renderResults = (query) => {
+        const normalizedQuery = query.trim().toLocaleLowerCase('id-ID');
+        results.replaceChildren();
+
+        if (!normalizedQuery) {
+            status.textContent = `Masukkan kata kunci untuk mencari dari ${searchIndex.length} artikel.`;
+            return;
+        }
+
+        const matches = searchIndex
+            .filter((post) => `${post.title} ${post.excerpt}`.toLocaleLowerCase('id-ID').includes(normalizedQuery))
+            .slice(0, 20);
+
+        status.textContent = matches.length
+            ? `Ditemukan ${matches.length} artikel untuk “${query.trim()}”.`
+            : `Tidak ada artikel untuk “${query.trim()}”. Coba gunakan kata kunci lain.`;
+
+        matches.forEach((post) => {
+            const article = document.createElement('article');
+            article.className = 'rounded-lg border border-primary/15 bg-white p-5 transition hover:border-primary/50';
+
+            const title = document.createElement('h2');
+            title.className = 'text-lg font-bold text-headline';
+            const link = document.createElement('a');
+            link.href = `/${post.slug}`;
+            link.textContent = post.title;
+            link.className = 'transition hover:text-primary';
+            title.append(link);
+
+            const date = document.createElement('p');
+            date.className = 'mt-2 text-xs text-body-base';
+            date.textContent = formatDate(post.publishedAt);
+
+            const excerpt = document.createElement('p');
+            excerpt.className = 'mt-3 text-small leading-relaxed text-body-base';
+            excerpt.textContent = post.excerpt;
+
+            article.append(title, date, excerpt);
+            results.append(article);
+        });
+    };
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        renderResults(input.value);
+    });
+
+    input.addEventListener('input', () => renderResults(input.value));
+</script>

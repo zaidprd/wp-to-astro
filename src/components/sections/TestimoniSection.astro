@@ -50,7 +50,7 @@ const testimonials = [
                     data-aos-delay={i * 100}
                 >
                     <!-- Bintang -->
-                    <div class="flex gap-1 mb-5" aria-label={`Rating ${t.rating} dari 5 bintang`}>
+                    <div class="flex gap-1 mb-5" role="img" aria-label={`Rating ${t.rating} dari 5 bintang`}>
                         {Array.from({ length: t.rating }).map(() => (
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-secondary fill-current" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                         ))}

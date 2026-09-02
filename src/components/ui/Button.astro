@@ -52,8 +52,8 @@ const Element = href ? 'a' : 'button';
   href={href}
   type={!href ? type : undefined}
   class={classes}
-  disabled={disabled}
-  aria-disabled={disabled}
+  disabled={!href && disabled ? true : undefined}
+  aria-disabled={!href && disabled ? 'true' : undefined}
   {...(target && { target, rel: target === '_blank' ? 'noopener noreferrer' : undefined })}
 >
   <span class="absolute left-0 -mt-12 h-32 w-1/2 translate-x-[250%] rotate-12 bg-white opacity-20 transition-all duration-250 ease-out group-hover:translate-x-[2%]"></span>

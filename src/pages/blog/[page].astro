@@ -4,7 +4,6 @@
 
 import { client, urlFor } from '../../lib/sanity';
 import { blogSetting } from '../../data/config';
-import { categories } from '../../data/categories';
 import PaginatedBlogLayout from '../../components/blog/PaginatedBlogLayout.astro';
 export const prerender = true;
 
@@ -60,5 +59,4 @@ const postsForLayout = paginatedPosts.map((post: any) => ({
     baseUrl="/blog"
     title="Blog"
     subtitle="Artikel, panduan, dan wawasan bisnis dari tim kami"
-    categories={categories}
 />

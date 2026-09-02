@@ -126,11 +126,9 @@ function formatDate(dateStr: string) {
 
         {content?.button && (
             <div class="text-center mt-10" data-aos="fade-up">
-                <Button
-                    text={content.button.text}
-                    link={content.button.link}
-                    variant={content.button.variant || 'primary'}
-                />
+                <Button href={content.button.link} variant={content.button.variant || 'primary'}>
+                    {content.button.text}
+                </Button>
             </div>
         )}
     </div>

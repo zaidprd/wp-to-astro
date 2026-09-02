@@ -160,7 +160,25 @@ const fullCanonicalUrl = new URL(canonicalPath, siteConfig.siteUrl).toString();
             });
         </script>
 
-        <!-- AdSense — dipindah ke sebelum </body> agar tidak blokir render -->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7938664692257223" crossorigin="anonymous"></script>
+        <!-- Muat AdSense setelah halaman siap atau ketika pengunjung mulai berinteraksi. -->
+        <script is:inline>
+            (() => {
+                let loaded = false;
+                const loadAds = () => {
+                    if (loaded) return;
+                    loaded = true;
+                    const script = document.createElement('script');
+                    script.async = true;
+                    script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7938664692257223';
+                    script.crossOrigin = 'anonymous';
+                    document.head.append(script);
+                };
+
+                ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach((eventName) =>
+                    window.addEventListener(eventName, loadAds, { once: true, passive: true }),
+                );
+                window.setTimeout(loadAds, 8000);
+            })();
+        </script>
     </body>
 </html>
