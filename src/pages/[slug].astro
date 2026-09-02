@@ -72,8 +72,9 @@ function portableTextToHtml(blocks: any[], markDefs: any[] = []): string {
                 if (mark === 'code') { text = `<code>${text}</code>`; continue; }
                 const def = markDefs.filter(Boolean).find((d: any) => d && d._key === mark);
                 if (def?._type === 'link') {
-                    const rel = def.href?.startsWith('/') ? '' : 'noopener noreferrer nofollow';
-                    const tgt = def.href?.startsWith('/') ? '' : ' target="_blank"';
+                    const isInternal = def.href?.startsWith('/') || def.href?.includes('jayakonsultanbisnis.com');
+                    const rel = isInternal ? '' : 'noopener noreferrer nofollow';
+                    const tgt = isInternal ? '' : ' target="_blank"';
                     text = `<a href="${escape(def.href || '#')}"${tgt}${rel ? ` rel="${rel}"` : ''}>${text}</a>`;
                 }
             }
@@ -101,8 +102,9 @@ function portableTextMarkdown(blocks: any[]): string | null {
         .trim();
 
     // Post otomatis lama menyimpan Markdown mentah di blok Portable Text biasa.
-    // Markdown harus berada di awal baris agar aman diproses oleh marked.
-    return /(^|\n)\s{0,3}(#{1,6}\s|[-*+]\s|\d+\.\s|>{1}\s|```|---\s*$)/m.test(content) ? content : null;
+    // Jangan mendeteksi marker list di sini: Portable Text valid juga memakai listItem
+    // dan teks seperti "1. ...", yang harus tetap dirender sebagai Portable Text.
+    return /(^|\n)\s{0,3}(#{1,6}\s|>{1}\s|```|---\s*$)/m.test(content) ? content : null;
 }
 
 let bodyHtml: string | null = null;
