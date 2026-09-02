@@ -4,6 +4,7 @@
 
 import { client, urlFor } from '../../lib/sanity';
 import { blogSetting } from '../../data/config';
+import { categories } from '../../data/categories';
 import PaginatedBlogLayout from '../../components/blog/PaginatedBlogLayout.astro';
 export const prerender = true;
 
@@ -27,13 +28,13 @@ const totalPages = Math.ceil(totalPosts / postsPerPage);
 const paginatedPosts = allPosts.slice(0, postsPerPage);
 
 // PERBAIKAN: Ubah struktur data agar cocok dengan yang dibutuhkan komponen `BlogPost.astro`
-const postsForLayout = paginatedPosts.map(post => ({
+const postsForLayout = paginatedPosts.map((post: any) => ({
     slug: post.slug, // Kirim slug secara langsung
     data: {
         title: post.title,
         excerpt: post.excerpt,
         publishDate: new Date(post.publishDate),
-        categories: post.categories?.map(c => c.title) || [],
+        categories: post.categories?.map((category: any) => category.title) || [],
         featuredImage: post.featuredImage ? urlFor(post.featuredImage).width(800).url() : undefined,
     }
 }));
@@ -45,5 +46,6 @@ const postsForLayout = paginatedPosts.map(post => ({
     totalPages={totalPages}
     baseUrl="/blog"
     title="Blog"
-    subtitle="Latest articles and news from the team"
+    subtitle="Artikel, panduan, dan wawasan bisnis dari tim kami"
+    categories={categories}
 />

@@ -3,15 +3,15 @@
 // KODE LENGKAP YANG SUDAH DIPERBAIKI
 
 import BlogPost from '@components/blog/BlogPost.astro';
-import { categories } from '../../data/categories';
+import { categories as allCategories, type Category } from '../../data/categories';
 
 interface Props {
     posts: any[];
     currentCategory?: string;
+    categories?: Category[];
 }
 
-const { posts, currentCategory } = Astro.props;
-const activeCategories = categories;
+const { posts, currentCategory, categories: activeCategories = allCategories } = Astro.props;
 ---
 
 {/* 
@@ -25,22 +25,24 @@ const activeCategories = categories;
     data-aos-delay="100"
 >
     <div class="w-full">
-        <h2 class="text-lg font-semibold mb-4">Filter by Categories:</h2>
+        <h2 class="text-lg font-semibold mb-4">Filter berdasarkan kategori</h2>
         <div class="flex flex-wrap gap-2">
             <a
                 href="/blog"
+                aria-current={!currentCategory ? 'page' : undefined}
                 class={`px-4 sm:px-6 py-2 sm:py-3 leading-none rounded-md text-small flex items-center justify-center transition-colors border border-primary duration-200 ${
                     !currentCategory
                         ? 'bg-primary text-body-dark shadow-md'
                         : 'bg-background text-body-base hover:bg-background-light hover:text-body-light'
                 }`}
             >
-                Show All
+                Semua artikel
             </a>
             {
                 activeCategories.map((category) => (
                     <a
                         href={`/category/${category.slug}`}
+                        aria-current={currentCategory === category.name ? 'page' : undefined}
                         class={`px-4 sm:px-6 py-2 sm:py-3 leading-none rounded-md text-small flex items-center justify-center transition-colors border border-primary duration-200 ${
                             currentCategory === category.name
                                 ? 'bg-primary text-body-dark shadow-md'
@@ -55,7 +57,7 @@ const activeCategories = categories;
         </div>
     </div>
     <p class="text-small text-body-base text-left sm:text-right whitespace-nowrap">
-        Showing <span class="font-bold text-primary">{posts.length}</span> posts
+Menampilkan <span class="font-bold text-primary">{posts.length}</span> artikel
     </p>
 </div>
 
@@ -77,4 +79,4 @@ const activeCategories = categories;
     }
 </div>
 
-{posts.length === 0 && <p class="text-center text-gray-500 py-8">No posts found in this category.</p>}
+{posts.length === 0 && <p class="text-center text-gray-500 py-8">Belum ada artikel dalam kategori ini.</p>}

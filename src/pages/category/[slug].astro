@@ -1,0 +1,53 @@
+---
+import { client, urlFor } from '../../lib/sanity';
+
+import { categories, getCategoryBySlug } from '../../data/categories';
+import PaginatedBlogLayout from '../../components/blog/PaginatedBlogLayout.astro';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+    return categories.map((category) => ({ params: { slug: category.slug } }));
+}
+
+const { slug } = Astro.params;
+const category = getCategoryBySlug(slug ?? '');
+
+if (!category) {
+    return Astro.redirect('/blog');
+}
+
+const categoryPosts = await client.fetch(
+    `*[_type == "post" && $categoryName in categories[]->title] | order(publishedAt desc) {
+        title,
+        "slug": slug.current,
+        excerpt,
+        "publishDate": publishedAt,
+        "featuredImage": mainImage { asset->{...}, alt },
+        categories[]->{ title }
+    }`,
+    { categoryName: category.name },
+);
+
+const postsForLayout = categoryPosts.map((post: any) => ({
+    slug: post.slug,
+    data: {
+        title: post.title,
+        excerpt: post.excerpt,
+        publishDate: new Date(post.publishDate),
+        categories: post.categories?.map((postCategory: any) => postCategory.title) || [],
+        featuredImage: post.featuredImage ? urlFor(post.featuredImage).width(800).url() : undefined,
+    },
+}));
+---
+
+<PaginatedBlogLayout
+    posts={postsForLayout}
+    currentPage={1}
+    totalPages={1}
+    baseUrl={`/category/${category.slug}`}
+    title={category.name}
+    subtitle={category.description}
+    currentCategory={category.name}
+    categories={categories}
+/>

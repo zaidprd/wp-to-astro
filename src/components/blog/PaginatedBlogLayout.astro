@@ -7,6 +7,7 @@ import InnerHero from '../sections/InnerHero.astro';
 import Button from '../ui/Button.astro';
 import { ChevronLeft, ChevronRight } from 'lucide-astro';
 import blogHeroImage from '@assets/images/blog-hero-2.jpg';
+import type { Category } from '../../data/categories';
 
 interface Props {
     posts: any[];
@@ -16,6 +17,7 @@ interface Props {
     title: string;
     subtitle: string;
     currentCategory?: string;
+    categories?: Category[];
 }
 
 const {
@@ -25,13 +27,16 @@ const {
     baseUrl,
     title,
     subtitle,
-    currentCategory
+    currentCategory,
+    categories
 } = Astro.props;
 
 // FIX #9: SEO title dinamis per halaman
-const seoTitle = currentPage > 1
-    ? `Blog Jakobi - Halaman ${currentPage} | Artikel Studi Kelayakan & Business Plan`
-    : "Blog Jakobi | Artikel Studi Kelayakan, Business Plan & Riset Pasar";
+const seoTitle = currentCategory
+    ? `${currentCategory} | Blog Jaya Konsultan Bisnis`
+    : currentPage > 1
+        ? `Blog Jaya Konsultan Bisnis - Halaman ${currentPage}`
+        : 'Blog Jaya Konsultan Bisnis | Artikel Studi Kelayakan & Business Plan';
 
 const seoDescription = "Kumpulan artikel, panduan, dan wawasan seputar studi kelayakan bisnis, business plan, riset pasar, dan strategi investasi dari tim PT Jaya Konsultan Bisnis.";
 
@@ -73,7 +78,7 @@ const paginationNumbers = getPaginationNumbers(currentPage, totalPages);
         <section class="py-base">
             <div class="site-container mx-auto px-4 sm:px-6">
 
-                <BlogList posts={paginatedPosts} currentCategory={currentCategory} />
+                <BlogList posts={paginatedPosts} currentCategory={currentCategory} categories={categories} />
 
                 {totalPages > 1 && (
                     <nav class="mt-16 flex items-center justify-center gap-2 sm:gap-3" aria-label="Navigasi halaman blog">
