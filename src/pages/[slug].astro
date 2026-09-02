@@ -92,6 +92,19 @@ function markExternalLinks(html: string): string {
     });
 }
 
+function portableTextMarkdown(blocks: any[]): string | null {
+    if (!blocks.every((block) => block._type === 'block' && Array.isArray(block.children))) return null;
+
+    const content = blocks
+        .map((block) => block.children.map((child: any) => child.text || '').join(''))
+        .join('\n\n')
+        .trim();
+
+    // Post otomatis lama menyimpan Markdown mentah di blok Portable Text biasa.
+    // Markdown harus berada di awal baris agar aman diproses oleh marked.
+    return /(^|\n)\s{0,3}(#{1,6}\s|[-*+]\s|\d+\.\s|>{1}\s|```|---\s*$)/m.test(content) ? content : null;
+}
+
 let bodyHtml: string | null = null;
 
 if (typeof post.body === 'string' && post.body.startsWith('[object Object]')) {
@@ -102,9 +115,11 @@ if (typeof post.body === 'string' && post.body.startsWith('[object Object]')) {
     // Artikel lama yang tersimpan sebagai string/markdown di Sanity
     bodyHtml = await marked.parse(post.body);
 } else if (Array.isArray(post.body)) {
-    // PortableText native dari Sanity Block Editor — selalu render SSG
-    // JANGAN pakai marked() di sini karena marked() bisa return Token array bukan string
-    bodyHtml = portableTextToHtml(post.body, (post._markDefs || []).filter(Boolean));
+    const markdown = portableTextMarkdown(post.body);
+    // Fallback untuk artikel dari Make yang menyimpan Markdown mentah sebagai Portable Text.
+    bodyHtml = markdown
+        ? await marked.parse(markdown)
+        : portableTextToHtml(post.body, (post._markDefs || []).filter(Boolean));
 }
 
 if (bodyHtml) bodyHtml = markExternalLinks(bodyHtml);
