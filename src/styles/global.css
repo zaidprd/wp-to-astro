@@ -173,6 +173,42 @@
     article strong { color: var(--color-headline); font-weight: 700; }
     article a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 3px; }
     article img { border-radius: 0.5rem; max-width: 100%; height: auto; }
+
+    /* Markdown tables from Sanity/Make: readable on desktop and safely scrollable on small screens. */
+    article table {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        min-width: 620px;
+        margin: 2rem 0;
+        overflow-x: auto;
+        border: 1px solid #DCE3EC;
+        border-spacing: 0;
+        border-collapse: separate;
+        border-radius: 0.75rem;
+        background: #FFFFFF;
+        box-shadow: 0 8px 24px rgba(18, 39, 82, 0.08);
+        font-size: 0.9375rem;
+        line-height: 1.55;
+    }
+    article thead { background: var(--color-primary); color: #FFFFFF; }
+    article th,
+    article td {
+        padding: 0.875rem 1rem;
+        text-align: left;
+        vertical-align: top;
+    }
+    article th {
+        color: #FFFFFF;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+    article td { border-top: 1px solid #E7ECF2; }
+    article tbody tr:nth-child(even) { background: #F8F9FA; }
+    article tbody tr:hover { background: #F2F6FC; }
+    article th:first-child,
+    article td:first-child { width: 23%; font-weight: 600; color: var(--color-headline); }
+    article th:first-child { color: #FFFFFF; }
 }
 
 @layer utilities {
